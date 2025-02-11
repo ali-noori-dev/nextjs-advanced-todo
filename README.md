@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Next.js Advanced Todo List
 
-## Getting Started
+A **feature-rich, full-stack Todo List application** built with **Next.js App Router**, **Prisma**, **NextAuth.js**, and **Sass**. This project demonstrates **authentication, API routes, database integration, real-time updates, and PWA capabilities**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 Features
+
+✅ **User Authentication** (OAuth & Credentials with NextAuth.js)  
+✅ **Task Management** (CRUD operations with API routes)  
+✅ **Task Categorization** (Priority, Due Date, Labels)  
+✅ **Drag & Drop Task Ordering**  
+✅ **Real-time Updates** (WebSockets / SSE)  
+✅ **Push Notifications** (Firebase Cloud Messaging)  
+✅ **Dark Mode & Responsive UI**  
+✅ **Offline Support (PWA)**  
+✅ **Deployed on Vercel**
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Next.js, React, TypeScript, Sass
+- **Backend:** Next.js API Routes, Prisma ORM
+- **Database:** PostgreSQL / MongoDB
+- **Auth:** NextAuth.js (Google, GitHub OAuth)
+- **Storage:** Cloudinary or Supabase for file uploads
+- **Real-time:** WebSockets / Server-Sent Events (SSE)
+- **Notifications:** Firebase Cloud Messaging (FCM) / OneSignal
+- **State Management:** Zustand
+- **Deployment:** Vercel
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+
+```sh
+git clone https://github.com/YOUR_GITHUB_USERNAME/nextjs-todo.git
+cd nextjs-todo
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3️⃣ Set Up Environment Variables
 
-## Learn More
+Create a `.env` file in the root directory and add:
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+DATABASE_URL="your_database_connection_string"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your_nextauth_secret"
+GOOGLE_CLIENT_ID="your_google_client_id"
+GOOGLE_CLIENT_SECRET="your_google_client_secret"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4️⃣ Set Up Prisma
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+npx prisma migrate dev --name init
+npx prisma generate
+```
 
-## Deploy on Vercel
+### 5️⃣ Run the Development Server
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sh
+pnpm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Now open `http://localhost:3000` in your browser to see the app in action!
+
+---
+
+## ✨ Contributing
+
+Want to contribute? **PRs are welcome!** 🚀
+
+### 🛠️ Steps to Contribute:
+
+### 1️⃣ **Fork the repository**
+
+### 2️⃣ **Create a new branch**
+
+```sh
+git checkout -b feature-name
+```
+
+### 3️⃣ Commit your changes
+
+```sh
+git add .
+git commit -m "feat: add new feature"
+```
+
+### 4️⃣ Push to your branch
+
+```sh
+git push origin feature-name
+```
+
+### 5️⃣ Submit a Pull Request (PR)
+
+Once your PR is approved, it will be merged into the main branch. Thank you for your contribution!
+
+---
+
+## 📞 Contact
+
+💬 **Developer:** Ali Noori  
+📧 **Email:** [ali.noori.dev@gmail.com](mailto:ali.noori.dev@gmail.com)  
+🔗 **GitHub:** [@ali-noori-dev](https://github.com/ali-noori-dev)
