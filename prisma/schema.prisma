@@ -9,20 +9,23 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String
-  tasks    Task[]
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  tasks     Task[]
 }
 
 model Task {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   description String?
-  status      String  @default("pending")
+  status      String   @default("pending") // Options: pending, in_progress, completed
   dueDate     DateTime?
-  priority    Int
-  user        User    @relation(fields: [userId], references: [id])
+  priority    Int      @default(3) // 1 (High), 2 (Medium), 3 (Low)
   userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
