@@ -10,17 +10,26 @@ describe("Prisma Models", () => {
     await prisma.$disconnect(); // Close Prisma connection after tests
   });
 
+  const testUser = {
+    name: "Ali Noori",
+    email: "ali@example.com",
+    password: "hashedpassword123",
+  };
+
   it("should create a user", async () => {
     const user = await prisma.user.create({
       data: {
-        name: "Ali Noori",
-        email: "ali@example.com",
-        password: "hashedpassword123",
+        name: testUser.name,
+        email: testUser.email,
+        password: testUser.password,
       },
     });
 
+    // Test if the user has the required properties
     expect(user).toHaveProperty("id");
-    expect(user.email).toBe("ali@example.com");
+    expect(user.name).toBe(testUser.name);
+    expect(user.email).toBe(testUser.email);
+    expect(user.password).toBe(testUser.password);
   });
 
   it("should create a task for the user", async () => {
