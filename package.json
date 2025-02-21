@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^6.4.0",
+    "@prisma/client": "^6.4.1",
     "autoprefixer": "^10.4.20",
     "next": "15.1.6",
     "next-auth": "^4.24.11",
@@ -26,7 +26,17 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "prettier-plugin-prisma": "^5.0.0",
-    "prisma": "^6.4.0",
+    "prisma": "^6.4.1",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "sharp"
+    ]
   }
 }
