@@ -1,6 +1,6 @@
-@import "_variables";
-@import "_mixins";
-@import "_components";
+@use "variables";
+@use "mixins";
+@use "components";
 
 body {
   background-color: #f4f4f4;
