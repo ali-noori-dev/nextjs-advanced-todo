@@ -1,5 +1,5 @@
 import { inter } from "@/app/ui";
-import "@styles/global.scss";
+import "@/styles/global.scss";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
