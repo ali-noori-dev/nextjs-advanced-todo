@@ -1,14 +1,10 @@
-import { Config } from "jest";
+import { pathsToModuleNameMapper } from "ts-jest";
+import { compilerOptions } from "./tsconfig.json";
 
-const config: Config = {
+export default {
   preset: "ts-jest",
   testEnvironment: "node",
-  transform: {
-    "^.+\\.ts$": "ts-jest",
-  },
-  moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/$1",
-  },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: "<rootDir>/",
+  }),
 };
-
-export default config;
