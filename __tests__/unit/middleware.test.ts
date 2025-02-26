@@ -1,9 +1,10 @@
+import { Routes } from "@/app/lib/constants";
 import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
 jest.mock("next-auth/middleware", () => ({
   withAuth: jest.fn(() =>
-    jest.fn((req) => NextResponse.redirect(new URL("/auth/signin", req.url)))
+    jest.fn((req) => NextResponse.redirect(new URL(Routes.SignIn, req.url)))
   ),
 }));
 
@@ -49,9 +50,9 @@ describe("Middleware", () => {
 
   it("should redirect to signin page for unauthenticated requests", async () => {
     const middleware = withAuth(
-      (req) => NextResponse.redirect(new URL("/auth/signin", req.url)), // ✅ Fix: Absolute URL
+      (req) => NextResponse.redirect(new URL(Routes.SignIn, req.url)), // ✅ Fix: Absolute URL
       {
-        pages: { signIn: "/auth/signin" },
+        pages: { signIn: Routes.SignIn },
       }
     );
 
@@ -64,7 +65,7 @@ describe("Middleware", () => {
     const res = await middleware(mockRequestWithAuth, mockEvent);
 
     expect(res?.headers.get("location")).toBe(
-      "http://localhost:3000/auth/signin"
+      `http://localhost:3000${Routes.SignIn}`
     );
   });
 });

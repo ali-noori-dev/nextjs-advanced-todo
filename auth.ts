@@ -1,3 +1,4 @@
+import { Routes } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
@@ -56,7 +57,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: Routes.SignIn,
   },
   secret: process.env.NEXTAUTH_SECRET!,
 };

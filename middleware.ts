@@ -1,3 +1,4 @@
+import { Routes } from "@/app/lib/constants";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
@@ -7,7 +8,7 @@ export default withAuth(
   },
   {
     pages: {
-      signIn: "/auth/signin", // Redirect to signin page if not authenticated
+      signIn: Routes.SignIn, // Redirect to signin page if not authenticated
     },
   }
 );
