@@ -57,7 +57,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: Routes.SignIn,
+    signIn: Routes.Login,
   },
   secret: process.env.NEXTAUTH_SECRET!,
 };

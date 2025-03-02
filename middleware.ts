@@ -8,7 +8,7 @@ export default withAuth(
   },
   {
     pages: {
-      signIn: Routes.SignIn, // Redirect to signin page if not authenticated
+      signIn: Routes.Login, // Redirect to login page if not authenticated
     },
   }
 );
