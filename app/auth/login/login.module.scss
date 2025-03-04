@@ -1,0 +1,97 @@
+@use "@/styles/variables";
+@use "styles/functions";
+@use "styles/mixins";
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f7f9fc;
+  padding: functions.spacing(6);
+  padding-left: 0;
+
+  &__form-section {
+    width: 50%;
+  }
+
+  &__card {
+    background: white;
+    padding: functions.spacing(8);
+    border-radius: functions.spacing(2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: functions.spacing(4);
+  }
+
+  &__text {
+    color: variables.$text-muted-color;
+    margin-bottom: functions.spacing(8);
+  }
+
+  &__footer {
+    margin-top: functions.spacing(4);
+    color: variables.$text-muted-color;
+
+    &-link {
+      color: variables.$primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__welcome-section {
+    width: 50%;
+    background: variables.$primary;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    height: 100%;
+    border-radius: functions.spacing(5);
+    padding: functions.spacing(20);
+
+    @include mixins.respond-to(xl) {
+      padding: functions.spacing(15);
+    }
+
+    @include mixins.respond-to(md) {
+      display: none;
+    }
+
+    h2 {
+      margin-bottom: functions.spacing(6);
+      font-size: 4rem;
+
+      @include mixins.respond-to(xl) {
+        font-size: 3rem;
+      }
+    }
+
+    p {
+      line-height: functions.spacing(10);
+      font-size: 1.8rem;
+
+      @include mixins.respond-to(xl) {
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  &__welcome-content {
+    flex-direction: column;
+    height: 50%;
+  }
+
+  &__animation {
+    height: 50%;
+  }
+}
