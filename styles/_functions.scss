@@ -1,7 +1,9 @@
+@use "sass:meta";
+
 $spacing-unit: 0.25; // Base spacing unit in rem
 
 @function spacing($multiplier: 1) {
-  @if type-of($multiplier) != "number" {
+  @if meta.type-of($multiplier) != "number" {
     @error "spacing() expects a number but received #{$multiplier}.";
   }
   @return #{$spacing-unit * $multiplier}rem;
