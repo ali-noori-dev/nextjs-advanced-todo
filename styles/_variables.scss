@@ -1,0 +1,12 @@
+@use "sass:color";
+
+// Colors
+$primary: #2564cf;
+$primary-light: color.scale($primary, $lightness: 40%);
+$primary-dark: color.scale($primary, $lightness: -40%);
+$text-color: #333;
+$text-muted-color: #878787;
+$border-color: #ccc;
+
+// Fonts
+$font-size-base: 1rem;
