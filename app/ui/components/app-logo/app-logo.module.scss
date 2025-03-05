@@ -1,7 +1,7 @@
 @use "@/styles/variables";
 
-.test {
-  font-size: 2rem;
+.app-logo__title {
+  font-size: variables.$font-size-2xl;
   font-weight: 700;
   color: variables.$primary;
   margin-left: -16px;
