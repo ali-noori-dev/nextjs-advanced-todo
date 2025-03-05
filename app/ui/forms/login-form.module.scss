@@ -1,0 +1,63 @@
+@use "@/styles/variables";
+$primary: #2564cf;
+$border: #e1e6ef;
+$black: #000;
+$gray: gray;
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__input {
+    padding: 12px;
+    border: 1px solid $border;
+  }
+
+  &__remember {
+    display: flex;
+    justify-content: space-between;
+    font-size: variables.$font-size-sm;
+    margin-top: 5px;
+
+    &-link {
+      color: $primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 12px;
+    cursor: pointer;
+    border: none;
+    margin-top: 10px;
+
+    &--login {
+      background: $primary;
+      color: white;
+    }
+
+    &--google {
+      background: white;
+      border: 1px solid $border;
+      color: $black;
+    }
+
+    &--github {
+      background: $black;
+      color: white;
+    }
+  }
+
+  &__or {
+    margin: 15px 0;
+    font-size: variables.$font-size-sm;
+    color: $gray;
+    text-align: center;
+  }
+}
