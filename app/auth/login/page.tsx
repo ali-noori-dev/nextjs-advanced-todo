@@ -1,5 +1,5 @@
-import { Routes } from "@/app/lib/constants";
-import { Center } from "@/app/ui/components";
+import { APP_NAME, Routes } from "@/app/lib/constants";
+import { AppLogo, Center } from "@/app/ui/components";
 import { LoginForm } from "@/app/ui/forms";
 import Link from "next/link";
 import styles from "./login.module.scss";
@@ -8,7 +8,7 @@ import LottieAnimation from "./LottieAnimation";
 const WelcomeSection = () => (
   <div className={styles["login-page__welcome-section"]}>
     <Center className={styles["login-page__welcome-content"]}>
-      <h2>Welcome to TaskNest</h2>
+      <h2>{`Welcome to ${APP_NAME}`}</h2>
       <p>Start managing your tasks effortlessly.</p>
       <p>Stay productive, stay organized, and achieve your goals.</p>
     </Center>
@@ -20,7 +20,9 @@ const WelcomeSection = () => (
 );
 
 const FormSection = () => (
-  <Center className={styles["login-page__form-section"]}>
+  <Center direction="column" className={styles["login-page__form-section"]}>
+    <AppLogo />
+
     <div className={styles["login-page__card"]}>
       <h2 className={styles["login-page__title"]}>Log in</h2>
 
