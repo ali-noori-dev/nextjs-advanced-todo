@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import styles from "./input-field.module.scss";
 
 interface InputFieldProps {
@@ -21,15 +20,14 @@ export function InputField({
   type = "text",
   value,
   onChange,
-  placeholder = "",
+  // Ensures :placeholder-shown works properly for label floating
+  placeholder = " ",
   fullWidth = false,
   required = false,
   disabled = false,
   error = false,
   helperText = "",
 }: InputFieldProps) {
-  const [focused, setFocused] = useState(false);
-
   return (
     <div
       className={`${styles["input-field"]} ${
@@ -41,21 +39,15 @@ export function InputField({
           type={type}
           value={value}
           onChange={onChange}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
           placeholder={placeholder}
           required={required}
           disabled={disabled}
           className={styles["input"]}
         />
-        <label
-          className={`${styles["label"]} ${
-            focused || value ? styles["label-float"] : ""
-          }`}
-        >
-          {label}
-        </label>
+
+        <label className={`${styles["label"]}`}>{label}</label>
       </div>
+
       {helperText && <p className={styles["helper-text"]}>{helperText}</p>}
     </div>
   );

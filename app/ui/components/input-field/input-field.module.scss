@@ -1,4 +1,5 @@
 @use "@/styles/variables";
+@use "sass:color";
 
 $transition-speed: 0.3s;
 
@@ -35,7 +36,7 @@ $transition-speed: 0.3s;
     }
 
     .label {
-      color: darken(variables.$disabled-color, 10%);
+      color: color.adjust(variables.$disabled-color, $lightness: -10%);
     }
   }
 }
@@ -61,6 +62,20 @@ $transition-speed: 0.3s;
   outline: none;
   background: transparent;
   padding: 8px 0;
+
+  &:focus ~ .label,
+  &:not(:placeholder-shown) ~ .label,
+  &:-webkit-autofill ~ .label {
+    // Handle autofill case
+    top: 4px;
+    font-size: variables.$font-size-xs;
+    color: variables.$primary;
+  }
+}
+
+// Ensure auto-filled input is properly styled
+.input:-webkit-autofill {
+  background-clip: text;
 }
 
 .label {
@@ -73,12 +88,6 @@ $transition-speed: 0.3s;
   padding: 0 5px;
   transition: all $transition-speed ease-in-out;
   pointer-events: none;
-}
-
-.label-float {
-  top: 4px;
-  font-size: variables.$font-size-xs;
-  color: variables.$primary;
 }
 
 .helper-text {
