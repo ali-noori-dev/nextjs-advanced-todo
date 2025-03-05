@@ -3,7 +3,7 @@
 import styles from "./input-field.module.scss";
 
 interface InputFieldProps {
-  label: string;
+  label?: string;
   type?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -34,7 +34,11 @@ export function InputField({
         fullWidth ? styles["full-width"] : ""
       } ${error ? styles["error"] : ""} ${disabled ? styles["disabled"] : ""}`}
     >
-      <div className={styles["input-container"]}>
+      <div
+        className={`${styles["input-container"]} ${
+          label ? styles["has-label"] : ""
+        }`}
+      >
         <input
           type={type}
           value={value}
@@ -45,7 +49,7 @@ export function InputField({
           className={styles["input"]}
         />
 
-        <label className={`${styles["label"]}`}>{label}</label>
+        {label && <label className={styles["label"]}>{label}</label>}
       </div>
 
       {helperText && <p className={styles["helper-text"]}>{helperText}</p>}

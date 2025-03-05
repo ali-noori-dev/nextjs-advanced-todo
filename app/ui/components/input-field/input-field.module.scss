@@ -63,6 +63,17 @@ $transition-speed: 0.3s;
   background: transparent;
   padding: 8px 0;
 
+  // If a label exists, hide the placeholder by default
+  .has-label &::placeholder {
+    color: transparent;
+  }
+
+  // Show the placeholder only when the label is floating
+  .has-label &:focus::placeholder,
+  .has-label &:not(:placeholder-shown) ~ .label + &::placeholder {
+    color: variables.$text-muted-color;
+  }
+
   &:focus ~ .label,
   &:not(:placeholder-shown) ~ .label,
   &:-webkit-autofill ~ .label {
