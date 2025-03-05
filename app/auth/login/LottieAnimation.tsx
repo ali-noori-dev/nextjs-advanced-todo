@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 
 const Lottie = dynamic(() => import("lottie-react"), {
   ssr: false,
-  loading: () => <div>Loading...</div>,
 });
 
 export default function LottieAnimation() {

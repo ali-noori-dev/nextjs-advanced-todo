@@ -78,7 +78,7 @@
 
     p {
       line-height: functions.spacing(10);
-      font-size: variables.$font-size-2xl;
+      font-size: 1.8rem;
 
       @include mixins.respond-to(xl) {
         font-size: variables.$font-size-lg;

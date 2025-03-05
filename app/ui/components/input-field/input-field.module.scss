@@ -1,0 +1,88 @@
+@use "@/styles/variables";
+
+$transition-speed: 0.3s;
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  font-family: "Inter", sans-serif;
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.error {
+    .input-container {
+      border-color: variables.$error-color;
+    }
+
+    .label {
+      color: variables.$error-color;
+    }
+  }
+
+  &.disabled {
+    .input-container {
+      background: variables.$disabled-color;
+      cursor: not-allowed;
+    }
+
+    .input {
+      cursor: not-allowed;
+      background: transparent;
+    }
+
+    .label {
+      color: darken(variables.$disabled-color, 10%);
+    }
+  }
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid variables.$border-color;
+  border-radius: variables.$border-radius-sm;
+  padding: 14px;
+  transition: border-color $transition-speed;
+  background: white;
+
+  &:focus-within {
+    border-color: variables.$primary;
+  }
+}
+
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 8px 0;
+}
+
+.label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: variables.$border-color;
+  background: white;
+  padding: 0 5px;
+  transition: all $transition-speed ease-in-out;
+  pointer-events: none;
+}
+
+.label-float {
+  top: 4px;
+  font-size: variables.$font-size-xs;
+  color: variables.$primary;
+}
+
+.helper-text {
+  font-size: variables.$font-size-sm;
+  color: variables.$error-color;
+  margin-left: 4px;
+}
