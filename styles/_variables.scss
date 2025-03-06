@@ -2,14 +2,25 @@
 @use "functions";
 
 // Colors
-$primary: #2564cf;
-$primary-light: color.scale($primary, $lightness: 40%);
-$primary-dark: color.scale($primary, $lightness: -40%);
+$primary: #1976d2;
+$primary-light: color.scale($primary, $lightness: 30%);
+$primary-lighter: color.scale($primary, $lightness: 60%);
+$primary-lightest: color.scale($primary, $lightness: 95%);
+$primary-dark: color.scale($primary, $lightness: -20%);
+
+$secondary: #636363;
+$secondary-light: color.scale($secondary, $lightness: 20%);
+$secondary-dark: color.scale($secondary, $lightness: -20%);
+
+$error-color: #d32f2f;
+$error-light: color.scale($error-color, $lightness: 20%);
+$error-dark: color.scale($error-color, $lightness: -20%);
+
 $text-color: #333;
 $text-muted-color: #878787;
 $border-color: #ccc;
-$error-color: #d32f2f;
-$disabled-color: #e0e0e0;
+$disabled-color: #00000042;
+$disabled-background: #0000001f;
 
 // Font Sizes
 $font-size-xs: 0.75rem;
