@@ -2,7 +2,7 @@
 @use "functions";
 
 // Colors
-$primary: #1976d2;
+$primary: #4070ed;
 $primary-light: color.scale($primary, $lightness: 30%);
 $primary-lighter: color.scale($primary, $lightness: 60%);
 $primary-lightest: color.scale($primary, $lightness: 95%);
