@@ -1,0 +1,83 @@
+@use "styles/variables";
+@use "styles/functions";
+@use "sass:color";
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  width: fit-content;
+  border-radius: variables.$border-radius-md;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
+    rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+
+  // Variants
+  &--primary {
+    background-color: variables.$primary;
+
+    &:hover:not(:disabled) {
+      background-color: variables.$primary-dark;
+    }
+  }
+
+  &--secondary {
+    background-color: variables.$secondary;
+
+    &:hover:not(:disabled) {
+      background-color: variables.$secondary-dark;
+    }
+  }
+
+  &--outline {
+    background-color: white;
+    outline: 2px solid variables.$primary;
+    color: variables.$primary;
+    box-shadow: none;
+
+    &:hover:not(:disabled) {
+      background-color: variables.$primary-lightest;
+    }
+  }
+
+  &--danger {
+    background-color: variables.$error-color;
+
+    &:hover:not(:disabled) {
+      background-color: variables.$error-dark;
+    }
+  }
+
+  // Sizes
+  &--small {
+    font-size: variables.$font-size-sm;
+    padding: functions.spacing(2) functions.spacing(3);
+  }
+
+  &--medium {
+    font-size: variables.$font-size-md;
+    padding: functions.spacing(3) functions.spacing(4);
+  }
+
+  &--large {
+    font-size: variables.$font-size-lg;
+    padding: functions.spacing(4) functions.spacing(5);
+  }
+
+  // Modifiers
+  &--full-width {
+    width: 100%;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    background-color: variables.$disabled-background;
+    color: variables.$disabled-color;
+    box-shadow: none;
+  }
+}
