@@ -8,19 +8,19 @@ type ButtonVariant = "primary" | "secondary" | "outline" | "danger";
 type ButtonSize = "small" | "medium" | "large";
 
 type ButtonProps = {
-  label: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;
-} & Omit<ComponentPropsWithoutRef<"button">, "className">;
+} & ComponentPropsWithoutRef<"button">;
 
 export function Button({
-  label,
+  children,
   variant = "primary",
   size = "medium",
   fullWidth = false,
   disabled = false,
   type = "button",
+  className,
   ...restProps
 }: ButtonProps) {
   const buttonClasses = clsx(styles.button, {
@@ -28,6 +28,7 @@ export function Button({
     [styles[`button--${size}`]]: size,
     [styles["button--full-width"]]: fullWidth,
     [styles["button--disabled"]]: disabled,
+    [className ?? ""]: className,
   });
 
   return (
@@ -37,7 +38,7 @@ export function Button({
       disabled={disabled}
       {...restProps}
     >
-      {label}
+      {children}
     </button>
   );
 }

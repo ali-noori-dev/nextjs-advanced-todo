@@ -1,8 +1,12 @@
 "use client";
 
-import { InputField } from "@/app/ui/components";
+import { Routes } from "@/app/lib/constants";
+import { Button, Center, Flex, InputField, VFlex } from "@/app/ui/components";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import styles from "./login-form.module.scss";
 
 export function LoginForm() {
@@ -15,7 +19,7 @@ export function LoginForm() {
   };
 
   return (
-    <div>
+    <VFlex className={styles["login-form__wrapper"]}>
       <form onSubmit={handleSubmit} className={styles["login-form"]}>
         <InputField
           label="Email"
@@ -23,6 +27,7 @@ export function LoginForm() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="username"
         />
 
         <InputField
@@ -31,40 +36,44 @@ export function LoginForm() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
         />
 
-        <div className={styles["login-form__remember"]}>
-          <input type="checkbox" id="remember" />
-          <label htmlFor="remember">Remember for 30 days</label>
-
-          <a href="#" className={styles["login-form__remember-link"]}>
-            Forgot password?
-          </a>
-        </div>
-
-        <button
-          type="submit"
-          className={`${styles["login-form__button"]} ${styles["login-form__button--login"]}`}
+        <Link
+          href={Routes.ForgotPassword}
+          className={styles["login-form__forget"]}
         >
+          Forgot password?
+        </Link>
+
+        <Button type="submit" fullWidth>
           Log in
-        </button>
+        </Button>
       </form>
 
-      <div className={styles["login-form__or"]}>OR</div>
+      <Center className={styles["login-form__or-container"]}>
+        <span className={styles["login-form__or"]}>OR</span>
+      </Center>
 
-      <button
-        className={`${styles["login-form__button"]} ${styles["login-form__button--google"]}`}
-        onClick={() => signIn("google")}
-      >
-        Continue with Google
-      </button>
+      <Flex className={styles["login-form__social-providers"]}>
+        <Button
+          className={styles["login-form__provider-button"]}
+          onClick={() => signIn("google")}
+          fullWidth
+        >
+          <FcGoogle size={18} />
+          Continue with Google
+        </Button>
 
-      <button
-        className={`${styles["login-form__button"]} ${styles["login-form__button--github"]}`}
-        onClick={() => signIn("github")}
-      >
-        Continue with GitHub
-      </button>
-    </div>
+        <Button
+          className={styles["login-form__provider-button"]}
+          onClick={() => signIn("github")}
+          fullWidth
+        >
+          <FaGithub size={18} />
+          Continue with GitHub
+        </Button>
+      </Flex>
+    </VFlex>
   );
 }
