@@ -15,6 +15,7 @@ interface InputFieldProps {
   disabled?: boolean;
   error?: boolean;
   helperText?: string;
+  autoComplete?: string;
 }
 
 export function InputField({
@@ -29,6 +30,7 @@ export function InputField({
   disabled = false,
   error = false,
   helperText = "",
+  autoComplete,
 }: InputFieldProps) {
   const rootClasses = clsx(styles.input, {
     [styles["input--full-width"]]: fullWidth,
@@ -51,6 +53,7 @@ export function InputField({
           required={required}
           disabled={disabled}
           className={styles.input__field}
+          autoComplete={autoComplete}
         />
 
         {label && <label className={styles.input__label}>{label}</label>}
