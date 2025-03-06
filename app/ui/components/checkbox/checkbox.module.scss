@@ -1,0 +1,48 @@
+@use "sass:color";
+@use "@/styles/variables";
+@use "styles/functions";
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: functions.spacing(2);
+  cursor: pointer;
+  user-select: none;
+
+  &__input {
+    display: none; // Hide default checkbox
+  }
+
+  &__box {
+    width: functions.spacing(5);
+    height: functions.spacing(5);
+    border: 2px solid variables.$border-color;
+    border-radius: variables.$border-radius-sm;
+    transition: all 0.2s ease-in-out;
+    background: white;
+
+    &::after {
+      content: "";
+      width: 12px;
+      height: 6px;
+      border-left: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      transform: rotate(-45deg);
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  &__input:checked + &__box {
+    background: variables.$primary;
+    border-color: variables.$primary;
+
+    &::after {
+      border-color: white;
+    }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

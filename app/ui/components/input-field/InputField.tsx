@@ -4,10 +4,10 @@ import { VFlex } from "@/app/ui/components";
 import styles from "./input-field.module.scss";
 
 interface InputFieldProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
   type?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   fullWidth?: boolean;
   required?: boolean;
