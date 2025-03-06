@@ -1,4 +1,6 @@
 @use "@/styles/variables";
+@use "styles/functions";
+
 $primary: #2564cf;
 $border: #e1e6ef;
 $black: #000;
@@ -7,7 +9,7 @@ $gray: gray;
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: functions.spacing(4);
 
   &__input {
     padding: 12px;

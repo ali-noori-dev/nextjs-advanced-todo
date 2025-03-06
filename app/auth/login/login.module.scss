@@ -21,18 +21,19 @@
     border-radius: variables.$border-radius-md;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 450px;
-    text-align: center;
   }
 
   &__title {
     font-size: variables.$font-size-2xl;
     font-weight: bold;
     margin-bottom: functions.spacing(4);
+    text-align: center;
   }
 
   &__text {
     color: variables.$text-muted-color;
     margin-bottom: functions.spacing(8);
+    text-align: center;
   }
 
   &__footer {

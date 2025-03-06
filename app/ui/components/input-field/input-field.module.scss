@@ -2,106 +2,106 @@
 @use "@/styles/variables";
 @use "styles/functions";
 
-.input-field {
+.input {
   position: relative;
   gap: functions.spacing();
 
-  &.full-width {
+  &--full-width {
     width: 100%;
   }
 
-  &.error {
-    .input-container {
+  &--error {
+    .input__container {
       border-color: variables.$error-color;
     }
 
-    .label {
+    .input__label {
       color: variables.$error-color;
     }
   }
 
-  &.disabled {
-    .input-container {
+  &--disabled {
+    .input__container {
       cursor: not-allowed;
       opacity: 0.7;
     }
 
-    .input {
+    .input__field {
       cursor: not-allowed;
     }
   }
 
-  &:hover:not(.disabled) {
-    .input-container {
+  &:hover:not(.input--disabled):not(:focus-within) {
+    .input__container {
       border-color: color.scale(variables.$border-color, $lightness: -30%);
     }
   }
-}
 
-.input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  border: 1px solid variables.$border-color;
-  border-radius: variables.$border-radius-sm;
-  padding: functions.spacing() functions.spacing(3);
-  background: white;
+  &__container {
+    position: relative;
+    border: 1px solid variables.$border-color;
+    border-radius: variables.$border-radius-md;
+    padding: functions.spacing() functions.spacing(3);
 
-  &:focus-within {
-    border-color: variables.$primary;
-    outline: 1px solid variables.$primary;
-  }
-}
+    &:focus-within {
+      border-color: variables.$primary;
+      outline: 1px solid variables.$primary;
+    }
 
-.input {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 8px 0;
-
-  // If a label exists, hide the placeholder by default
-  .has-label &::placeholder {
-    color: transparent;
+    // If a label exists, hide the placeholder by default
+    &--labeled {
+      .input__field::placeholder {
+        color: transparent;
+      }
+    }
   }
 
-  // Show the placeholder only when the label is floating
-  .has-label &:focus::placeholder,
-  .has-label &:not(:placeholder-shown) ~ .label + &::placeholder {
-    color: variables.$text-muted-color;
-  }
+  &__field {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: functions.spacing(2) 0;
 
-  &:focus ~ .label,
-  &:not(:placeholder-shown) ~ .label,
-  &:-webkit-autofill ~ .label {
+    // Show the placeholder only when the label is floating
+    &:focus::placeholder,
+    &:not(:placeholder-shown) ~ .input__label + &::placeholder {
+      color: variables.$text-muted-color;
+    }
+
+    // Handle label floating
+    &:focus ~ .input__label,
+    &:not(:placeholder-shown) ~ .input__label,
     // Handle autofill case
-    top: 0px;
-    font-size: variables.$font-size-xs;
+    &:-webkit-autofill ~ .input__label {
+      top: 0px;
+      font-size: variables.$font-size-xs;
+    }
+
+    &:focus ~ .input__label {
+      color: variables.$primary;
+    }
+
+    // Ensure auto-filled input is properly styled
+    &:-webkit-autofill {
+      background-clip: text;
+    }
   }
 
-  &:focus ~ .label {
-    color: variables.$primary;
+  &__label {
+    position: absolute;
+    left: functions.spacing(3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: variables.$text-muted-color;
+    background: white;
+    padding: 0 functions.spacing();
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
   }
-}
 
-// Ensure auto-filled input is properly styled
-.input:-webkit-autofill {
-  background-clip: text;
-}
-
-.label {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: variables.$text-muted-color;
-  background: white;
-  padding: 0 5px;
-  pointer-events: none;
-}
-
-.helper-text {
-  font-size: variables.$font-size-sm;
-  color: variables.$error-color;
-  margin-left: 4px;
+  &__helper {
+    font-size: variables.$font-size-sm;
+    color: variables.$error-color;
+    margin-left: functions.spacing(2);
+  }
 }

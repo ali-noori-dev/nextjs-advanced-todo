@@ -31,13 +31,15 @@ export function InputField({
 }: InputFieldProps) {
   return (
     <VFlex
-      className={`${styles["input-field"]} ${
-        fullWidth ? styles["full-width"] : ""
-      } ${error ? styles["error"] : ""} ${disabled ? styles["disabled"] : ""}`}
+      className={`${styles["input"]} ${
+        fullWidth ? styles["input--full-width"] : ""
+      } ${error ? styles["input--error"] : ""} ${
+        disabled ? styles["input--disabled"] : ""
+      }`}
     >
       <div
-        className={`${styles["input-container"]} ${
-          label ? styles["has-label"] : ""
+        className={`${styles["input__container"]} ${
+          label ? styles["input__container--labeled"] : ""
         }`}
       >
         <input
@@ -47,13 +49,13 @@ export function InputField({
           placeholder={placeholder}
           required={required}
           disabled={disabled}
-          className={styles["input"]}
+          className={styles["input__field"]}
         />
 
-        {label && <label className={styles["label"]}>{label}</label>}
+        {label && <label className={styles["input__label"]}>{label}</label>}
       </div>
 
-      {helperText && <p className={styles["helper-text"]}>{helperText}</p>}
+      {helperText && <p className={styles["input__helper"]}>{helperText}</p>}
     </VFlex>
   );
 }
