@@ -1,6 +1,7 @@
 "use client";
 
 import { Center } from "@/app/ui/components";
+import clsx from "clsx";
 import styles from "./checkbox.module.scss";
 
 interface CheckboxProps {
@@ -20,21 +21,21 @@ export function Checkbox({
     onChange(e.target.checked);
   };
 
+  const rootClasses = clsx(styles.checkbox, {
+    [styles["checkbox--disabled"]]: disabled,
+  });
+
   return (
-    <label
-      className={`${styles["checkbox"]} ${
-        disabled ? styles["checkbox--disabled"] : ""
-      }`}
-    >
+    <label className={rootClasses}>
       <input
         type="checkbox"
         checked={checked}
         onChange={handleChange}
         disabled={disabled}
-        className={styles["checkbox__input"]}
+        className={styles.checkbox__input}
       />
-      <Center className={styles["checkbox__box"]}></Center>
-      {label && <span className={styles["checkbox__label"]}>{label}</span>}
+      <Center className={styles.checkbox__box}></Center>
+      {label && <span className={styles.checkbox__label}>{label}</span>}
     </label>
   );
 }

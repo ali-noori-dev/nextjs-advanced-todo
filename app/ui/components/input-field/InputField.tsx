@@ -1,6 +1,7 @@
 "use client";
 
 import { VFlex } from "@/app/ui/components";
+import clsx from "clsx";
 import styles from "./input-field.module.scss";
 
 interface InputFieldProps {
@@ -29,19 +30,19 @@ export function InputField({
   error = false,
   helperText = "",
 }: InputFieldProps) {
+  const rootClasses = clsx(styles.input, {
+    [styles["input--full-width"]]: fullWidth,
+    [styles["input--error"]]: error,
+    [styles["input--disabled"]]: disabled,
+  });
+
+  const containerClasses = clsx(styles.input__container, {
+    [styles["input__container--labeled"]]: label,
+  });
+
   return (
-    <VFlex
-      className={`${styles["input"]} ${
-        fullWidth ? styles["input--full-width"] : ""
-      } ${error ? styles["input--error"] : ""} ${
-        disabled ? styles["input--disabled"] : ""
-      }`}
-    >
-      <div
-        className={`${styles["input__container"]} ${
-          label ? styles["input__container--labeled"] : ""
-        }`}
-      >
+    <VFlex className={rootClasses}>
+      <div className={containerClasses}>
         <input
           type={type}
           value={value}
@@ -49,13 +50,13 @@ export function InputField({
           placeholder={placeholder}
           required={required}
           disabled={disabled}
-          className={styles["input__field"]}
+          className={styles.input__field}
         />
 
-        {label && <label className={styles["input__label"]}>{label}</label>}
+        {label && <label className={styles.input__label}>{label}</label>}
       </div>
 
-      {helperText && <p className={styles["input__helper"]}>{helperText}</p>}
+      {helperText && <p className={styles.input__helper}>{helperText}</p>}
     </VFlex>
   );
 }
