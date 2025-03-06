@@ -2,12 +2,9 @@
 @use "@/styles/variables";
 @use "styles/functions";
 
-$transition-speed: 0.3s;
-
 .input-field {
-  gap: 5px;
   position: relative;
-  font-family: "Inter", sans-serif;
+  gap: functions.spacing();
 
   &.full-width {
     width: 100%;
@@ -25,17 +22,18 @@ $transition-speed: 0.3s;
 
   &.disabled {
     .input-container {
-      background: variables.$disabled-color;
       cursor: not-allowed;
+      opacity: 0.7;
     }
 
     .input {
       cursor: not-allowed;
-      background: transparent;
     }
+  }
 
-    .label {
-      color: color.adjust(variables.$disabled-color, $lightness: -10%);
+  &:hover:not(.disabled) {
+    .input-container {
+      border-color: color.scale(variables.$border-color, $lightness: -30%);
     }
   }
 }
@@ -47,11 +45,11 @@ $transition-speed: 0.3s;
   border: 1px solid variables.$border-color;
   border-radius: variables.$border-radius-sm;
   padding: functions.spacing() functions.spacing(3);
-  transition: border-color $transition-speed;
   background: white;
 
   &:focus-within {
     border-color: variables.$primary;
+    outline: 1px solid variables.$primary;
   }
 }
 
@@ -77,8 +75,11 @@ $transition-speed: 0.3s;
   &:not(:placeholder-shown) ~ .label,
   &:-webkit-autofill ~ .label {
     // Handle autofill case
-    top: 4px;
+    top: 0px;
     font-size: variables.$font-size-xs;
+  }
+
+  &:focus ~ .label {
     color: variables.$primary;
   }
 }
@@ -93,10 +94,9 @@ $transition-speed: 0.3s;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: variables.$border-color;
+  color: variables.$text-muted-color;
   background: white;
   padding: 0 5px;
-  transition: all $transition-speed ease-in-out;
   pointer-events: none;
 }
 
