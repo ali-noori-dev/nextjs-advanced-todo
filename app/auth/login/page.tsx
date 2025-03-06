@@ -1,5 +1,5 @@
 import { APP_NAME, Routes } from "@/app/lib/constants";
-import { AppLogo, Center } from "@/app/ui/components";
+import { AppLogo, VCenter } from "@/app/ui/components";
 import { LoginForm } from "@/app/ui/forms";
 import Link from "next/link";
 import styles from "./login.module.scss";
@@ -7,11 +7,11 @@ import LottieAnimation from "./LottieAnimation";
 
 const WelcomeSection = () => (
   <div className={styles["login-page__welcome-section"]}>
-    <Center className={styles["login-page__welcome-content"]}>
+    <VCenter className={styles["login-page__welcome-content"]}>
       <h2>{`Welcome to ${APP_NAME}`}</h2>
       <p>Start managing your tasks effortlessly.</p>
       <p>Stay productive, stay organized, and achieve your goals.</p>
-    </Center>
+    </VCenter>
 
     <div className={styles["login-page__animation"]}>
       <LottieAnimation />
@@ -20,7 +20,7 @@ const WelcomeSection = () => (
 );
 
 const FormSection = () => (
-  <Center direction="column" className={styles["login-page__form-section"]}>
+  <VCenter className={styles["login-page__form-section"]}>
     <AppLogo />
 
     <div className={styles["login-page__card"]}>
@@ -42,7 +42,7 @@ const FormSection = () => (
         </Link>
       </p>
     </div>
-  </Center>
+  </VCenter>
 );
 
 export default function LoginPage() {

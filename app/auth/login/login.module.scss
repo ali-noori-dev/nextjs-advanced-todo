@@ -52,7 +52,6 @@
   &__welcome-section {
     width: 50%;
     background: variables.$primary;
-    flex-direction: column;
     color: white;
     text-align: center;
     height: 100%;
@@ -87,7 +86,6 @@
   }
 
   &__welcome-content {
-    flex-direction: column;
     height: 50%;
   }
 

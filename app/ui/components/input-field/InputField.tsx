@@ -1,5 +1,6 @@
 "use client";
 
+import { VFlex } from "@/app/ui/components";
 import styles from "./input-field.module.scss";
 
 interface InputFieldProps {
@@ -29,7 +30,7 @@ export function InputField({
   helperText = "",
 }: InputFieldProps) {
   return (
-    <div
+    <VFlex
       className={`${styles["input-field"]} ${
         fullWidth ? styles["full-width"] : ""
       } ${error ? styles["error"] : ""} ${disabled ? styles["disabled"] : ""}`}
@@ -53,6 +54,6 @@ export function InputField({
       </div>
 
       {helperText && <p className={styles["helper-text"]}>{helperText}</p>}
-    </div>
+    </VFlex>
   );
 }
