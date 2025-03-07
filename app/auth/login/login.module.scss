@@ -70,14 +70,12 @@
     }
   }
 
-  &__welcome-content {
-    height: 50%;
-  }
-
+  &__welcome-content,
   &__animation {
     height: 50%;
   }
 
+  // Mobile styles
   @include mixins.respond-to(xs) {
     &__card {
       width: 100%;
@@ -92,6 +90,7 @@
     }
   }
 
+  // Tablet styles
   @include mixins.respond-to(md) {
     padding-left: functions.spacing(6);
 
@@ -104,6 +103,7 @@
     }
   }
 
+  // Desktop styles
   @include mixins.respond-to(xl) {
     &__welcome-section {
       padding: functions.spacing(15);
