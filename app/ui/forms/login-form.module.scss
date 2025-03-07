@@ -1,5 +1,6 @@
 @use "styles/variables";
 @use "styles/functions";
+@use "styles/mixins";
 
 .login-form__wrapper {
   gap: functions.spacing(4);
@@ -22,6 +23,10 @@
 
   &__social-providers {
     gap: functions.spacing(4);
+
+    @include mixins.respond-to(xs) {
+      flex-direction: column;
+    }
   }
 
   &__provider-button {

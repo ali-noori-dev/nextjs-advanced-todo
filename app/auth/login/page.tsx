@@ -31,17 +31,14 @@ const FormSection = () => (
       </p>
 
       <LoginForm />
-
-      <p className={styles["login-page__footer"]}>
-        Don't have an account?{" "}
-        <Link
-          className={styles["login-page__footer-link"]}
-          href={Routes.SignUp}
-        >
-          Sign up
-        </Link>
-      </p>
     </div>
+
+    <p className={styles["login-page__footer"]}>
+      Don't have an account?{" "}
+      <Link className={styles["login-page__footer-link"]} href={Routes.SignUp}>
+        Sign up
+      </Link>
+    </p>
   </VCenter>
 );
 

@@ -37,7 +37,7 @@
   }
 
   &__footer {
-    margin-top: functions.spacing(4);
+    margin-top: functions.spacing(8);
     color: variables.$text-muted-color;
 
     &-link {
@@ -59,30 +59,14 @@
     border-radius: variables.$border-radius-2xl;
     padding: functions.spacing(20);
 
-    @include mixins.respond-to(xl) {
-      padding: functions.spacing(15);
-    }
-
-    @include mixins.respond-to(md) {
-      display: none;
-    }
-
     h2 {
       margin-bottom: functions.spacing(6);
       font-size: variables.$font-size-4xl;
-
-      @include mixins.respond-to(xl) {
-        font-size: variables.$font-size-3xl;
-      }
     }
 
     p {
       line-height: functions.spacing(10);
       font-size: 1.8rem;
-
-      @include mixins.respond-to(xl) {
-        font-size: variables.$font-size-lg;
-      }
     }
   }
 
@@ -92,5 +76,45 @@
 
   &__animation {
     height: 50%;
+  }
+
+  @include mixins.respond-to(xs) {
+    &__card {
+      width: 100%;
+    }
+
+    &__text {
+      font-size: variables.$font-size-sm;
+    }
+
+    &__title {
+      font-size: variables.$font-size-xl;
+    }
+  }
+
+  @include mixins.respond-to(md) {
+    padding-left: functions.spacing(6);
+
+    &__form-section {
+      width: 100%;
+    }
+
+    &__welcome-section {
+      display: none;
+    }
+  }
+
+  @include mixins.respond-to(xl) {
+    &__welcome-section {
+      padding: functions.spacing(15);
+
+      h2 {
+        font-size: variables.$font-size-3xl;
+      }
+
+      p {
+        font-size: variables.$font-size-lg;
+      }
+    }
   }
 }
