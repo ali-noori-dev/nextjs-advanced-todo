@@ -2,7 +2,7 @@
 @use "styles/functions";
 @use "styles/mixins";
 
-.login-page {
+.auth-layout {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +30,7 @@
     text-align: center;
   }
 
-  &__text {
+  &__description {
     color: variables.$text-muted-color;
     margin-bottom: functions.spacing(8);
     text-align: center;
@@ -81,7 +81,7 @@
       width: 100%;
     }
 
-    &__text {
+    &__description {
       font-size: variables.$font-size-sm;
     }
 
