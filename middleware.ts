@@ -16,13 +16,16 @@ export default withAuth(
 export const config = {
   matcher: [
     /*
-     * Match all request paths except:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
+     * Protect all routes except:
+     * - API routes (`/api`)
+     * - Next.js static files (`/_next/static`)
+     * - Image optimization files (`/_next/image`)
+     * - Public assets (`/public`, `/favicon.ico`)
+     * - Authentication pages (`/auth/signup`, `/auth/login`, `/auth/forgot-password`)
+     *
+     * This ensures that unauthenticated users can access the sign-up, login,
+     * and forgot password pages while protecting other routes.
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|public|auth/signup|auth/login|auth/forgot-password).*)",
   ],
 };
