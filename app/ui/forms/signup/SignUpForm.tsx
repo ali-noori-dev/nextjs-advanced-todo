@@ -1,10 +1,13 @@
 "use client";
 
-import { Button, Center, Flex, InputField, VFlex } from "@/app/ui/components";
+import {
+  AuthProviderButtons,
+  Button,
+  InputField,
+  VFlex,
+} from "@/app/ui/components";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import styles from "./signup-form.module.scss";
 
 export function SignUpForm() {
@@ -52,29 +55,7 @@ export function SignUpForm() {
         </Button>
       </form>
 
-      <Center className={styles["signup-form__or-container"]}>
-        <span className={styles["signup-form__or"]}>OR</span>
-      </Center>
-
-      <Flex className={styles["signup-form__social-providers"]}>
-        <Button
-          className={styles["signup-form__provider-button"]}
-          onClick={() => signIn("google")}
-          fullWidth
-        >
-          <FcGoogle size={18} />
-          Sign up with Google
-        </Button>
-
-        <Button
-          className={styles["signup-form__provider-button"]}
-          onClick={() => signIn("github")}
-          fullWidth
-        >
-          <FaGithub size={18} />
-          Sign up with GitHub
-        </Button>
-      </Flex>
+      <AuthProviderButtons />
     </VFlex>
   );
 }

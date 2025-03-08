@@ -1,4 +1,5 @@
 export * from "./app-logo/AppLogo";
+export * from "./auth-provider-buttons/AuthProviderButtons";
 export * from "./button/Button";
 export * from "./Center";
 export * from "./checkbox/Checkbox";

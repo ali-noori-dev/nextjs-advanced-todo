@@ -1,0 +1,42 @@
+@use "styles/variables";
+@use "styles/functions";
+@use "styles/mixins";
+
+.auth-providers {
+  &__container {
+    gap: functions.spacing(4);
+
+    @include mixins.respond-to(xs) {
+      flex-direction: column;
+    }
+  }
+
+  &__button {
+    background-color: white !important;
+    border: 1px solid variables.$border-color !important;
+    box-shadow: none !important;
+    color: variables.$text-color !important;
+    font-size: variables.$font-size-xs !important;
+    gap: functions.spacing(2) !important;
+
+    &:hover {
+      background-color: variables.$lightest-gray !important;
+    }
+  }
+
+  &__or-container {
+    &::before,
+    &::after {
+      border-bottom: 1px solid variables.$border-color;
+      content: "";
+      display: block;
+      width: 50%;
+    }
+  }
+
+  &__or {
+    font-size: variables.$font-size-sm;
+    color: variables.$text-muted-color;
+    padding: 0 functions.spacing(2);
+  }
+}

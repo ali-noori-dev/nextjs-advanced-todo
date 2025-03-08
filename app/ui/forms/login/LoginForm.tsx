@@ -1,12 +1,15 @@
 "use client";
 
 import { Routes } from "@/app/lib/constants";
-import { Button, Center, Flex, InputField, VFlex } from "@/app/ui/components";
+import {
+  AuthProviderButtons,
+  Button,
+  InputField,
+  VFlex,
+} from "@/app/ui/components";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import styles from "./login-form.module.scss";
 
 export function LoginForm() {
@@ -51,29 +54,7 @@ export function LoginForm() {
         </Button>
       </form>
 
-      <Center className={styles["login-form__or-container"]}>
-        <span className={styles["login-form__or"]}>OR</span>
-      </Center>
-
-      <Flex className={styles["login-form__social-providers"]}>
-        <Button
-          className={styles["login-form__provider-button"]}
-          onClick={() => signIn("google")}
-          fullWidth
-        >
-          <FcGoogle size={18} />
-          Continue with Google
-        </Button>
-
-        <Button
-          className={styles["login-form__provider-button"]}
-          onClick={() => signIn("github")}
-          fullWidth
-        >
-          <FaGithub size={18} />
-          Continue with GitHub
-        </Button>
-      </Flex>
+      <AuthProviderButtons />
     </VFlex>
   );
 }
