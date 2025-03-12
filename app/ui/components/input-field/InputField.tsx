@@ -2,6 +2,8 @@
 
 import { VFlex } from "@/app/ui/components";
 import clsx from "clsx";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./input-field.module.scss";
 
 interface InputFieldProps {
@@ -32,6 +34,9 @@ export function InputField({
   helperText = "",
   autoComplete,
 }: InputFieldProps) {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPasswordField = type === "password";
+
   const rootClasses = clsx(styles.input, {
     [styles["input--full-width"]]: fullWidth,
     [styles["input--error"]]: error,
@@ -40,13 +45,14 @@ export function InputField({
 
   const containerClasses = clsx(styles.input__container, {
     [styles["input__container--labeled"]]: label,
+    [styles["input__container--password"]]: isPasswordField,
   });
 
   return (
     <VFlex className={rootClasses}>
       <div className={containerClasses}>
         <input
-          type={type}
+          type={isPasswordField && showPassword ? "text" : type}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
@@ -57,6 +63,16 @@ export function InputField({
         />
 
         {label && <label className={styles.input__label}>{label}</label>}
+
+        {isPasswordField && (
+          <button
+            type="button"
+            className={styles["input__toggle-password"]}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+          </button>
+        )}
       </div>
 
       {helperText && <p className={styles.input__helper}>{helperText}</p>}

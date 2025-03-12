@@ -43,6 +43,10 @@
     border-radius: variables.$border-radius-md;
     padding: functions.spacing() functions.spacing(3);
 
+    &--password {
+      padding-right: functions.spacing(9);
+    }
+
     &:focus-within {
       border-color: variables.$primary;
       outline: 1px solid variables.$primary;
@@ -103,5 +107,25 @@
     font-size: variables.$font-size-sm;
     color: variables.$error-color;
     margin-left: functions.spacing(2);
+  }
+
+  &__toggle-password {
+    position: absolute;
+    right: functions.spacing(2);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: variables.$text-muted-color;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: variables.$text-color;
+    }
   }
 }
