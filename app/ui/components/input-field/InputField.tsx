@@ -2,37 +2,27 @@
 
 import { VFlex } from "@/app/ui/components";
 import clsx from "clsx";
-import { useState } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./input-field.module.scss";
 
-interface InputFieldProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+type InputFieldProps = {
   label?: string;
-  type?: string;
-  placeholder?: string;
   fullWidth?: boolean;
-  required?: boolean;
-  disabled?: boolean;
   error?: boolean;
   helperText?: string;
-  autoComplete?: string;
-}
+} & ComponentPropsWithoutRef<"input">;
 
 export function InputField({
   label,
   type = "text",
-  value,
-  onChange,
   // Ensures :placeholder-shown works properly for label floating
   placeholder = " ",
   fullWidth = false,
-  required = false,
   disabled = false,
   error = false,
   helperText = "",
-  autoComplete,
+  ...restProps
 }: InputFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
   const isPasswordField = type === "password";
@@ -53,13 +43,10 @@ export function InputField({
       <div className={containerClasses}>
         <input
           type={isPasswordField && showPassword ? "text" : type}
-          value={value}
-          onChange={onChange}
           placeholder={placeholder}
-          required={required}
           disabled={disabled}
           className={styles.input__field}
-          autoComplete={autoComplete}
+          {...restProps}
         />
 
         {label && <label className={styles.input__label}>{label}</label>}
