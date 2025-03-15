@@ -57,16 +57,19 @@
   &--small {
     font-size: variables.$font-size-sm;
     padding: functions.spacing(2) functions.spacing(3);
+    height: functions.spacing(8);
   }
 
   &--medium {
     font-size: variables.$font-size-md;
     padding: functions.spacing(3) functions.spacing(4);
+    height: functions.spacing(10);
   }
 
   &--large {
     font-size: variables.$font-size-lg;
     padding: functions.spacing(4) functions.spacing(5);
+    height: functions.spacing(12);
   }
 
   // Modifiers
@@ -76,8 +79,7 @@
 
   &--disabled {
     cursor: not-allowed;
-    background-color: variables.$disabled-background;
-    color: variables.$disabled-color;
     box-shadow: none;
+    opacity: 0.7;
   }
 }
