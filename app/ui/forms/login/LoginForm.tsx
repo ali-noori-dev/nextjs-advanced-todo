@@ -1,45 +1,54 @@
 "use client";
 
+import { loginUser } from "@/app/lib/actions";
 import { Routes } from "@/app/lib/constants";
+import { LoginState } from "@/app/lib/types";
 import {
   AuthProviderButtons,
   Button,
   InputField,
   VFlex,
 } from "@/app/ui/components";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useActionState } from "react";
 import styles from "./login-form.module.scss";
 
-export function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const initialState: LoginState = {
+  errors: {},
+  values: { email: "", password: "" },
+};
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await signIn("credentials", { email, password, callbackUrl: "/" });
-  };
+export function LoginForm() {
+  const [state, formAction, isPending] = useActionState(
+    loginUser,
+    initialState
+  );
+
+  const { errors, values } = state || initialState;
 
   return (
     <VFlex className={styles["login-form__wrapper"]}>
-      <form onSubmit={handleSubmit} className={styles["login-form"]}>
+      <form action={formAction} className={styles["login-form"]} noValidate>
         <InputField
           label="Email"
           placeholder="Enter your email"
+          name="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           autoComplete="username"
+          error={!!errors.email}
+          helperText={errors.email}
+          defaultValue={values.email}
         />
 
         <InputField
           label="Password"
           placeholder="Enter your password"
+          name="password"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
+          error={!!errors.password}
+          helperText={errors.password}
+          defaultValue={values.password}
         />
 
         <Link
@@ -49,7 +58,7 @@ export function LoginForm() {
           Forgot password?
         </Link>
 
-        <Button type="submit" fullWidth>
+        <Button type="submit" fullWidth loading={isPending}>
           Log in
         </Button>
       </form>
