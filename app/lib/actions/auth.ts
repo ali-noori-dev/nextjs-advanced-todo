@@ -44,7 +44,7 @@ export async function loginUser(
     if (result?.error) {
       return {
         values,
-        errors: { email: "Invalid email or password", password: " " },
+        errors: { email: "Incorrect email or password", password: " " },
       };
     }
 
@@ -54,7 +54,7 @@ export async function loginUser(
     return {
       values,
       errors: {
-        email: "Something went wrong. Please try again.",
+        email: "Something went wrong. Please try again",
         password: " ",
       },
     };
