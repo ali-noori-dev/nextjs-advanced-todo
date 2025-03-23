@@ -5,10 +5,12 @@ import { signIn } from "next-auth/react";
 import { z } from "zod";
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email format" }),
-  password: z
+  email: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters long" }),
+    .min(1, { message: "Please enter your email address" })
+    // Use .pipe() to run the email format check only if the field is not empty
+    .pipe(z.string().email({ message: "Please enter a valid email address" })),
+  password: z.string().min(1, { message: "Please enter your password" }),
 });
 
 export async function loginUser(
