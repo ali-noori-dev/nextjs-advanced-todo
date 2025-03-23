@@ -1,5 +1,7 @@
 "use client";
 
+import { signupUser } from "@/app/lib/actions";
+import { SignupState } from "@/app/lib/types";
 import {
   AuthProviderButtons,
   Button,
@@ -7,50 +9,69 @@ import {
   VFlex,
 } from "@/app/ui/components";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useActionState, useEffect } from "react";
 import styles from "./signup-form.module.scss";
 
-export function SignUpForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+const initialState: SignupState = {
+  errors: {},
+  values: { name: "", email: "", password: "" },
+};
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await signIn("credentials", { email, password, callbackUrl: "/" });
-  };
+export function SignUpForm() {
+  const [state, formAction, isPending] = useActionState(
+    signupUser,
+    initialState
+  );
+
+  const { errors, values, success } = state || initialState;
+
+  // Auto sign in after successful signup
+  useEffect(() => {
+    if (success) {
+      signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        callbackUrl: "/",
+      });
+    }
+  }, [success]);
 
   return (
     <VFlex className={styles["signup-form__wrapper"]}>
-      <form onSubmit={handleSubmit} className={styles["signup-form"]}>
+      <form action={formAction} className={styles["signup-form"]} noValidate>
         <InputField
           label="Full Name"
           placeholder="Enter your full name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
           autoComplete="name"
+          error={!!errors.name}
+          helperText={errors.name}
+          defaultValue={values.name}
         />
 
         <InputField
           label="Email"
           placeholder="Enter your email"
+          name="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           autoComplete="username"
+          error={!!errors.email}
+          helperText={errors.email}
+          defaultValue={values.email}
         />
 
         <InputField
           label="Password"
           placeholder="Create a password"
+          name="password"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           autoComplete="new-password"
+          error={!!errors.password}
+          helperText={errors.password}
+          defaultValue={values.password}
         />
 
-        <Button type="submit" fullWidth>
+        <Button type="submit" fullWidth loading={isPending}>
           Create Account
         </Button>
       </form>

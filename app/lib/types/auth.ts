@@ -5,3 +5,13 @@ export type LoginState = {
     password: string;
   };
 };
+
+export type SignupState = {
+  errors: Record<string, string>;
+  success?: boolean;
+  values: {
+    name: string;
+    email: string;
+    password: string;
+  };
+};
