@@ -27,18 +27,20 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password required.");
+          throw new Error("Email and password required");
         }
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
-        if (
-          !user ||
-          !(await bcrypt.compare(credentials.password, user.password))
-        ) {
-          throw new Error("Invalid credentials.");
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password,
+          user?.password || ""
+        );
+
+        if (!user || !isPasswordValid) {
+          throw new Error("Email or password is incorrect. Please try again.");
         }
 
         return user;
