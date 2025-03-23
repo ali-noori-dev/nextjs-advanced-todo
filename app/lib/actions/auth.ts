@@ -12,18 +12,22 @@ const emailSchema = z
   // Use .pipe() to run the email format check only if the field is not empty
   .pipe(z.string().email({ message: "Please enter a valid email address" }));
 
+const passwordSchema = z
+  .string()
+  .min(1, { message: "Please enter your password" })
+  .pipe(
+    z.string().min(8, { message: "Password must be at least 8 characters" })
+  );
+
 const loginSchema = z.object({
   email: emailSchema,
-  password: z.string().min(1, { message: "Please enter your password" }),
+  password: passwordSchema,
 });
 
 const signupSchema = z.object({
   name: z.string().min(1, { message: "Please enter your full name" }),
   email: emailSchema,
-  password: z
-    .string()
-    .min(1, { message: "Please enter a password" })
-    .min(8, { message: "Password must be at least 8 characters" }),
+  password: passwordSchema,
 });
 
 function handleValidationError(error: z.ZodError) {
