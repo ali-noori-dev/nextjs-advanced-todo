@@ -6,10 +6,11 @@ import {
   AuthProviderButtons,
   Button,
   InputField,
+  PasswordStrengthTooltip,
   VFlex,
 } from "@/app/ui/components";
 import { signIn } from "next-auth/react";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import styles from "./signup-form.module.scss";
 
 const initialState: SignupState = {
@@ -18,6 +19,8 @@ const initialState: SignupState = {
 };
 
 export function SignUpForm() {
+  const [password, setPassword] = useState("");
+
   const [state, formAction, isPending] = useActionState(
     signupUser,
     initialState
@@ -60,16 +63,19 @@ export function SignUpForm() {
           defaultValue={values.email}
         />
 
-        <InputField
-          label="Password"
-          placeholder="Create a password"
-          name="password"
-          type="password"
-          autoComplete="new-password"
-          error={!!errors.password}
-          helperText={errors.password}
-          defaultValue={values.password}
-        />
+        <PasswordStrengthTooltip password={password}>
+          <InputField
+            label="Password"
+            placeholder="Create a password"
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            error={!!errors.password}
+            helperText={errors.password}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </PasswordStrengthTooltip>
 
         <Button type="submit" fullWidth loading={isPending}>
           Create Account
