@@ -16,6 +16,10 @@ $error-color: #d32f2f;
 $error-light: color.scale($error-color, $lightness: 20%);
 $error-dark: color.scale($error-color, $lightness: -20%);
 
+$success-color: #008000;
+$success-light: color.scale($success-color, $lightness: 20%);
+$success-dark: color.scale($success-color, $lightness: -20%);
+
 $text-color: #333;
 $text-muted-color: #878787;
 $border-color: #ccc;
