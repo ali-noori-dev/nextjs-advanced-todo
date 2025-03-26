@@ -12,24 +12,25 @@ type Props = {
 export function PasswordStrengthTooltip({ password, children }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
+  const hasSymbol = /[^A-Za-z0-9]/.test(password);
+  const hasMinLength = password.length >= 8;
+  const hasNumber = /[0-9]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasUpper = /[A-Z]/.test(password);
+  const hasMixed = hasLower && hasUpper;
+
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
 
   const getStrength = () => {
-    const hasUpper = /[A-Z]/.test(password);
-    const hasLower = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSymbol = /[^A-Za-z0-9]/.test(password);
-    const isLong = password.length >= 12;
-
-    const score = [hasUpper, hasLower, hasNumber, hasSymbol, isLong].filter(
+    const score = [hasSymbol, hasMinLength, hasNumber, hasMixed].filter(
       Boolean
     ).length;
 
-    if (password.length === 0) return { label: "", level: 0 };
-    if (score <= 2) return { label: "Weak Password", level: 1 };
-    if (score === 3) return { label: "Average Password", level: 2 };
-    if (score === 4) return { label: "Good Password", level: 3 };
+    if (!hasMinLength) return { label: "At least 8 characters", level: 0 };
+    if (score === 1) return { label: "Weak Password", level: 1 };
+    if (score === 2) return { label: "Average Password", level: 2 };
+    if (score === 3) return { label: "Good Password", level: 3 };
     return { label: "Strong Password", level: 4 };
   };
 
@@ -43,50 +44,11 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
     >
       {children}
 
-      {isFocused && (
+      {isFocused && password.length > 0 && (
         <div className={styles["password-tooltip__popup"]}>
           <strong className={styles["password-tooltip__popup-title"]}>
             {label}
           </strong>
-
-          <ul className={styles["password-tooltip__popup-list"]}>
-            <li
-              className={`${styles["password-tooltip__popup-list-item"]} ${
-                password.length >= 6
-                  ? styles["password-tooltip__popup-list-item--passed"]
-                  : ""
-              }`}
-            >
-              At least 6 characters
-            </li>
-            <li
-              className={`${styles["password-tooltip__popup-list-item"]} ${
-                /[A-Z]/.test(password) && /[a-z]/.test(password)
-                  ? styles["password-tooltip__popup-list-item--passed"]
-                  : ""
-              }`}
-            >
-              Upper & lower case letters
-            </li>
-            <li
-              className={`${styles["password-tooltip__popup-list-item"]} ${
-                /[^A-Za-z0-9]/.test(password)
-                  ? styles["password-tooltip__popup-list-item--passed"]
-                  : ""
-              }`}
-            >
-              A symbol (#$&)
-            </li>
-            <li
-              className={`${styles["password-tooltip__popup-list-item"]} ${
-                password.length >= 12
-                  ? styles["password-tooltip__popup-list-item--passed"]
-                  : ""
-              }`}
-            >
-              A longer password
-            </li>
-          </ul>
 
           <div className={styles["password-tooltip__popup-bar"]}>
             {[1, 2, 3, 4].map((i) => (
@@ -100,6 +62,40 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
               />
             ))}
           </div>
+
+          <span>It's better to have:</span>
+
+          <ul className={styles["password-tooltip__popup-list"]}>
+            <li
+              className={`${styles["password-tooltip__popup-list-item"]} ${
+                hasMixed
+                  ? styles["password-tooltip__popup-list-item--passed"]
+                  : ""
+              }`}
+            >
+              Upper & lower case letters
+            </li>
+
+            <li
+              className={`${styles["password-tooltip__popup-list-item"]} ${
+                hasSymbol
+                  ? styles["password-tooltip__popup-list-item--passed"]
+                  : ""
+              }`}
+            >
+              A symbol (#$&)
+            </li>
+
+            <li
+              className={`${styles["password-tooltip__popup-list-item"]} ${
+                hasNumber
+                  ? styles["password-tooltip__popup-list-item--passed"]
+                  : ""
+              }`}
+            >
+              A number
+            </li>
+          </ul>
         </div>
       )}
     </Flex>

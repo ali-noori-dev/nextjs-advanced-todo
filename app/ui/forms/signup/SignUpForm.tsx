@@ -69,11 +69,12 @@ export function SignUpForm() {
             placeholder="Create a password"
             name="password"
             type="password"
-            autoComplete="new-password"
+            autoComplete="password"
             error={!!errors.password}
             helperText={errors.password}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            fullWidth
           />
         </PasswordStrengthTooltip>
 
