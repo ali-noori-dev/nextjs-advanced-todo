@@ -56,7 +56,7 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
                 key={i}
                 className={`${styles["password-tooltip__popup-bar-dot"]} ${
                   i <= level
-                    ? styles["password-tooltip__popup-bar-dot--filled"]
+                    ? styles[`password-tooltip__popup-bar-dot--filled-${level}`]
                     : ""
                 }`}
               />
