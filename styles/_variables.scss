@@ -2,29 +2,65 @@
 @use "functions";
 
 // Colors
-$primary: #4070ed;
-$primary-light: color.scale($primary, $lightness: 30%);
-$primary-lighter: color.scale($primary, $lightness: 60%);
-$primary-lightest: color.scale($primary, $lightness: 95%);
-$primary-dark: color.scale($primary, $lightness: -20%);
+$color-primary: #4070ed;
+$color-primary-100: color.scale($color-primary, $lightness: 90%);
+$color-primary-200: color.scale($color-primary, $lightness: 60%);
+$color-primary-300: color.scale($color-primary, $lightness: 35%);
+$color-primary-400: color.scale($color-primary, $lightness: 15%);
+$color-primary-500: $color-primary;
+$color-primary-600: color.scale($color-primary, $lightness: -15%);
+$color-primary-700: color.scale($color-primary, $lightness: -30%);
+$color-primary-800: color.scale($color-primary, $lightness: -45%);
+$color-primary-900: color.scale($color-primary, $lightness: -60%);
 
-$secondary: #636363;
-$secondary-light: color.scale($secondary, $lightness: 20%);
-$secondary-dark: color.scale($secondary, $lightness: -20%);
+$color-secondary: #636363;
+$color-secondary-100: color.scale($color-secondary, $lightness: 90%);
+$color-secondary-200: color.scale($color-secondary, $lightness: 60%);
+$color-secondary-300: color.scale($color-secondary, $lightness: 35%);
+$color-secondary-400: color.scale($color-secondary, $lightness: 15%);
+$color-secondary-500: $color-secondary;
+$color-secondary-600: color.scale($color-secondary, $lightness: -15%);
+$color-secondary-700: color.scale($color-secondary, $lightness: -30%);
+$color-secondary-800: color.scale($color-secondary, $lightness: -45%);
+$color-secondary-900: color.scale($color-secondary, $lightness: -60%);
 
-$error-color: #d32f2f;
-$error-light: color.scale($error-color, $lightness: 20%);
-$error-dark: color.scale($error-color, $lightness: -20%);
+$color-error: #f34e4f;
+$color-error-100: color.scale($color-error, $lightness: 90%);
+$color-error-200: color.scale($color-error, $lightness: 60%);
+$color-error-300: color.scale($color-error, $lightness: 35%);
+$color-error-400: color.scale($color-error, $lightness: 15%);
+$color-error-500: $color-error;
+$color-error-600: color.scale($color-error, $lightness: -15%);
+$color-error-700: color.scale($color-error, $lightness: -30%);
+$color-error-800: color.scale($color-error, $lightness: -45%);
+$color-error-900: color.scale($color-error, $lightness: -60%);
 
-$success-color: #008000;
-$success-light: color.scale($success-color, $lightness: 20%);
-$success-dark: color.scale($success-color, $lightness: -20%);
+$color-success: #00a87e;
+$color-success-100: color.scale($color-success, $lightness: 90%);
+$color-success-200: color.scale($color-success, $lightness: 60%);
+$color-success-300: color.scale($color-success, $lightness: 35%);
+$color-success-400: color.scale($color-success, $lightness: 15%);
+$color-success-500: $color-success;
+$color-success-600: color.scale($color-success, $lightness: -15%);
+$color-success-700: color.scale($color-success, $lightness: -30%);
+$color-success-800: color.scale($color-success, $lightness: -45%);
+$color-success-900: color.scale($color-success, $lightness: -60%);
 
-$text-color: #333;
-$text-muted-color: #878787;
-$border-color: #ccc;
-$lightest-gray: #f5f5f5;
-$background-light: #f7f9fc;
+$color-gray: #808080;
+$color-gray-100: color.scale($color-gray, $lightness: 95%);
+$color-gray-200: color.scale($color-gray, $lightness: 60%);
+$color-gray-300: color.scale($color-gray, $lightness: 35%);
+$color-gray-400: color.scale($color-gray, $lightness: 15%);
+$color-gray-500: $color-gray;
+$color-gray-600: color.scale($color-gray, $lightness: -15%);
+$color-gray-700: color.scale($color-gray, $lightness: -30%);
+$color-gray-800: color.scale($color-gray, $lightness: -45%);
+$color-gray-900: color.scale($color-gray, $lightness: -60%);
+
+$color-text: $color-gray-800;
+$color-text-muted: $color-gray;
+$color-border: $color-gray-200;
+$color-background-light: #f7f9fc;
 
 // Font Sizes
 $font-size-xs: 0.75rem;
@@ -37,9 +73,9 @@ $font-size-3xl: 3rem;
 $font-size-4xl: 4rem;
 
 // Border Radius
-$border-radius-sm: functions.spacing();
-$border-radius-md: functions.spacing(2);
-$border-radius-lg: functions.spacing(3);
-$border-radius-xl: functions.spacing(4);
-$border-radius-2xl: functions.spacing(5);
-$border-radius-full: functions.spacing(10);
+$radius-sm: functions.spacing();
+$radius-md: functions.spacing(2);
+$radius-lg: functions.spacing(3);
+$radius-xl: functions.spacing(4);
+$radius-2xl: functions.spacing(5);
+$radius-full: functions.spacing(10);

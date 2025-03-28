@@ -12,11 +12,11 @@
 
   &--error {
     .input__container {
-      border-color: variables.$error-color;
+      border-color: variables.$color-error;
     }
 
     .input__label {
-      color: variables.$error-color;
+      color: variables.$color-error;
     }
   }
 
@@ -33,14 +33,14 @@
 
   &:hover:not(.input--disabled):not(:focus-within) {
     .input__container {
-      border-color: color.scale(variables.$border-color, $lightness: -30%);
+      border-color: color.scale(variables.$color-border, $lightness: -30%);
     }
   }
 
   &__container {
     position: relative;
-    border: 1px solid variables.$border-color;
-    border-radius: variables.$border-radius-md;
+    border: 1px solid variables.$color-border;
+    border-radius: variables.$radius-md;
     padding: functions.spacing() functions.spacing(3);
 
     &--password {
@@ -48,8 +48,8 @@
     }
 
     &:focus-within {
-      border-color: variables.$primary;
-      outline: 1px solid variables.$primary;
+      border-color: variables.$color-primary;
+      outline: 1px solid variables.$color-primary;
     }
 
     // If a label exists, hide the placeholder by default
@@ -69,7 +69,7 @@
     // Show the placeholder only when the label is floating
     &:focus::placeholder,
     &:not(:placeholder-shown) ~ .input__label + &::placeholder {
-      color: variables.$text-muted-color;
+      color: variables.$color-gray;
     }
 
     // Handle label floating
@@ -82,7 +82,7 @@
     }
 
     &:focus ~ .input__label {
-      color: variables.$primary;
+      color: variables.$color-primary;
     }
 
     // Ensure auto-filled input is properly styled
@@ -96,7 +96,7 @@
     left: functions.spacing(3);
     top: 50%;
     transform: translateY(-50%);
-    color: variables.$text-muted-color;
+    color: variables.$color-gray;
     background: white;
     padding: 0 functions.spacing();
     pointer-events: none;
@@ -105,7 +105,7 @@
 
   &__helper {
     font-size: variables.$font-size-sm;
-    color: variables.$error-color;
+    color: variables.$color-error;
     margin-left: functions.spacing(2);
   }
 
@@ -121,11 +121,11 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    color: variables.$text-muted-color;
+    color: variables.$color-gray-400;
     transition: color 0.2s ease-in-out;
 
     &:hover {
-      color: variables.$text-color;
+      color: variables.$color-gray-600;
     }
   }
 }

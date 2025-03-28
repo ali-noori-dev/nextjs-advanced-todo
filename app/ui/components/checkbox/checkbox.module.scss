@@ -16,8 +16,8 @@
   &__box {
     width: functions.spacing(5);
     height: functions.spacing(5);
-    border: 2px solid variables.$border-color;
-    border-radius: variables.$border-radius-sm;
+    border: 2px solid variables.$color-border;
+    border-radius: variables.$radius-sm;
     transition: all 0.2s ease-in-out;
     background: white;
 
@@ -33,8 +33,8 @@
   }
 
   &__input:checked + &__box {
-    background: variables.$primary;
-    border-color: variables.$primary;
+    background: variables.$color-primary;
+    border-color: variables.$color-primary;
 
     &::after {
       border-color: white;

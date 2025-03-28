@@ -8,7 +8,7 @@
   justify-content: center;
   font-weight: 600;
   width: fit-content;
-  border-radius: variables.$border-radius-md;
+  border-radius: variables.$radius-md;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -19,37 +19,37 @@
 
   // Variants
   &--primary {
-    background-color: variables.$primary;
+    background-color: variables.$color-primary;
 
     &:hover:not(:disabled) {
-      background-color: variables.$primary-dark;
+      background-color: variables.$color-primary-600;
     }
   }
 
   &--secondary {
-    background-color: variables.$secondary;
+    background-color: variables.$color-secondary;
 
     &:hover:not(:disabled) {
-      background-color: variables.$secondary-dark;
+      background-color: variables.$color-secondary-600;
     }
   }
 
   &--outline {
     background-color: white;
-    outline: 2px solid variables.$primary;
-    color: variables.$primary;
+    outline: 2px solid variables.$color-primary;
+    color: variables.$color-primary;
     box-shadow: none;
 
     &:hover:not(:disabled) {
-      background-color: variables.$primary-lightest;
+      background-color: variables.$color-primary-100;
     }
   }
 
   &--danger {
-    background-color: variables.$error-color;
+    background-color: variables.$color-error;
 
     &:hover:not(:disabled) {
-      background-color: variables.$error-dark;
+      background-color: variables.$color-error-600;
     }
   }
 

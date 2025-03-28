@@ -13,21 +13,21 @@
 
   &__button {
     background-color: white !important;
-    border: 1px solid variables.$border-color !important;
+    border: 1px solid variables.$color-border !important;
     box-shadow: none !important;
-    color: variables.$text-color !important;
+    color: variables.$color-text !important;
     font-size: variables.$font-size-xs !important;
     gap: functions.spacing(2) !important;
 
     &:hover {
-      background-color: variables.$lightest-gray !important;
+      background-color: variables.$color-gray-100 !important;
     }
   }
 
   &__or-container {
     &::before,
     &::after {
-      border-bottom: 1px solid variables.$border-color;
+      border-bottom: 1px solid variables.$color-border;
       content: "";
       display: block;
       width: 50%;
@@ -36,7 +36,7 @@
 
   &__or {
     font-size: variables.$font-size-sm;
-    color: variables.$text-muted-color;
+    color: variables.$color-text-muted;
     padding: 0 functions.spacing(2);
   }
 }
