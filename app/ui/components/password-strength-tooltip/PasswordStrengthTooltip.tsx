@@ -19,6 +19,24 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
   const hasUpper = /[A-Z]/.test(password);
   const hasMixed = hasLower && hasUpper;
 
+  const strengthCriteria = [
+    {
+      id: "mixed",
+      label: "Upper & lower case letters",
+      isPassed: hasMixed,
+    },
+    {
+      id: "symbol",
+      label: "A symbol (#$&)",
+      isPassed: hasSymbol,
+    },
+    {
+      id: "number",
+      label: "A number",
+      isPassed: hasNumber,
+    },
+  ];
+
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
 
@@ -66,35 +84,18 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
           <span>It's better to have:</span>
 
           <ul className={styles["password-tooltip__popup-list"]}>
-            <li
-              className={`${styles["password-tooltip__popup-list-item"]} ${
-                hasMixed
-                  ? styles["password-tooltip__popup-list-item--passed"]
-                  : ""
-              }`}
-            >
-              Upper & lower case letters
-            </li>
-
-            <li
-              className={`${styles["password-tooltip__popup-list-item"]} ${
-                hasSymbol
-                  ? styles["password-tooltip__popup-list-item--passed"]
-                  : ""
-              }`}
-            >
-              A symbol (#$&)
-            </li>
-
-            <li
-              className={`${styles["password-tooltip__popup-list-item"]} ${
-                hasNumber
-                  ? styles["password-tooltip__popup-list-item--passed"]
-                  : ""
-              }`}
-            >
-              A number
-            </li>
+            {strengthCriteria.map(({ id, label, isPassed }) => (
+              <li
+                key={id}
+                className={`${styles["password-tooltip__popup-list-item"]} ${
+                  isPassed
+                    ? styles["password-tooltip__popup-list-item--passed"]
+                    : ""
+                }`}
+              >
+                {label}
+              </li>
+            ))}
           </ul>
         </div>
       )}
