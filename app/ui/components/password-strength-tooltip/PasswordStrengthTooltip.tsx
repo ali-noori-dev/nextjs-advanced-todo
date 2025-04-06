@@ -2,6 +2,7 @@
 
 import { PASSWORD_MIN_LENGTH } from "@/app/lib/constants";
 import { Flex } from "@/app/ui/components";
+import clsx from "clsx";
 import { ReactNode, useState } from "react";
 import styles from "./password-strength-tooltip.module.scss";
 
@@ -88,43 +89,43 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
     >
       {children}
 
-      {shouldShowTooltip && (
-        <div className={styles["password-tooltip__popup"]}>
-          <strong className={styles["password-tooltip__popup-title"]}>
-            {label}
-          </strong>
+      <div
+        className={clsx(styles["password-tooltip__popup"], {
+          [styles["password-tooltip__popup--visible"]]: shouldShowTooltip,
+        })}
+      >
+        <strong className={styles["password-tooltip__popup-title"]}>
+          {label}
+        </strong>
 
-          <div className={styles["password-tooltip__popup-bar"]}>
-            {Array.from({ length: 4 }, (_, i) => i + 1).map((dotIndex) => (
-              <span
-                key={dotIndex}
-                className={`${styles["password-tooltip__popup-bar-dot"]} ${
-                  dotIndex <= level
-                    ? styles[`password-tooltip__popup-bar-dot--filled-${level}`]
-                    : ""
-                }`}
-              />
-            ))}
-          </div>
-
-          <span>It's better to have:</span>
-
-          <ul className={styles["password-tooltip__popup-list"]}>
-            {strengthCriteria.map(({ id, label, validator }) => (
-              <li
-                key={id}
-                className={`${styles["password-tooltip__popup-list-item"]} ${
-                  validator(password)
-                    ? styles["password-tooltip__popup-list-item--passed"]
-                    : ""
-                }`}
-              >
-                {label}
-              </li>
-            ))}
-          </ul>
+        <div className={styles["password-tooltip__popup-bar"]}>
+          {Array.from({ length: 4 }, (_, i) => i + 1).map((dotIndex) => (
+            <span
+              key={dotIndex}
+              className={clsx(styles["password-tooltip__popup-bar-dot"], {
+                [styles[`password-tooltip__popup-bar-dot--filled-${level}`]]:
+                  dotIndex <= level,
+              })}
+            />
+          ))}
         </div>
-      )}
+
+        <span>It's better to have:</span>
+
+        <ul className={styles["password-tooltip__popup-list"]}>
+          {strengthCriteria.map(({ id, label, validator }) => (
+            <li
+              key={id}
+              className={clsx(styles["password-tooltip__popup-list-item"], {
+                [styles["password-tooltip__popup-list-item--passed"]]:
+                  validator(password),
+              })}
+            >
+              {label}
+            </li>
+          ))}
+        </ul>
+      </div>
     </Flex>
   );
 }
