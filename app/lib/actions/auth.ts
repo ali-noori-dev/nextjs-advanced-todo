@@ -1,5 +1,6 @@
 "use server";
 
+import { PASSWORD_MIN_LENGTH } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { LoginState, SignupState } from "@/app/lib/types";
 import bcrypt from "bcryptjs";
@@ -16,7 +17,11 @@ const passwordSchema = z
   .string()
   .min(1, { message: "Please enter your password" })
   .pipe(
-    z.string().min(8, { message: "Password must be at least 8 characters" })
+    z
+      .string()
+      .min(PASSWORD_MIN_LENGTH, {
+        message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+      })
   );
 
 const loginSchema = z.object({

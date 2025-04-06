@@ -1,1 +1,1 @@
-export const APP_NAME = "TaskNest";
+export const APP_NAME = "TaskNest" as const;
