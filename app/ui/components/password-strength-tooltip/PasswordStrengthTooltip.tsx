@@ -98,7 +98,7 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
           {label}
         </strong>
 
-        <div className={styles["password-tooltip__popup-bar"]}>
+        <Flex className={styles["password-tooltip__popup-bar"]}>
           {Array.from({ length: 4 }, (_, i) => i + 1).map((dotIndex) => (
             <span
               key={dotIndex}
@@ -108,7 +108,7 @@ export function PasswordStrengthTooltip({ password, children }: Props) {
               })}
             />
           ))}
-        </div>
+        </Flex>
 
         <span>It's better to have:</span>
 
