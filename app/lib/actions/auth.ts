@@ -4,7 +4,6 @@ import { PASSWORD_MIN_LENGTH } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { LoginState, SignupState } from "@/app/lib/types";
 import bcrypt from "bcryptjs";
-import { signIn } from "next-auth/react";
 import { z } from "zod";
 
 const emailSchema = z
@@ -17,11 +16,9 @@ const passwordSchema = z
   .string()
   .min(1, { message: "Please enter your password" })
   .pipe(
-    z
-      .string()
-      .min(PASSWORD_MIN_LENGTH, {
-        message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
-      })
+    z.string().min(PASSWORD_MIN_LENGTH, {
+      message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+    })
   );
 
 const loginSchema = z.object({
@@ -43,6 +40,22 @@ function handleValidationError(error: z.ZodError) {
   return errors;
 }
 
+async function findUserByEmail(email: string) {
+  return prisma.user.findUnique({ where: { email } });
+}
+
+function handleServerError<T extends { values: any; errors: any }>(
+  values: T["values"]
+): T {
+  return {
+    values,
+    errors: {
+      email: "Something went wrong. Please try again",
+      password: " ",
+    },
+  } as T;
+}
+
 export async function loginUser(
   prevState: LoginState | undefined,
   formData: FormData
@@ -53,36 +66,29 @@ export async function loginUser(
   };
 
   try {
-    const validated = loginSchema.safeParse(values);
+    const validation = loginSchema.safeParse(values);
 
-    if (!validated.success) {
-      return { values, errors: handleValidationError(validated.error) };
+    if (!validation.success) {
+      return { values, errors: handleValidationError(validation.error) };
     }
 
-    // Authenticate user with NextAuth
-    const result = await signIn("credentials", {
-      email: validated.data.email,
-      password: validated.data.password,
-      callbackUrl: "/",
-    });
+    const user = await findUserByEmail(validation.data.email);
 
-    if (result?.error) {
+    const passwordIsCorrect =
+      user && (await bcrypt.compare(validation.data.password, user.password));
+
+    if (!passwordIsCorrect) {
       return {
         values,
-        errors: { email: result.error, password: " " },
+        errors: { email: "Incorrect email or password", password: " " },
       };
     }
 
-    // On success, return empty errors but still include the values
-    return { values, errors: {} };
+    // On success, return empty errors and success true
+    return { values, errors: {}, success: true };
   } catch (error) {
-    return {
-      values,
-      errors: {
-        email: "Something went wrong. Please try again",
-        password: " ",
-      },
-    };
+    console.error("Login error:", error);
+    return handleServerError<LoginState>(values);
   }
 }
 
@@ -103,9 +109,7 @@ export async function signupUser(
       return { values, errors: handleValidationError(validated.error) };
     }
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email: validated.data.email },
-    });
+    const existingUser = await findUserByEmail(validated.data.email);
 
     if (existingUser) {
       return {
@@ -116,7 +120,7 @@ export async function signupUser(
 
     const hashedPassword = await bcrypt.hash(validated.data.password, 10);
 
-    await prisma.user.create({
+    const createdUser = await prisma.user.create({
       data: {
         name: validated.data.name,
         email: validated.data.email,
@@ -124,15 +128,17 @@ export async function signupUser(
       },
     });
 
+    if (!createdUser) {
+      return {
+        values,
+        errors: { email: "Account could not be created. Please try again." },
+      };
+    }
+
     // On success, return empty errors and success true
     return { values, errors: {}, success: true };
   } catch (error) {
-    return {
-      values,
-      errors: {
-        email: "Something went wrong. Please try again",
-        password: " ",
-      },
-    };
+    console.error("Signup error:", error);
+    return handleServerError<SignupState>(values);
   }
 }
