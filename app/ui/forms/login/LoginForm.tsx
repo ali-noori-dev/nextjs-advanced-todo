@@ -9,8 +9,9 @@ import {
   InputField,
   VFlex,
 } from "@/app/ui/components";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import styles from "./login-form.module.scss";
 
 const initialState: LoginState = {
@@ -24,7 +25,18 @@ export function LoginForm() {
     initialState
   );
 
-  const { errors, values } = state || initialState;
+  const { errors, values, success } = state || initialState;
+
+  // Auto sign in after successful login
+  useEffect(() => {
+    if (success) {
+      signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        callbackUrl: "/",
+      });
+    }
+  }, [success]);
 
   return (
     <VFlex className={styles["login-form__wrapper"]}>
