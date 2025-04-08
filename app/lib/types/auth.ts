@@ -1,17 +1,16 @@
-export type LoginState = {
+type BaseAuthState = {
   errors: Record<string, string>;
+  success?: boolean;
   values: {
     email: string;
     password: string;
   };
 };
 
-export type SignupState = {
-  errors: Record<string, string>;
-  success?: boolean;
-  values: {
+export type LoginState = BaseAuthState;
+
+export type SignupState = BaseAuthState & {
+  values: BaseAuthState["values"] & {
     name: string;
-    email: string;
-    password: string;
   };
 };
