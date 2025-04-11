@@ -75,7 +75,8 @@ export async function loginUser(
     const user = await findUserByEmail(validation.data.email);
 
     const passwordIsCorrect =
-      user && (await bcrypt.compare(validation.data.password, user.password));
+      user?.password &&
+      (await bcrypt.compare(validation.data.password, user.password));
 
     if (!passwordIsCorrect) {
       return {
