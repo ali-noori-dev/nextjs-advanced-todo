@@ -14,7 +14,7 @@ export function AuthProviderButtons() {
       <Flex className={`${styles["auth-providers__container"]}`}>
         <Button
           className={styles["auth-providers__button"]}
-          onClick={() => signIn("google")}
+          onClick={() => signIn("google", { callbackUrl: "/" })}
           fullWidth
         >
           <FcGoogle size={18} />
@@ -23,7 +23,7 @@ export function AuthProviderButtons() {
 
         <Button
           className={styles["auth-providers__button"]}
-          onClick={() => signIn("github")}
+          onClick={() => signIn("github", { callbackUrl: "/" })}
           fullWidth
         >
           <FaGithub size={18} />
