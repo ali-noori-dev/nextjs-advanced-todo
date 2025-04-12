@@ -74,6 +74,28 @@ export async function loginUser(
 
     const user = await findUserByEmail(validation.data.email);
 
+    if (user && !user.password) {
+      const account = await prisma.account.findFirst({
+        where: { userId: user.id },
+      });
+
+      const providerLabels: Record<string, string> = {
+        google: "Google",
+        github: "GitHub",
+      };
+
+      const providerLabel =
+        providerLabels[account?.provider ?? ""] || "an external provider";
+
+      return {
+        values,
+        errors: {
+          email: `This account was created using ${providerLabel}. Please log in with ${providerLabel} instead.`,
+          password: " ",
+        },
+      };
+    }
+
     const passwordIsCorrect =
       user?.password &&
       (await bcrypt.compare(validation.data.password, user.password));
