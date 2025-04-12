@@ -107,6 +107,7 @@
     font-size: variables.$font-size-sm;
     color: variables.$color-error;
     margin-left: functions.spacing(2);
+    line-height: 1.3;
   }
 
   &__toggle-password {
