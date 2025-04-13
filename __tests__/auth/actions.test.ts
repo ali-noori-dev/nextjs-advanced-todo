@@ -1,4 +1,5 @@
 import { loginUser, signupUser } from "@/app/lib/actions";
+import { AUTH_MESSAGES } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { User } from "@prisma/client";
 import bcrypt from "bcryptjs";
@@ -42,8 +43,10 @@ describe("auth actions", () => {
         createFormData({ email: "", password: "" })
       );
 
-      expect(res.errors.email).toBe("Please enter your email address");
-      expect(res.errors.password).toBe("Please enter your password");
+      expect(res.errors.email).toBe(AUTH_MESSAGES.VALIDATION.EMAIL_REQUIRED);
+      expect(res.errors.password).toBe(
+        AUTH_MESSAGES.VALIDATION.PASSWORD_REQUIRED
+      );
     });
 
     it("returns error if user does not exist", async () => {
@@ -57,7 +60,7 @@ describe("auth actions", () => {
         })
       );
 
-      expect(res.errors.email).toBe("Incorrect email or password");
+      expect(res.errors.email).toBe(AUTH_MESSAGES.ERRORS.INCORRECT_CREDENTIALS);
     });
 
     it("returns error if user has no password (OAuth account)", async () => {
@@ -101,9 +104,9 @@ describe("auth actions", () => {
       );
 
       expect(res.errors).toEqual({
-        name: "Please enter your full name",
-        email: "Please enter your email address",
-        password: "Please enter your password",
+        name: AUTH_MESSAGES.VALIDATION.NAME_REQUIRED,
+        email: AUTH_MESSAGES.VALIDATION.EMAIL_REQUIRED,
+        password: AUTH_MESSAGES.VALIDATION.PASSWORD_REQUIRED,
       });
     });
 
@@ -121,7 +124,7 @@ describe("auth actions", () => {
         })
       );
 
-      expect(res.errors.email).toBe("This email is already registered");
+      expect(res.errors.email).toBe(AUTH_MESSAGES.ERRORS.EMAIL_EXISTS);
     });
 
     it("returns success on valid signup", async () => {

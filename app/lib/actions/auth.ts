@@ -1,6 +1,6 @@
 "use server";
 
-import { PASSWORD_MIN_LENGTH } from "@/app/lib/constants";
+import { AUTH_MESSAGES, PASSWORD_MIN_LENGTH } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { LoginState, SignupState } from "@/app/lib/types";
 import bcrypt from "bcryptjs";
@@ -8,16 +8,16 @@ import { z } from "zod";
 
 const emailSchema = z
   .string()
-  .min(1, { message: "Please enter your email address" })
+  .min(1, { message: AUTH_MESSAGES.VALIDATION.EMAIL_REQUIRED })
   // Use .pipe() to run the email format check only if the field is not empty
-  .pipe(z.string().email({ message: "Please enter a valid email address" }));
+  .pipe(z.string().email({ message: AUTH_MESSAGES.VALIDATION.EMAIL_INVALID }));
 
 const passwordSchema = z
   .string()
-  .min(1, { message: "Please enter your password" })
+  .min(1, { message: AUTH_MESSAGES.VALIDATION.PASSWORD_REQUIRED })
   .pipe(
     z.string().min(PASSWORD_MIN_LENGTH, {
-      message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+      message: AUTH_MESSAGES.VALIDATION.PASSWORD_LENGTH,
     })
   );
 
@@ -27,7 +27,7 @@ const loginSchema = z.object({
 });
 
 const signupSchema = z.object({
-  name: z.string().min(1, { message: "Please enter your full name" }),
+  name: z.string().min(1, { message: AUTH_MESSAGES.VALIDATION.NAME_REQUIRED }),
   email: emailSchema,
   password: passwordSchema,
 });
@@ -50,7 +50,7 @@ function handleServerError<T extends { values: any; errors: any }>(
   return {
     values,
     errors: {
-      email: "Something went wrong. Please try again",
+      email: AUTH_MESSAGES.ERRORS.SERVER_ERROR,
       password: " ",
     },
   } as T;
@@ -90,7 +90,7 @@ export async function loginUser(
       return {
         values,
         errors: {
-          email: `This account was created using ${providerLabel}. Please log in with ${providerLabel} instead.`,
+          email: AUTH_MESSAGES.ERRORS.OAUTH_LOGIN(providerLabel),
           password: " ",
         },
       };
@@ -103,7 +103,10 @@ export async function loginUser(
     if (!passwordIsCorrect) {
       return {
         values,
-        errors: { email: "Incorrect email or password", password: " " },
+        errors: {
+          email: AUTH_MESSAGES.ERRORS.INCORRECT_CREDENTIALS,
+          password: " ",
+        },
       };
     }
 
@@ -137,7 +140,7 @@ export async function signupUser(
     if (existingUser) {
       return {
         values,
-        errors: { email: "This email is already registered" },
+        errors: { email: AUTH_MESSAGES.ERRORS.EMAIL_EXISTS, password: " " },
       };
     }
 
@@ -154,7 +157,10 @@ export async function signupUser(
     if (!createdUser) {
       return {
         values,
-        errors: { email: "Account could not be created. Please try again." },
+        errors: {
+          email: AUTH_MESSAGES.ERRORS.ACCOUNT_CREATE_FAILED,
+          password: " ",
+        },
       };
     }
 
