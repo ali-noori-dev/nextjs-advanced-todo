@@ -1,6 +1,6 @@
+import { AuthLayout } from "@/app/auth/components";
 import { APP_NAME, Routes } from "@/app/lib/constants";
 import { LoginForm } from "@/app/ui/forms";
-import { AuthLayout } from "../components/AuthLayout";
 
 export default function LoginPage() {
   return (
