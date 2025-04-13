@@ -24,13 +24,6 @@ export function AuthLayout({
   footerLinkHref,
   form,
 }: AuthLayoutProps) {
-  return (
-    <main className={styles["auth-layout"]}>
-      <FormSection />
-      <WelcomeSection />
-    </main>
-  );
-
   function WelcomeSection() {
     return (
       <div className={styles["auth-layout__welcome-section"]}>
@@ -71,4 +64,11 @@ export function AuthLayout({
       </VCenter>
     );
   }
+
+  return (
+    <main className={styles["auth-layout"]}>
+      <FormSection />
+      <WelcomeSection />
+    </main>
+  );
 }
