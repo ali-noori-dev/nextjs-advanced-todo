@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { Routes } from "@/app/lib/constants";
 import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
