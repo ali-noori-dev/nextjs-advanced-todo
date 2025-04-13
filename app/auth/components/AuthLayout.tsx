@@ -1,6 +1,6 @@
 import { AppLogo, VCenter } from "@/app/ui/components";
 import Link from "next/link";
-import LottieAnimation from "./LottieAnimation";
+import AuthAnimation from "./AuthAnimation";
 import styles from "./auth-layout.module.scss";
 
 interface AuthLayoutProps {
@@ -40,7 +40,7 @@ export function AuthLayout({
         </VCenter>
 
         <div className={styles["auth-layout__animation"]}>
-          <LottieAnimation />
+          <AuthAnimation />
         </div>
       </div>
     );

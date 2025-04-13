@@ -1,13 +1,13 @@
 "use client";
 
-import animationData from "@/public/animations/login-animation.json";
+import animationData from "@/public/animations/auth-animation.json";
 import dynamic from "next/dynamic";
 
 const Lottie = dynamic(() => import("lottie-react"), {
   ssr: false,
 });
 
-export default function LottieAnimation() {
+export default function AuthAnimation() {
   return (
     <Lottie
       animationData={animationData}
