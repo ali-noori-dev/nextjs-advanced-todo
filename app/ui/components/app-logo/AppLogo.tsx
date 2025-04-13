@@ -1,8 +1,8 @@
 import { APP_NAME } from "@/app/lib/constants";
 import { Center } from "@/app/ui/components";
 import { satisfy } from "@/app/ui/fonts";
-import logo from "@/public/tasknest-logo.png";
 import Image from "next/image";
+import logo from "../../../../public/tasknest-logo.png";
 import styles from "./app-logo.module.scss";
 
 export function AppLogo() {

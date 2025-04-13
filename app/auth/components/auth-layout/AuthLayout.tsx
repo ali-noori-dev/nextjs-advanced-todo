@@ -3,7 +3,7 @@ import Link from "next/link";
 import AuthAnimation from "../AuthAnimation";
 import styles from "./auth-layout.module.scss";
 
-interface AuthLayoutProps {
+export interface AuthLayoutProps {
   welcomeTitle: string;
   welcomeDescription: string;
   formTitle: string;
