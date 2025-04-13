@@ -1,5 +1,5 @@
+import { AuthLayout, AuthLayoutProps } from "@/app/auth/components";
 import { render, screen } from "@testing-library/react";
-import { AuthLayout, AuthLayoutProps } from "./AuthLayout";
 
 jest.mock("@/app/auth/components/AuthAnimation", () => ({
   __esModule: true,
