@@ -49,6 +49,20 @@ describe("auth actions", () => {
       );
     });
 
+    it("returns error for password shorter than minimum length", async () => {
+      const res = await loginUser(
+        undefined,
+        createFormData({
+          email: "test@example.com",
+          password: "short",
+        })
+      );
+
+      expect(res.errors.password).toBe(
+        AUTH_MESSAGES.VALIDATION.PASSWORD_LENGTH
+      );
+    });
+
     it("returns error if user does not exist", async () => {
       (mockedPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
 
@@ -108,6 +122,21 @@ describe("auth actions", () => {
         email: AUTH_MESSAGES.VALIDATION.EMAIL_REQUIRED,
         password: AUTH_MESSAGES.VALIDATION.PASSWORD_REQUIRED,
       });
+    });
+
+    it("returns error for password shorter than minimum length", async () => {
+      const res = await signupUser(
+        undefined,
+        createFormData({
+          name: "John Doe",
+          email: "test@example.com",
+          password: "short",
+        })
+      );
+
+      expect(res.errors.password).toBe(
+        AUTH_MESSAGES.VALIDATION.PASSWORD_LENGTH
+      );
     });
 
     it("returns error if user already exists", async () => {
