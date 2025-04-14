@@ -17,7 +17,6 @@ export function DotSpinner({
   color = "white",
   className,
 }: DotSpinnerProps) {
-  // Create an array to render multiple dots
   const dots = Array.from({ length: 3 }).map((_, index) => (
     <div
       key={index}
