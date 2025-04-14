@@ -7,6 +7,14 @@ jest.mock("@/app/ui/components", () => ({
 }));
 
 describe("Button component", () => {
+  it("renders with default props", () => {
+    render(<Button />);
+    const button = screen.getByRole("button");
+    expect(button.className).toMatch(/button--primary/);
+    expect(button.className).toMatch(/button--medium/);
+    expect(button).toHaveAttribute("type", "button");
+  });
+
   it("renders children", () => {
     render(<Button>Click Me</Button>);
     expect(screen.getByRole("button")).toHaveTextContent("Click Me");
@@ -30,23 +38,6 @@ describe("Button component", () => {
     render(<Button fullWidth />);
     const button = screen.getByRole("button");
     expect(button.className).toMatch(/button--full-width/);
-  });
-
-  it("uses 'primary' as default variant", () => {
-    render(<Button>Test</Button>);
-    const button = screen.getByRole("button");
-    expect(button.className).toMatch(/button--primary/);
-  });
-
-  it("uses 'medium' as default size", () => {
-    render(<Button>Test</Button>);
-    const button = screen.getByRole("button");
-    expect(button.className).toMatch(/button--medium/);
-  });
-
-  it("uses 'button' as default type", () => {
-    render(<Button />);
-    expect(screen.getByRole("button")).toHaveAttribute("type", "button");
   });
 
   it("allows overriding type prop", () => {
