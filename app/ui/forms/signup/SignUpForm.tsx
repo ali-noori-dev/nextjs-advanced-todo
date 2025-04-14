@@ -78,7 +78,12 @@ export function SignUpForm() {
           />
         </PasswordStrengthTooltip>
 
-        <Button type="submit" fullWidth loading={isPending}>
+        <Button
+          type="submit"
+          aria-label="Create Account"
+          fullWidth
+          loading={isPending}
+        >
           Create Account
         </Button>
       </form>
