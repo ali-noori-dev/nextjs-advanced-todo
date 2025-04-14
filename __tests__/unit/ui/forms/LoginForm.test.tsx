@@ -25,6 +25,23 @@ describe("LoginForm", () => {
     jest.clearAllMocks();
   });
 
+  it("uses initialState when state is undefined", () => {
+    (useActionState as jest.Mock).mockReturnValue([
+      undefined,
+      mockFormAction,
+      false,
+    ]);
+
+    render(<LoginForm />);
+
+    const emailInput = screen.getByLabelText("Email");
+    const passwordInput = screen.getByLabelText("Password");
+
+    expect(emailInput).toHaveValue("");
+    expect(passwordInput).toHaveValue("");
+    expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
+  });
+
   it("displays validation errors when present", () => {
     const stateWithErrors = {
       ...baseState,
