@@ -77,19 +77,84 @@ describe("auth actions", () => {
       expect(res.errors.email).toBe(AUTH_MESSAGES.ERRORS.INCORRECT_CREDENTIALS);
     });
 
-    it("returns error if user has no password (OAuth account)", async () => {
-      (mockedPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce({
-        ...TEST_USER,
-        password: null,
+    it("handles OAuth users with different providers", async () => {
+      const testCases = [
+        {
+          provider: "google",
+          expectedLabel: "Google",
+        },
+        {
+          provider: "github",
+          expectedLabel: "GitHub",
+        },
+        {
+          provider: "unknown",
+          expectedLabel: "an external provider",
+        },
+        {
+          provider: null,
+          expectedLabel: "an external provider",
+        },
+      ];
+
+      for (const { provider, expectedLabel } of testCases) {
+        // Mock user without password (OAuth user)
+        (mockedPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce({
+          ...TEST_USER,
+          password: null,
+        });
+
+        // Mock account with different providers
+        (mockedPrisma.account.findFirst as jest.Mock).mockResolvedValueOnce(
+          provider
+            ? {
+                provider,
+                type: "oauth",
+                userId: TEST_USER.id,
+              }
+            : null
+        );
+
+        const testValues = {
+          email: "test@example.com",
+          password: "password123",
+        };
+
+        const res = await loginUser(undefined, createFormData(testValues));
+
+        expect(res).toEqual({
+          values: testValues,
+          errors: {
+            email: AUTH_MESSAGES.ERRORS.OAUTH_LOGIN(expectedLabel),
+            password: " ",
+          },
+        });
+
+        // Clear mocks for next iteration
+        (mockedPrisma.user.findUnique as jest.Mock).mockClear();
+        (mockedPrisma.account.findFirst as jest.Mock).mockClear();
+      }
+    });
+
+    it("handles server error gracefully", async () => {
+      (mockedPrisma.user.findUnique as jest.Mock).mockRejectedValueOnce(
+        new Error("Database error")
+      );
+
+      const testValues = {
+        email: "test@example.com",
+        password: "password123",
+      };
+
+      const res = await loginUser(undefined, createFormData(testValues));
+
+      expect(res).toEqual({
+        values: testValues,
+        errors: {
+          email: AUTH_MESSAGES.ERRORS.SERVER_ERROR,
+          password: " ",
+        },
       });
-
-      (mockedPrisma.account.findFirst as jest.Mock).mockResolvedValueOnce({
-        provider: "google",
-      });
-
-      const res = await loginUser(undefined, createFormData(TEST_USER as any));
-
-      expect(res.errors.email).toMatch(/created using Google/);
     });
 
     it("returns success on valid credentials", async () => {
@@ -154,6 +219,54 @@ describe("auth actions", () => {
       );
 
       expect(res.errors.email).toBe(AUTH_MESSAGES.ERRORS.EMAIL_EXISTS);
+    });
+
+    it("handles account creation failure", async () => {
+      // Mock that user doesn't exist yet
+      (mockedPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
+      // Mock create to return null (failure case)
+      (mockedPrisma.user.create as jest.Mock).mockResolvedValueOnce(null);
+      // Mock password hashing
+      (mockedBcrypt.hash as jest.Mock).mockResolvedValueOnce("hashedPassword");
+
+      const testValues = {
+        name: "Test User",
+        email: "test@example.com",
+        password: "password123",
+      };
+
+      const res = await signupUser(undefined, createFormData(testValues));
+
+      expect(res).toEqual({
+        values: testValues,
+        errors: {
+          email: AUTH_MESSAGES.ERRORS.ACCOUNT_CREATE_FAILED,
+          password: " ",
+        },
+      });
+      expect(mockedPrisma.user.create).toHaveBeenCalled();
+    });
+
+    it("handles server error gracefully", async () => {
+      (mockedPrisma.user.findUnique as jest.Mock).mockRejectedValueOnce(
+        new Error("Database error")
+      );
+
+      const testValues = {
+        name: "John Doe",
+        email: "test@example.com",
+        password: "password123",
+      };
+
+      const res = await signupUser(undefined, createFormData(testValues));
+
+      expect(res).toEqual({
+        values: testValues,
+        errors: {
+          email: AUTH_MESSAGES.ERRORS.SERVER_ERROR,
+          password: " ",
+        },
+      });
     });
 
     it("returns success on valid signup", async () => {
