@@ -1,6 +1,7 @@
 import { AUTH_MESSAGES } from "@/app/lib/constants";
 import { SignUpForm } from "@/app/ui/forms/signup/SignUpForm";
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { signIn } from "next-auth/react";
 import { useActionState } from "react";
 
@@ -27,6 +28,24 @@ describe("SignUpForm", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it("uses initialState when state is undefined", () => {
+    (useActionState as jest.Mock).mockReturnValue([
+      undefined,
+      mockFormAction,
+      false,
+    ]);
+
+    render(<SignUpForm />);
+
+    // Verify form is rendered with initial empty values
+    expect(screen.getByLabelText("Full Name")).toHaveValue("");
+    expect(screen.getByLabelText("Email")).toHaveValue("");
+    expect(screen.getByLabelText("Password")).toHaveValue("");
+
+    // Verify no error messages are shown
+    expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
   });
 
   it("displays field-specific validation errors", () => {
@@ -58,6 +77,22 @@ describe("SignUpForm", () => {
     expect(
       screen.getByText(AUTH_MESSAGES.VALIDATION.PASSWORD_LENGTH)
     ).toBeInTheDocument();
+  });
+
+  it("updates password field value on change", async () => {
+    const user = userEvent.setup();
+    (useActionState as jest.Mock).mockReturnValue([
+      baseState,
+      mockFormAction,
+      false,
+    ]);
+
+    render(<SignUpForm />);
+
+    const passwordInput = screen.getByLabelText("Password");
+    await user.type(passwordInput, "newpassword123");
+
+    expect(passwordInput).toHaveValue("newpassword123");
   });
 
   it("disables submit button during loading", () => {
