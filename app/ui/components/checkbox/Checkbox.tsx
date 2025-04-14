@@ -13,7 +13,7 @@ interface CheckboxProps {
 
 export function Checkbox({
   label,
-  checked = false,
+  checked,
   onChange,
   disabled = false,
 }: CheckboxProps) {

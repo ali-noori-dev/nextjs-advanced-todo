@@ -36,6 +36,10 @@ const createFormData = (data: Record<string, string>): FormData => {
 };
 
 describe("auth actions", () => {
+  beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
   describe("loginUser", () => {
     it("returns validation error for empty fields", async () => {
       const res = await loginUser(
