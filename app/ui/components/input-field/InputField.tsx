@@ -2,7 +2,7 @@
 
 import { VFlex } from "@/app/ui/components";
 import clsx from "clsx";
-import { ComponentPropsWithoutRef, useState } from "react";
+import { ComponentPropsWithoutRef, useId, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./input-field.module.scss";
 
@@ -22,10 +22,13 @@ export function InputField({
   disabled = false,
   error = false,
   helperText = "",
+  id,
   ...restProps
 }: InputFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
   const isPasswordField = type === "password";
+  const generatedId = useId();
+  const inputId = id || generatedId;
 
   const rootClasses = clsx(styles.input, {
     [styles["input--full-width"]]: fullWidth,
@@ -42,6 +45,7 @@ export function InputField({
     <VFlex className={rootClasses}>
       <div className={containerClasses}>
         <input
+          id={inputId}
           type={isPasswordField && showPassword ? "text" : type}
           placeholder={placeholder}
           disabled={disabled}
@@ -49,7 +53,11 @@ export function InputField({
           {...restProps}
         />
 
-        {label && <label className={styles.input__label}>{label}</label>}
+        {label && (
+          <label htmlFor={inputId} className={styles.input__label}>
+            {label}
+          </label>
+        )}
 
         {isPasswordField && (
           <button
