@@ -70,7 +70,7 @@ export function LoginForm() {
           Forgot password?
         </Link>
 
-        <Button type="submit" fullWidth loading={isPending}>
+        <Button type="submit" aria-label="Log in" fullWidth loading={isPending}>
           Log in
         </Button>
       </form>
