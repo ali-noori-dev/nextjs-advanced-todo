@@ -1,36 +1,11 @@
 "use server";
 
-import { AUTH_MESSAGES, PASSWORD_MIN_LENGTH } from "@/app/lib/constants";
+import { AUTH_MESSAGES } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { LoginState, SignupState } from "@/app/lib/types";
+import { loginSchema, signupSchema } from "@/app/lib/validation";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
-
-const emailSchema = z
-  .string()
-  .min(1, { message: AUTH_MESSAGES.VALIDATION.EMAIL_REQUIRED })
-  // Use .pipe() to run the email format check only if the field is not empty
-  .pipe(z.string().email({ message: AUTH_MESSAGES.VALIDATION.EMAIL_INVALID }));
-
-const passwordSchema = z
-  .string()
-  .min(1, { message: AUTH_MESSAGES.VALIDATION.PASSWORD_REQUIRED })
-  .pipe(
-    z.string().min(PASSWORD_MIN_LENGTH, {
-      message: AUTH_MESSAGES.VALIDATION.PASSWORD_LENGTH,
-    })
-  );
-
-const loginSchema = z.object({
-  email: emailSchema,
-  password: passwordSchema,
-});
-
-const signupSchema = z.object({
-  name: z.string().min(1, { message: AUTH_MESSAGES.VALIDATION.NAME_REQUIRED }),
-  email: emailSchema,
-  password: passwordSchema,
-});
 
 function handleValidationError(error: z.ZodError) {
   const errors: Record<string, string> = {};
