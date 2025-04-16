@@ -1,11 +1,14 @@
 import { z } from "zod";
 
+export const PriorityEnum = z.enum(["LOW", "MEDIUM", "HIGH"]);
+export const StatusEnum = z.enum(["TODO", "IN_PROGRESS", "DONE"]);
+
 export const createTaskSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
-  status: z.enum(["TODO", "IN_PROGRESS", "DONE"]),
   dueDate: z.string().optional(),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+  status: StatusEnum,
+  priority: PriorityEnum,
 });
 
 export const updateTaskSchema = createTaskSchema.partial();

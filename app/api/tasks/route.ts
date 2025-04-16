@@ -1,11 +1,11 @@
 import { HttpStatus } from "@/app/lib/constants";
-import { withAuth } from "@/app/lib/middleware";
+import { withCurrentUser } from "@/app/lib/middleware";
 import { prisma } from "@/app/lib/prisma";
 import { createTaskSchema } from "@/app/lib/schemas";
 import { validateJsonBody } from "@/app/lib/utils";
 
 export async function GET() {
-  return withAuth(async (email) => {
+  return withCurrentUser(async (email) => {
     const tasks = await prisma.task.findMany({
       where: { user: { email } },
     });
@@ -15,7 +15,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  return withAuth(async (email) => {
+  return withCurrentUser(async (email) => {
     const validation = await validateJsonBody(req, createTaskSchema);
     if (!validation.success) return validation.response;
 

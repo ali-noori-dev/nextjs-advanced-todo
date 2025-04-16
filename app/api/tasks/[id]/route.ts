@@ -1,12 +1,12 @@
 import { HttpStatus } from "@/app/lib/constants";
-import { withAuth } from "@/app/lib/middleware";
+import { withCurrentUser } from "@/app/lib/middleware";
 import { prisma } from "@/app/lib/prisma";
 import { updateTaskSchema } from "@/app/lib/schemas";
 import { TaskRouteParams } from "@/app/lib/types";
 import { validateJsonBody } from "@/app/lib/utils";
 
 export async function PATCH(req: Request, { params }: TaskRouteParams) {
-  return withAuth(async () => {
+  return withCurrentUser(async () => {
     const validation = await validateJsonBody(req, updateTaskSchema);
     if (!validation.success) return validation.response;
 
@@ -20,7 +20,7 @@ export async function PATCH(req: Request, { params }: TaskRouteParams) {
 }
 
 export async function DELETE(_: Request, { params }: TaskRouteParams) {
-  return withAuth(async () => {
+  return withCurrentUser(async () => {
     await prisma.task.delete({
       where: { id: params.id },
     });
