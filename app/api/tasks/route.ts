@@ -1,47 +1,37 @@
-// GET (fetch tasks) and POST (create task)
+import { HttpStatus } from "@/app/lib/constants";
+import { withAuth } from "@/app/lib/middleware";
 import { prisma } from "@/app/lib/prisma";
-import { createTaskSchema } from "@/app/lib/validation";
-import { authOptions } from "@/auth";
-import { getServerSession } from "next-auth";
+import { createTaskSchema } from "@/app/lib/schemas";
+import { validateJsonBody } from "@/app/lib/utils";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+  return withAuth(async (email) => {
+    const tasks = await prisma.task.findMany({
+      where: { user: { email } },
+    });
 
-  const tasks = await prisma.task.findMany({
-    where: { user: { email: session.user.email } },
+    return Response.json(tasks);
   });
-
-  return Response.json(tasks);
 }
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+  return withAuth(async (email) => {
+    const validation = await validateJsonBody(req, createTaskSchema);
+    if (!validation.success) return validation.response;
 
-  const body = await req.json();
-  const parsed = createTaskSchema.safeParse(body);
+    const { title, description, dueDate, priority, status } = validation.data;
 
-  if (!parsed.success) {
-    return Response.json(parsed.error.flatten(), { status: 400 });
-  }
+    const task = await prisma.task.create({
+      data: {
+        title,
+        description,
+        dueDate,
+        priority,
+        status,
+        user: { connect: { email } },
+      },
+    });
 
-  const { title, description, dueDate, priority, status } = parsed.data;
-
-  const task = await prisma.task.create({
-    data: {
-      title,
-      description,
-      dueDate,
-      priority,
-      status,
-      user: { connect: { email: session.user.email } },
-    },
+    return Response.json(task, { status: HttpStatus.CREATED });
   });
-
-  return Response.json(task, { status: 201 });
 }
