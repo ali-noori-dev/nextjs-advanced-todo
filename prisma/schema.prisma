@@ -8,43 +8,38 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum Priority {
-  HIGH
-  MEDIUM
-  LOW
-}
-
-enum Status {
-  TODO
-  IN_PROGRESS
-  DONE
-}
-
 model User {
   id              String    @id @default(uuid())
   name            String
   email           String    @unique
   password        String?   // Optional because OAuth users don’t have one
-  image           String? 
+  image           String?
   emailVerified   DateTime?
   createdAt       DateTime  @default(now())
 
-  tasks         Task[]
+  lists         List[]
   accounts      Account[]
   sessions      Session[]
 }
 
-model Task {
-  id          String    @id @default(uuid())
+model List {
+  id        String   @id @default(uuid())
+  title     String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cards     Card[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Card {
+  id          String   @id @default(uuid())
   title       String
   description String?
-  status      Status    @default(TODO)
-  dueDate     DateTime?
-  priority    Priority  @default(LOW)
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  listId      String
+  list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Account {
