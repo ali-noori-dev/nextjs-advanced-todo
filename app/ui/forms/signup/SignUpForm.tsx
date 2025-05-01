@@ -1,7 +1,7 @@
 "use client";
 
 import { signupUser } from "@/app/lib/actions";
-import { SignupState } from "@/app/lib/types";
+import type { SignupState } from "@/app/lib/types";
 import {
   AuthProviderButtons,
   Button,

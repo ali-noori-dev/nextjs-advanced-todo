@@ -1,7 +1,7 @@
 import { loginUser, signupUser } from "@/app/lib/actions";
 import { AUTH_MESSAGES } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 jest.mock("@/app/lib/prisma", () => ({

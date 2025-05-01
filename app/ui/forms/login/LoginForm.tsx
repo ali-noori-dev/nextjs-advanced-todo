@@ -2,7 +2,7 @@
 
 import { loginUser } from "@/app/lib/actions";
 import { Routes } from "@/app/lib/constants";
-import { LoginState } from "@/app/lib/types";
+import type { LoginState } from "@/app/lib/types";
 import {
   AuthProviderButtons,
   Button,

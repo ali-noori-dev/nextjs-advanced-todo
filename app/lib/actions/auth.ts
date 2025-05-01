@@ -3,7 +3,7 @@
 import { AUTH_MESSAGES } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { loginSchema, signupSchema } from "@/app/lib/schemas";
-import { LoginState, SignupState } from "@/app/lib/types";
+import type { LoginState, SignupState } from "@/app/lib/types";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
