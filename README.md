@@ -8,7 +8,7 @@ A **feature-rich, full-stack Todo List application** built with **Next.js App Ro
 
 ✅ **User Authentication** (OAuth & Credentials with NextAuth.js)  
 ✅ **Task Management** (CRUD operations with API routes)  
-✅ **Task Categorization** (Priority, Due Date, Labels)  
+✅ **Task Categorization** (Lists, Due Date, Labels)  
 ✅ **Drag & Drop Task Ordering**  
 ✅ **Real-time Updates** (WebSockets / SSE)  
 ✅ **Push Notifications** (Firebase Cloud Messaging)  

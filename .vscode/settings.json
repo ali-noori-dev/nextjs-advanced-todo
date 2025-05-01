@@ -6,6 +6,7 @@
     "nextauth",
     "Noori",
     "Supabase",
-    "tasknest"
+    "tasknest",
+    "turbopack"
   ]
 }
