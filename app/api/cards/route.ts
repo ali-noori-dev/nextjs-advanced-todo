@@ -9,14 +9,8 @@ export async function POST(req: Request) {
     const validation = await validateJsonBody(req, createCardSchema);
     if (!validation.success) return validation.response;
 
-    const { listId, title, description } = validation.data;
-
     const card = await prisma.card.create({
-      data: {
-        listId,
-        title,
-        description,
-      },
+      data: validation.data,
     });
 
     return Response.json(card, { status: HttpStatus.CREATED });
