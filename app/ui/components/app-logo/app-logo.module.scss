@@ -1,8 +1,17 @@
 @use "styles/variables";
+@use "@/styles/functions";
 
 .app-logo__title {
-  font-size: variables.$font-size-2xl;
   font-weight: 700;
   color: variables.$color-primary;
-  margin-left: -16px;
+
+  &--sm {
+    font-size: variables.$font-size-md;
+    margin-left: functions.spacing(-2);
+  }
+
+  &--md {
+    font-size: variables.$font-size-2xl;
+    margin-left: functions.spacing(-4);
+  }
 }

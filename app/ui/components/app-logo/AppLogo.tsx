@@ -5,12 +5,32 @@ import Image from "next/image";
 import logo from "../../../../public/tasknest-logo.png";
 import styles from "./app-logo.module.scss";
 
-export function AppLogo() {
+interface AppLogoProps {
+  size?: "sm" | "md";
+}
+
+export function AppLogo({ size = "md" }: AppLogoProps) {
+  const imageSize = {
+    sm: 60,
+    md: 100,
+  }[size];
+
   return (
     <Center>
-      <Image src={logo} alt={`${APP_NAME} Logo`} width={100} height={100} />
+      <Image
+        src={logo}
+        alt={`${APP_NAME} Logo`}
+        width={imageSize}
+        height={imageSize}
+      />
 
-      <h1 className={`${styles["app-logo__title"]} ${satisfy.className}`}>
+      <h1
+        className={`
+        ${styles["app-logo__title"]} 
+        ${styles[`app-logo__title--${size}`]} 
+        ${satisfy.className}
+      `}
+      >
         {APP_NAME}
       </h1>
     </Center>
