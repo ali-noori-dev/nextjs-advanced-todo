@@ -1,15 +1,12 @@
-import { Routes } from "@/app/lib/constants";
-import { prisma } from "@/app/lib/prisma";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import bcrypt from "bcryptjs";
-import type { NextAuthOptions } from "next-auth";
+import { authorizeUser } from "@/app/lib/auth";
+import { authConfig } from "@/auth.config";
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+export const { auth, signIn, signOut, handlers } = NextAuth({
+  ...authConfig,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -19,49 +16,9 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
-    CredentialsProvider({
+    Credentials({
       name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password required");
-        }
-
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
-
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user?.password || ""
-        );
-
-        if (!user || !isPasswordValid) {
-          throw new Error("Email or password is incorrect. Please try again.");
-        }
-
-        return user;
-      },
+      authorize: authorizeUser,
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
-  callbacks: {
-    async session({ session, user, token }) {
-      if (session.user) {
-        session.user.id = token.sub!;
-      }
-      return session;
-    },
-  },
-  pages: {
-    signIn: Routes.Login,
-  },
-  secret: process.env.NEXTAUTH_SECRET!,
-};
-
-export const handler = NextAuth(authOptions);
+});
