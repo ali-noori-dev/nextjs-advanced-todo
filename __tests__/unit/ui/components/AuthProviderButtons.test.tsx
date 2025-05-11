@@ -3,10 +3,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { signIn } from "next-auth/react";
 
-jest.mock("next-auth/react", () => ({
-  signIn: jest.fn(),
-}));
-
 describe("AuthProviderButtons", () => {
   beforeEach(() => {
     jest.clearAllMocks();
