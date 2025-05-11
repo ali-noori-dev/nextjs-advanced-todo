@@ -4,7 +4,9 @@ import { AUTH_MESSAGES } from "@/app/lib/constants";
 import { prisma } from "@/app/lib/prisma";
 import { loginSchema, signupSchema } from "@/app/lib/schemas";
 import type { LoginState, SignupState } from "@/app/lib/types";
+import { signIn } from "@/auth";
 import bcrypt from "bcryptjs";
+import { AuthError } from "next-auth";
 import { z } from "zod";
 
 function handleValidationError(error: z.ZodError) {
@@ -41,13 +43,13 @@ export async function loginUser(
   };
 
   try {
-    const validation = loginSchema.safeParse(values);
+    const validated = loginSchema.safeParse(values);
 
-    if (!validation.success) {
-      return { values, errors: handleValidationError(validation.error) };
+    if (!validated.success) {
+      return { values, errors: handleValidationError(validated.error) };
     }
 
-    const user = await findUserByEmail(validation.data.email);
+    const user = await findUserByEmail(validated.data.email);
 
     if (user && !user.password) {
       const account = await prisma.account.findFirst({
@@ -73,7 +75,7 @@ export async function loginUser(
 
     const passwordIsCorrect =
       user?.password &&
-      (await bcrypt.compare(validation.data.password, user.password));
+      (await bcrypt.compare(validated.data.password, user.password));
 
     if (!passwordIsCorrect) {
       return {
@@ -85,11 +87,15 @@ export async function loginUser(
       };
     }
 
-    // On success, return empty errors and success true
-    return { values, errors: {}, success: true };
+    await signIn("credentials", formData);
+
+    return { values, errors: {} };
   } catch (error) {
-    console.error("Login error:", error);
-    return handleServerError<LoginState>(values);
+    if (error instanceof AuthError) {
+      console.error("Login error:", error);
+      return handleServerError<LoginState>(values);
+    }
+    throw error;
   }
 }
 
@@ -139,10 +145,14 @@ export async function signupUser(
       };
     }
 
-    // On success, return empty errors and success true
-    return { values, errors: {}, success: true };
+    await signIn("credentials", formData);
+
+    return { values, errors: {} };
   } catch (error) {
-    console.error("Signup error:", error);
-    return handleServerError<SignupState>(values);
+    if (error instanceof AuthError) {
+      console.error("Signup error:", error);
+      return handleServerError<SignupState>(values);
+    }
+    throw error;
   }
 }
