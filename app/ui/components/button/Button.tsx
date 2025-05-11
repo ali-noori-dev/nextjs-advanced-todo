@@ -5,11 +5,13 @@ import clsx from "clsx";
 import { ComponentPropsWithoutRef } from "react";
 import styles from "./button.module.scss";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "danger";
+type ButtonVariant = "contained" | "outlined" | "ghost";
+type ButtonColor = "primary" | "secondary" | "error" | "success";
 type ButtonSize = "small" | "medium" | "large";
 
 type ButtonProps = {
   variant?: ButtonVariant;
+  color?: ButtonColor;
   size?: ButtonSize;
   fullWidth?: boolean;
   loading?: boolean;
@@ -17,7 +19,8 @@ type ButtonProps = {
 
 export function Button({
   children,
-  variant = "primary",
+  variant = "contained",
+  color = "primary",
   size = "medium",
   fullWidth = false,
   disabled = false,
@@ -28,13 +31,17 @@ export function Button({
 }: ButtonProps) {
   const isDisabled = disabled || loading;
 
-  const buttonClasses = clsx(styles.button, {
-    [styles[`button--${variant}`]]: variant,
-    [styles[`button--${size}`]]: size,
-    [styles["button--full-width"]]: fullWidth,
-    [styles["button--disabled"]]: isDisabled,
-    [className ?? ""]: className,
-  });
+  const buttonClasses = clsx(
+    styles.button,
+    styles[`button--${variant}`],
+    styles[`button--${color}`],
+    styles[`button--${size}`],
+    {
+      [styles["button--full-width"]]: fullWidth,
+      [styles["button--disabled"]]: isDisabled,
+      [className ?? ""]: className,
+    }
+  );
 
   return (
     <button

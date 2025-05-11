@@ -13,43 +13,120 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   white-space: nowrap;
-  color: white;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
-    rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 
   // Variants
-  &--primary {
-    background-color: variables.$color-primary;
+  &--contained {
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
+      rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 
-    &:hover:not(:disabled) {
-      background-color: variables.$color-primary-600;
+    &.button--primary {
+      background-color: variables.$color-primary;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-primary-600;
+      }
+    }
+
+    &.button--secondary {
+      background-color: variables.$color-secondary;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-secondary-600;
+      }
+    }
+
+    &.button--error {
+      background-color: variables.$color-error;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-error-600;
+      }
+    }
+
+    &.button--success {
+      background-color: variables.$color-success;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-success-600;
+      }
     }
   }
 
-  &--secondary {
-    background-color: variables.$color-secondary;
-
-    &:hover:not(:disabled) {
-      background-color: variables.$color-secondary-600;
-    }
-  }
-
-  &--outline {
+  &--outlined {
     background-color: white;
-    outline: 2px solid variables.$color-primary;
-    color: variables.$color-primary;
-    box-shadow: none;
+    outline: 2px solid;
 
-    &:hover:not(:disabled) {
-      background-color: variables.$color-primary-100;
+    &.button--primary {
+      outline-color: variables.$color-primary;
+      color: variables.$color-primary;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-primary-100;
+      }
+    }
+
+    &.button--secondary {
+      outline-color: variables.$color-secondary;
+      color: variables.$color-secondary;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-secondary-100;
+      }
+    }
+
+    &.button--error {
+      outline-color: variables.$color-error;
+      color: variables.$color-error;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-error-100;
+      }
+    }
+
+    &.button--success {
+      outline-color: variables.$color-success;
+      color: variables.$color-success;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-success-100;
+      }
     }
   }
 
-  &--danger {
-    background-color: variables.$color-error;
+  &--ghost {
+    background-color: transparent;
 
-    &:hover:not(:disabled) {
-      background-color: variables.$color-error-600;
+    &.button--primary {
+      color: variables.$color-primary;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-primary-100;
+      }
+    }
+
+    &.button--secondary {
+      color: variables.$color-secondary;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-secondary-100;
+      }
+    }
+
+    &.button--error {
+      color: variables.$color-error;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-error-100;
+      }
+    }
+
+    &.button--success {
+      color: variables.$color-success;
+
+      &:hover:not(:disabled) {
+        background-color: variables.$color-success-100;
+      }
     }
   }
 
