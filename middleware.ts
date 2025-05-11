@@ -1,31 +1,8 @@
-import { Routes } from "@/app/lib/constants";
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 
-export default withAuth(
-  function middleware() {
-    return NextResponse.next();
-  },
-  {
-    pages: {
-      signIn: Routes.Login, // Redirect to login page if not authenticated
-    },
-  }
-);
+export default NextAuth(authConfig).auth;
 
 export const config = {
-  matcher: [
-    /*
-     * Protect all routes except:
-     * - API routes (`/api`)
-     * - Next.js static files (`/_next/static`)
-     * - Image optimization files (`/_next/image`)
-     * - Public assets (`/public`, `/favicon.ico`)
-     * - Authentication pages (`/auth/signup`, `/auth/login`, `/auth/forgot-password`)
-     *
-     * This ensures that unauthenticated users can access the sign-up, login,
-     * and forgot password pages while protecting other routes.
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico|public|auth/signup|auth/login|auth/forgot-password).*)",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|public).*)"],
 };
