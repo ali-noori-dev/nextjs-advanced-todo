@@ -9,8 +9,8 @@ import {
   PasswordStrengthTooltip,
   VFlex,
 } from "@/app/ui/components";
-import { signIn } from "next-auth/react";
-import { useActionState, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useActionState, useState } from "react";
 import styles from "./signup-form.module.scss";
 
 const initialState: SignupState = {
@@ -26,18 +26,10 @@ export function SignUpForm() {
     initialState
   );
 
-  const { errors, values, success } = state || initialState;
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
-  // Auto sign in after successful signup
-  useEffect(() => {
-    if (success) {
-      signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        callbackUrl: "/",
-      });
-    }
-  }, [success]);
+  const { errors, values } = state || initialState;
 
   return (
     <VFlex className={styles["signup-form__wrapper"]}>
@@ -77,6 +69,8 @@ export function SignUpForm() {
             fullWidth
           />
         </PasswordStrengthTooltip>
+
+        <input type="hidden" name="redirectTo" value={callbackUrl} />
 
         <Button
           type="submit"
