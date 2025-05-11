@@ -1,2 +1,4 @@
-import { handler } from "@/auth";
-export { handler as GET, handler as POST };
+// app/api/auth/[...nextauth]/route.ts
+import { handlers } from "@/auth";
+
+export const { GET, POST } = handlers;
