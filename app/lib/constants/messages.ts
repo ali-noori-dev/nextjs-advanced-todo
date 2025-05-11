@@ -10,8 +10,11 @@ export const AUTH_MESSAGES = {
   },
   ERRORS: {
     INCORRECT_CREDENTIALS: "Incorrect email or password",
+    MISSING_CREDENTIALS: "Email and password required",
     EMAIL_EXISTS: "This email is already registered",
     SERVER_ERROR: "Something went wrong. Please try again",
+    OAUTH_ACCOUNT_NOT_LINKED:
+      "An account already exists with this email address.",
     OAUTH_LOGIN: (provider: string) =>
       `This account was created using ${provider}. Please log in with ${provider} instead.`,
     ACCOUNT_CREATE_FAILED: "Account could not be created. Please try again.",

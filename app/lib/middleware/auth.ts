@@ -1,6 +1,5 @@
 import { Routes } from "@/app/lib/constants";
-import { authOptions } from "@/auth";
-import { getServerSession } from "next-auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 type AuthMode = "client" | "server";
@@ -9,7 +8,7 @@ async function withCurrentUser<T = Response>(
   handler: (email: string) => Promise<T>,
   options?: { mode?: AuthMode }
 ): Promise<T | Response> {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   const userEmail = session?.user?.email;
 
   if (!userEmail) {

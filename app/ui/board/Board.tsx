@@ -14,7 +14,7 @@ export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
   }, [initialLists, setLists]);
 
   return (
-    <main>
+    <main style={{ padding: "1rem" }}>
       <AddListForm />
 
       {lists.map((list) => (
