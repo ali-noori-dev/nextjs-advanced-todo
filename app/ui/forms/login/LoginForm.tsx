@@ -1,7 +1,7 @@
 "use client";
 
 import { loginUser } from "@/app/lib/actions";
-import { Routes } from "@/app/lib/constants";
+import { AUTH_MESSAGES, Routes } from "@/app/lib/constants";
 import type { LoginState } from "@/app/lib/types";
 import {
   AuthProviderButtons,
@@ -9,9 +9,10 @@ import {
   InputField,
   VFlex,
 } from "@/app/ui/components";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useActionState, useEffect } from "react";
+import toast from "react-hot-toast";
 import styles from "./login-form.module.scss";
 
 const initialState: LoginState = {
@@ -25,18 +26,22 @@ export function LoginForm() {
     initialState
   );
 
-  const { errors, values, success } = state || initialState;
+  const { errors, values } = state || initialState;
 
-  // Auto sign in after successful login
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const errorParam = searchParams.get("error");
+
+  const errorMessage =
+    errorParam === "OAuthAccountNotLinked"
+      ? AUTH_MESSAGES.ERRORS.OAUTH_ACCOUNT_NOT_LINKED
+      : undefined;
+
   useEffect(() => {
-    if (success) {
-      signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        callbackUrl: "/",
-      });
+    if (errorMessage) {
+      toast.error(errorMessage);
     }
-  }, [success]);
+  }, [errorMessage]);
 
   return (
     <VFlex className={styles["login-form__wrapper"]}>
@@ -62,6 +67,8 @@ export function LoginForm() {
           helperText={errors.password}
           defaultValue={values.password}
         />
+
+        <input type="hidden" name="redirectTo" value={callbackUrl} />
 
         <Link
           href={Routes.ForgotPassword}
