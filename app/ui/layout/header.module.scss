@@ -1,0 +1,19 @@
+@use "@/styles/functions";
+@use "styles/variables";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 functions.spacing(4);
+  background-color: variables.$color-gray-50;
+
+  &__user-fullname {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  &__signout-icon {
+    margin-right: functions.spacing(1);
+  }
+}
