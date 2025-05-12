@@ -16,3 +16,7 @@ jest.mock("react", () => ({
 jest.mock("react-hot-toast", () => ({
   error: jest.fn(),
 }));
+
+jest.mock("@/app/lib/store", () => ({
+  useListStore: jest.fn(),
+}));

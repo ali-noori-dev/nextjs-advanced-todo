@@ -3,10 +3,6 @@ import type { ListWithCards } from "@/app/lib/types";
 import { Board } from "@/app/ui/board";
 import { render, screen } from "@testing-library/react";
 
-jest.mock("@/app/lib/store", () => ({
-  useListStore: jest.fn(),
-}));
-
 describe("Board Component", () => {
   it("renders with initial lists", () => {
     const mockSetLists = jest.fn();
