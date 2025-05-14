@@ -11,6 +11,7 @@ type InputFieldProps = {
   fullWidth?: boolean;
   error?: boolean;
   helperText?: string;
+  rootClassName?: string;
 } & ComponentPropsWithoutRef<"input">;
 
 export function InputField({
@@ -23,6 +24,8 @@ export function InputField({
   error = false,
   helperText = "",
   id,
+  className = "",
+  rootClassName,
   ...restProps
 }: InputFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +33,7 @@ export function InputField({
   const generatedId = useId();
   const inputId = id || generatedId;
 
-  const rootClasses = clsx(styles.input, {
+  const rootClasses = clsx(styles.input, rootClassName, {
     [styles["input--full-width"]]: fullWidth,
     [styles["input--error"]]: error,
     [styles["input--disabled"]]: disabled,
@@ -49,7 +52,7 @@ export function InputField({
           type={isPasswordField && showPassword ? "text" : type}
           placeholder={placeholder}
           disabled={disabled}
-          className={styles.input__field}
+          className={`${styles.input__field} ${className}`}
           {...restProps}
         />
 
