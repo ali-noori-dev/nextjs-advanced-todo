@@ -6,6 +6,10 @@
   position: relative;
   gap: functions.spacing();
 
+  &__container {
+    background: #fff;
+  }
+
   &--full-width {
     width: 100%;
   }
