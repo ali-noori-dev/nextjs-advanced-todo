@@ -1,0 +1,39 @@
+@use "styles/variables";
+@use "styles/functions";
+
+.list-creator {
+  width: 272px;
+
+  &__add-button {
+    width: 100%;
+    padding: functions.spacing(6) functions.spacing(2);
+    justify-content: left;
+    background-color: variables.$color-gray-100;
+    color: variables.$color-gray-700 !important;
+
+    &:hover {
+      background-color: variables.$color-gray-200 !important;
+    }
+  }
+
+  &__add-icon {
+    font-size: variables.$font-size-2xl;
+    margin-right: functions.spacing(2);
+  }
+
+  &__form {
+    background-color: variables.$color-gray-100;
+    border-radius: 0.5rem;
+    padding: functions.spacing(2);
+  }
+
+  &__input {
+    margin-bottom: functions.spacing(2);
+  }
+
+  &__cancel-button {
+    font-size: variables.$font-size-xl;
+    width: 40px;
+    padding: 0;
+  }
+}
