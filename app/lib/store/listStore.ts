@@ -23,7 +23,7 @@ const handleAddList = async (title: string, set: SetState) => {
 
     set((state) => ({
       lists: [...state.lists, { ...newList, cards: [] }],
-      loading: false,
+      loadingList: false,
     }));
   } catch (error) {
     console.error("Failed to create list:", error);
