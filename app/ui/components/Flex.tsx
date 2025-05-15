@@ -16,6 +16,7 @@ export const Flex: React.FC<FlexProps> = ({
   align,
   wrap,
   gap,
+  style,
   ...rest
 }) => {
   return (
@@ -27,6 +28,7 @@ export const Flex: React.FC<FlexProps> = ({
         alignItems: align,
         flexWrap: wrap,
         gap,
+        ...style,
       }}
       {...rest}
     >
