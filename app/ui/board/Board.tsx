@@ -7,7 +7,8 @@ import { ListCreator } from "@/app/ui/lists";
 import { useEffect } from "react";
 
 export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
-  const { lists, setLists } = useListStore();
+  const lists = useListStore((state) => state.lists);
+  const setLists = useListStore((state) => state.setLists);
 
   useEffect(() => {
     setLists(initialLists);
