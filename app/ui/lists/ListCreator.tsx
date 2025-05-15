@@ -9,13 +9,16 @@ import { MdClear } from "react-icons/md";
 import styles from "./list-creator.module.scss";
 
 function AddButton({ onClick }: { onClick: VoidFunction }) {
+  const lists = useListStore((state) => state.lists);
+
   return (
     <Button
       variant="ghost"
       onClick={onClick}
       className={styles["list-creator__add-button"]}
     >
-      <IoIosAdd className={styles["list-creator__add-icon"]} /> Add a list
+      <IoIosAdd className={styles["list-creator__add-icon"]} />
+      {`Add ${lists.length ? "another" : "a"} list`}
     </Button>
   );
 }
