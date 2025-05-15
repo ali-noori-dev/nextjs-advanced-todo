@@ -3,7 +3,7 @@
 import { useListStore } from "@/app/lib/store";
 import type { ListWithCards } from "@/app/lib/types";
 import { AddCardForm, CardList } from "@/app/ui/cards";
-import { AddListForm } from "@/app/ui/lists";
+import { ListCreator } from "@/app/ui/lists";
 import { useEffect } from "react";
 
 export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
@@ -15,7 +15,7 @@ export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
 
   return (
     <main style={{ padding: "1rem" }}>
-      <AddListForm />
+      <ListCreator />
 
       {lists.map((list) => (
         <section key={list.id}>

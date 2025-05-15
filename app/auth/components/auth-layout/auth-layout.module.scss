@@ -24,7 +24,7 @@
   }
 
   &__title {
-    font-size: variables.$font-size-2xl;
+    font-size: variables.$font-size-3xl;
     font-weight: bold;
     margin-bottom: functions.spacing(4);
     text-align: center;
@@ -61,7 +61,7 @@
 
     h2 {
       margin-bottom: functions.spacing(6);
-      font-size: variables.$font-size-4xl;
+      font-size: variables.$font-size-5xl;
     }
 
     p {
@@ -109,7 +109,7 @@
       padding: functions.spacing(15);
 
       h2 {
-        font-size: variables.$font-size-3xl;
+        font-size: variables.$font-size-4xl;
       }
 
       p {

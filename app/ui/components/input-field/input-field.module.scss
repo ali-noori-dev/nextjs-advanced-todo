@@ -1,14 +1,9 @@
-@use "sass:color";
 @use "styles/variables";
 @use "styles/functions";
 
 .input {
   position: relative;
   gap: functions.spacing();
-
-  &__container {
-    background: #fff;
-  }
 
   &--full-width {
     width: 100%;
@@ -37,11 +32,12 @@
 
   &:hover:not(.input--disabled):not(:focus-within) {
     .input__container {
-      border-color: color.scale(variables.$color-border, $lightness: -30%);
+      border-color: variables.$color-border-hover;
     }
   }
 
   &__container {
+    background: #fff;
     position: relative;
     border: 1px solid variables.$color-border;
     border-radius: variables.$radius-md;
