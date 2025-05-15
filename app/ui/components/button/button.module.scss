@@ -13,6 +13,7 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   white-space: nowrap;
+  position: relative;
 
   // Variants
   &--contained {
@@ -158,5 +159,12 @@
     cursor: not-allowed;
     box-shadow: none;
     opacity: 0.7;
+  }
+
+  &__loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
