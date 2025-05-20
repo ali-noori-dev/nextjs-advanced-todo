@@ -5,6 +5,7 @@ import type { ListWithCards } from "@/app/lib/types";
 import { AddCardForm, CardList } from "@/app/ui/cards";
 import { ListCreator } from "@/app/ui/lists";
 import { useEffect } from "react";
+import styles from "./board.module.scss";
 
 export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
   const lists = useListStore((state) => state.lists);
@@ -15,7 +16,7 @@ export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
   }, [initialLists, setLists]);
 
   return (
-    <main style={{ padding: "1rem" }}>
+    <main className={styles.board}>
       <ListCreator />
 
       {lists.map((list) => (

@@ -1,0 +1,7 @@
+@use "styles/functions";
+
+.board {
+  display: flex;
+  padding: functions.spacing(4);
+  gap: functions.spacing(3);
+}
