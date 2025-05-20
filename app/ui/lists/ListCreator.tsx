@@ -44,7 +44,7 @@ function AddButton({ onClick }: { onClick: VoidFunction }) {
 function ListForm({ onClose }: { onClose: VoidFunction }) {
   const [title, setTitle] = useState("");
   const addList = useListStore((state) => state.addList);
-  const loading = useListStore((state) => state.loadingList);
+  const isAddingList = useListStore((state) => state.isAddingList);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -66,16 +66,16 @@ function ListForm({ onClose }: { onClose: VoidFunction }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         rootClassName={styles["list-creator__input"]}
-        disabled={loading}
+        disabled={isAddingList}
         autoFocus
       />
 
       <Flex gap="0.5rem">
         <Button
           type="submit"
-          disabled={loading || !title.trim()}
+          disabled={!title.trim()}
           className={styles["list-creator__submit-button"]}
-          loading={loading}
+          loading={isAddingList}
         >
           Add list
         </Button>
