@@ -1,5 +1,6 @@
 "use client";
 
+import { ERROR_MESSAGES } from "@/app/lib/constants";
 import { useListStore } from "@/app/lib/store";
 import { Button, Flex, TextareaField } from "@/app/ui/components";
 import { useState } from "react";
@@ -7,6 +8,23 @@ import toast from "react-hot-toast";
 import { IoIosAdd } from "react-icons/io";
 import { MdClear } from "react-icons/md";
 import styles from "./list-creator.module.scss";
+
+export function ListCreator() {
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const openForm = () => setIsFormVisible(true);
+  const closeForm = () => setIsFormVisible(false);
+
+  return (
+    <div className={styles["list-creator"]}>
+      {isFormVisible ? (
+        <ListForm onClose={closeForm} />
+      ) : (
+        <AddButton onClick={openForm} />
+      )}
+    </div>
+  );
+}
 
 function AddButton({ onClick }: { onClick: VoidFunction }) {
   const lists = useListStore((state) => state.lists);
@@ -37,7 +55,7 @@ function ListForm({ onClose }: { onClose: VoidFunction }) {
       onClose();
     } catch (error) {
       console.error("Failed to add list:", error);
-      toast.error("Something went wrong while adding the list");
+      toast.error(ERROR_MESSAGES.ADD_LIST_FAILED);
     }
   }
 
@@ -72,22 +90,5 @@ function ListForm({ onClose }: { onClose: VoidFunction }) {
         </Button>
       </Flex>
     </form>
-  );
-}
-
-export function ListCreator() {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const openForm = () => setIsFormVisible(true);
-  const closeForm = () => setIsFormVisible(false);
-
-  return (
-    <div className={styles["list-creator"]}>
-      {isFormVisible ? (
-        <ListForm onClose={closeForm} />
-      ) : (
-        <AddButton onClick={openForm} />
-      )}
-    </div>
   );
 }
