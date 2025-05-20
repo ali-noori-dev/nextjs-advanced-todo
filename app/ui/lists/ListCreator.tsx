@@ -31,7 +31,7 @@ function AddButton({ onClick }: { onClick: VoidFunction }) {
 
   return (
     <Button
-      variant="ghost"
+      color="gray"
       onClick={onClick}
       className={styles["list-creator__add-button"]}
     >
@@ -81,8 +81,7 @@ function ListForm({ onClose }: { onClose: VoidFunction }) {
         </Button>
 
         <Button
-          variant="ghost"
-          color="secondary"
+          color="gray"
           onClick={onClose}
           className={styles["list-creator__cancel-button"]}
         >

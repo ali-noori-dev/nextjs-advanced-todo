@@ -1,12 +1,12 @@
 "use client";
 
-import { Center, DotSpinner } from "@/app/ui/components";
+import { DotSpinner } from "@/app/ui/components";
 import clsx from "clsx";
 import { ComponentPropsWithoutRef } from "react";
 import styles from "./button.module.scss";
 
 type ButtonVariant = "contained" | "outlined" | "ghost";
-type ButtonColor = "primary" | "secondary" | "error" | "success";
+type ButtonColor = "primary" | "secondary" | "error" | "success" | "gray";
 type ButtonSize = "small" | "medium" | "large";
 
 type ButtonProps = {
@@ -50,14 +50,16 @@ export function Button({
       disabled={isDisabled}
       {...restProps}
     >
-      <Center style={{ visibility: loading ? "hidden" : "visible" }}>
-        {children}
-      </Center>
+      {!loading && children}
 
       {loading && (
-        <span className={styles["button__loading-indicator"]}>
-          <DotSpinner size="small" />
-        </span>
+        <>
+          <div style={{ visibility: "hidden" }}>{children}</div>
+
+          <span className={styles["button__loading-indicator"]}>
+            <DotSpinner size="small" />
+          </span>
+        </>
       )}
     </button>
   );

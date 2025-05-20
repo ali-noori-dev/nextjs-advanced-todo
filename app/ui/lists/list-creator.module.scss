@@ -8,12 +8,6 @@
     width: 100%;
     padding: functions.spacing(6) functions.spacing(2);
     justify-content: left;
-    background-color: variables.$color-gray-100;
-    color: variables.$color-gray-700 !important;
-
-    &:hover {
-      background-color: variables.$color-gray-200 !important;
-    }
   }
 
   &__add-icon {
