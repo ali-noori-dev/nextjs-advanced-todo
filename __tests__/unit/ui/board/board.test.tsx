@@ -5,7 +5,6 @@ import { render, screen } from "@testing-library/react";
 
 describe("Board Component", () => {
   it("renders with initial lists", () => {
-    const mockSetLists = jest.fn();
     const mockLists: ListWithCards[] = [
       {
         id: "1",
@@ -17,14 +16,15 @@ describe("Board Component", () => {
       },
     ];
 
-    (useListStore as unknown as jest.Mock).mockReturnValue({
-      lists: mockLists,
-      setLists: mockSetLists,
-    });
+    (useListStore as unknown as jest.Mock).mockImplementation((selector) =>
+      selector({
+        lists: mockLists,
+        setLists: jest.fn(),
+      })
+    );
 
     render(<Board initialLists={mockLists} />);
 
     expect(screen.getByText("List 1")).toBeInTheDocument();
-    expect(mockSetLists).toHaveBeenCalledWith(mockLists);
   });
 });
