@@ -1,7 +1,12 @@
 @use "styles/functions";
+@use "styles/variables";
 
 .board {
   display: flex;
   padding: functions.spacing(4);
   gap: functions.spacing(3);
+
+  &__list {
+    width: variables.$list-width;
+  }
 }

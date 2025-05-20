@@ -2,7 +2,7 @@
 @use "styles/functions";
 
 .list-creator {
-  width: 272px;
+  width: variables.$list-width;
 
   &__add-button {
     width: 100%;
