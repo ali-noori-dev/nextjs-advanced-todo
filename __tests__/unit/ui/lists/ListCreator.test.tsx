@@ -10,7 +10,7 @@ describe("ListCreator", () => {
   const baseStore = {
     lists: [],
     addList: mockAddList,
-    loadingList: false,
+    isAddingList: false,
   };
 
   beforeEach(() => {
@@ -60,7 +60,7 @@ describe("ListCreator", () => {
       selector({
         lists: [],
         addList: addListMock,
-        loadingList: false,
+        isAddingList: false,
       })
     );
 
@@ -95,7 +95,7 @@ describe("ListCreator", () => {
       selector({
         lists: [],
         addList: addListMock,
-        loadingList: false,
+        isAddingList: false,
       })
     );
 
