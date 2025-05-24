@@ -1,10 +1,9 @@
 "use client";
 
-import { ERROR_MESSAGES } from "@/app/lib/constants";
+import { createListSchema } from "@/app/lib/schemas";
 import { useListStore } from "@/app/lib/store";
 import { Button, Flex, TextareaField } from "@/app/ui/components";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { ChangeEvent, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdClear } from "react-icons/md";
 import styles from "./list-creator.module.scss";
@@ -43,37 +42,48 @@ function AddButton({ onClick }: { onClick: VoidFunction }) {
 
 function ListForm({ onClose }: { onClose: VoidFunction }) {
   const [title, setTitle] = useState("");
+  const [validationError, setValidationError] = useState("");
   const addList = useListStore((state) => state.addList);
   const isAddingList = useListStore((state) => state.isAddingList);
 
-  async function handleSubmit(e: React.FormEvent) {
+  function validateForm(e: React.FormEvent) {
     e.preventDefault();
+    const result = createListSchema.safeParse({ title: title.trim() });
 
-    try {
-      await addList(title.trim());
-      setTitle("");
-      onClose();
-    } catch (error) {
-      console.error("Failed to add list:", error);
-      toast.error(ERROR_MESSAGES.ADD_LIST_FAILED);
-    }
+    if (!result.success) {
+      const errorMessage = result.error.issues[0]?.message || "Invalid input";
+      setValidationError(errorMessage);
+      return;
+    } else handleSubmit();
   }
 
+  async function handleSubmit() {
+    await addList(title.trim());
+    setTitle("");
+    onClose();
+  }
+
+  const onTitleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setTitle(e.target.value);
+    setValidationError(""); // Clear error while typing
+  };
+
   return (
-    <form onSubmit={handleSubmit} className={styles["list-creator__form"]}>
+    <form onSubmit={validateForm} className={styles["list-creator__form"]}>
       <TextareaField
         placeholder="Enter list name..."
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={onTitleChange}
         rootClassName={styles["list-creator__input"]}
         disabled={isAddingList}
         autoFocus
+        error={!!validationError}
+        helperText={validationError}
       />
 
       <Flex gap="0.5rem">
         <Button
           type="submit"
-          disabled={!title.trim()}
           className={styles["list-creator__submit-button"]}
           loading={isAddingList}
         >

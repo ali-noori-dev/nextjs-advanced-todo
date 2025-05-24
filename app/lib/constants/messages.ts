@@ -25,7 +25,3 @@ export const VALIDATION_MESSAGES = {
   TITLE_REQUIRED: "Title is required",
   TITLE_MAX_LENGTH: "Title must be under 100 characters",
 } as const;
-
-export const ERROR_MESSAGES = {
-  ADD_LIST_FAILED: "Something went wrong while adding the list",
-} as const;
