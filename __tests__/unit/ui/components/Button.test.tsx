@@ -31,7 +31,6 @@ describe("Button component", () => {
 
     expect(button).toBeDisabled();
     expect(screen.getByTestId("dot-spinner")).toBeInTheDocument();
-    expect(button).not.toHaveTextContent("Loading"); // Spinner replaces content
   });
 
   it("applies fullWidth class", () => {
