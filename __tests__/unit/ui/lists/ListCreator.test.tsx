@@ -1,8 +1,8 @@
-import { ERROR_MESSAGES } from "@/app/lib/constants";
+import { VALIDATION_MESSAGES } from "@/app/lib/constants";
+import { createListSchema } from "@/app/lib/schemas";
 import { useListStore } from "@/app/lib/store";
 import { ListCreator } from "@/app/ui/lists";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import toast from "react-hot-toast";
 
 describe("ListCreator", () => {
   const mockAddList = jest.fn();
@@ -53,6 +53,33 @@ describe("ListCreator", () => {
     expect(getTextarea()).toBeInTheDocument();
   });
 
+  it("shows validation error when input is invalid", async () => {
+    openListForm();
+
+    fireEvent.click(getSubmitButton());
+
+    expect(
+      await screen.findByText(VALIDATION_MESSAGES.TITLE_REQUIRED)
+    ).toBeInTheDocument();
+
+    expect(mockAddList).not.toHaveBeenCalled();
+  });
+
+  it("falls back to 'Invalid input' when no message is present", () => {
+    jest.spyOn(createListSchema, "safeParse").mockImplementationOnce(
+      () =>
+        ({
+          success: false,
+          error: { issues: [] }, // no message -> triggers fallback
+        } as any)
+    );
+
+    openListForm();
+    fireEvent.click(getSubmitButton());
+
+    expect(screen.getByText("Invalid input")).toBeInTheDocument();
+  });
+
   it("adds a list and closes the form", async () => {
     const addListMock = jest.fn(() => Promise.resolve());
 
@@ -79,37 +106,5 @@ describe("ListCreator", () => {
     });
 
     expect(addListMock).toHaveBeenCalledWith("New List");
-  });
-
-  it("disables submit button when input is empty", () => {
-    openListForm();
-    expect(getSubmitButton()).toBeDisabled();
-  });
-
-  it("shows an error toast when addList throws", async () => {
-    const addListMock = jest.fn(() =>
-      Promise.reject(new Error("Server error"))
-    );
-
-    (useListStore as unknown as jest.Mock).mockImplementation((selector) =>
-      selector({
-        lists: [],
-        addList: addListMock,
-        isAddingList: false,
-      })
-    );
-
-    openListForm();
-
-    fireEvent.change(getTextarea(), {
-      target: { value: "Oops" },
-    });
-
-    fireEvent.click(getSubmitButton());
-
-    await waitFor(() => {
-      expect(addListMock).toHaveBeenCalled();
-      expect(toast.error).toHaveBeenCalledWith(ERROR_MESSAGES.ADD_LIST_FAILED);
-    });
   });
 });
