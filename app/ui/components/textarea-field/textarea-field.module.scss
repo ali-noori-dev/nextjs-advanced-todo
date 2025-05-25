@@ -28,7 +28,7 @@
     outline: 1px solid variables.$color-border;
     border: none;
     border-radius: variables.$radius-md;
-    padding: functions.spacing(3);
+    padding: functions.spacing(2) functions.spacing(3);
     font-size: variables.$font-size-sm;
     font-weight: 600;
 
