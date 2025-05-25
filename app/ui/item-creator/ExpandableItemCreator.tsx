@@ -56,7 +56,7 @@ function AddButton({
     <Button
       color="gray"
       onClick={onClick}
-      className={styles["expandable-item-creator__add-button"]}
+      className={`expandable-item-creator-add-button ${styles["expandable-item-creator__add-button"]}`}
     >
       <IoIosAdd className={styles["expandable-item-creator__add-icon"]} />
       {label}
