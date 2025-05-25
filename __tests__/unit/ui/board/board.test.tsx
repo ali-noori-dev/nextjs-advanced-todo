@@ -1,4 +1,4 @@
-import { useListStore } from "@/app/lib/store";
+import { useBoardStore } from "@/app/lib/store";
 import type { ListWithCards } from "@/app/lib/types";
 import { Board } from "@/app/ui/board";
 import { render, screen } from "@testing-library/react";
@@ -16,7 +16,7 @@ describe("Board Component", () => {
       },
     ];
 
-    (useListStore as unknown as jest.Mock).mockImplementation((selector) =>
+    (useBoardStore as unknown as jest.Mock).mockImplementation((selector) =>
       selector({
         lists: mockLists,
         setLists: jest.fn(),

@@ -9,7 +9,7 @@ import type { CardInput, ListWithCards } from "@/app/lib/types";
 import toast from "react-hot-toast";
 import { create, StateCreator } from "zustand";
 
-interface ListState {
+interface BoardState {
   lists: ListWithCards[];
   isAddingList: boolean;
   isAddingCard: boolean;
@@ -20,7 +20,7 @@ interface ListState {
   addCard: (listId: string, card: CardInput) => Promise<void>;
 }
 
-type SetState = Parameters<StateCreator<ListState>>[0];
+type SetState = Parameters<StateCreator<BoardState>>[0];
 
 const handleAddList = async (title: string, set: SetState) => {
   set({ isAddingList: true });
@@ -78,7 +78,7 @@ const handleAddCard = async (
   }
 };
 
-export const useListStore = create<ListState>((set) => ({
+export const useBoardStore = create<BoardState>((set) => ({
   lists: [],
   isAddingList: false,
   isAddingCard: false,

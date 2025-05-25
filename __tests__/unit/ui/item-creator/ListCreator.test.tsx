@@ -1,7 +1,7 @@
 "use client";
 
 import { VALIDATION_MESSAGES } from "@/app/lib/constants";
-import { useListStore } from "@/app/lib/store";
+import { useBoardStore } from "@/app/lib/store";
 import { ListCreator } from "@/app/ui/item-creator";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
@@ -9,7 +9,7 @@ describe("ListCreator", () => {
   const mockAddList = jest.fn();
 
   const setupStore = (customState = {}) => {
-    (useListStore as unknown as jest.Mock).mockImplementation((selector) =>
+    (useBoardStore as unknown as jest.Mock).mockImplementation((selector) =>
       selector({
         lists: [],
         addList: mockAddList,

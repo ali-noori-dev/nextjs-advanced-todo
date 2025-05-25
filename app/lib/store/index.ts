@@ -1,1 +1,1 @@
-export * from "./listStore";
+export * from "./boardStore";

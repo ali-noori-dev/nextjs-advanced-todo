@@ -18,5 +18,5 @@ jest.mock("react-hot-toast", () => ({
 }));
 
 jest.mock("@/app/lib/store", () => ({
-  useListStore: jest.fn(),
+  useBoardStore: jest.fn(),
 }));
