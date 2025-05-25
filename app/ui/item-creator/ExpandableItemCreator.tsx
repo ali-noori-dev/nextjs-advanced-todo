@@ -4,14 +4,15 @@ import { Button, Flex, TextareaField } from "@/app/ui/components";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdClear } from "react-icons/md";
+import { ZodSchema } from "zod";
 import styles from "./expandable-item-creator.module.scss";
 
 export type ExpandableItemCreatorProps = {
   itemCount: number;
   entityName: string;
   isLoading: boolean;
-  onSubmit: (value: string) => Promise<void>;
-  validateForm: (value: string) => string | null;
+  onSubmit: (title: string) => Promise<void>;
+  schema: ZodSchema;
 };
 
 type CreationFormProps = Omit<ExpandableItemCreatorProps, "itemCount"> & {
@@ -68,7 +69,7 @@ function CreationForm({
   onClose,
   isLoading,
   entityName,
-  validateForm,
+  schema,
 }: CreationFormProps) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -81,10 +82,10 @@ function CreationForm({
   const handleValidateAndSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const trimmed = value.trim();
-    const validationError = validateForm(trimmed);
+    const result = schema.safeParse({ title: trimmed });
 
-    if (validationError) {
-      setError(validationError);
+    if (!result.success) {
+      setError(result.error.issues[0]?.message || "Invalid input");
       return;
     }
 
