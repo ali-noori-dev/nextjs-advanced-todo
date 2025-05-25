@@ -1,0 +1,10 @@
+@use "styles/variables";
+@use "styles/functions";
+
+.list-creator {
+  width: variables.$list-width;
+
+  :global(.expandable-item-creator-add-button) {
+    padding-block: functions.spacing(6);
+  }
+}
