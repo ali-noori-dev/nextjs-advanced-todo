@@ -2,11 +2,10 @@
 @use "styles/functions";
 
 .expandable-item-creator {
-  width: variables.$list-width;
-
   &__add-button {
     width: 100%;
-    padding: functions.spacing(6) functions.spacing(2);
+    height: 2rem;
+    padding: 0 functions.spacing(2);
     justify-content: left;
   }
 
@@ -19,6 +18,7 @@
     background-color: variables.$color-gray-100;
     border-radius: 0.5rem;
     padding: functions.spacing(2);
+    width: 100%;
   }
 
   &__input {
