@@ -104,7 +104,6 @@ function CreationForm({
         placeholder={`Enter ${entityName} name...`}
         value={value}
         onChange={handleChange}
-        rootClassName={styles["expandable-item-creator__input"]}
         disabled={isLoading}
         autoFocus
         error={!!error}
@@ -112,7 +111,7 @@ function CreationForm({
       />
 
       <Flex gap="0.5rem">
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={isLoading} size="small">
           {`Add ${entityName}`}
         </Button>
 
@@ -120,6 +119,7 @@ function CreationForm({
           color="gray"
           type="button"
           onClick={onClose}
+          size="small"
           aria-label="Cancel"
           className={styles["expandable-item-creator__cancel-button"]}
         >
