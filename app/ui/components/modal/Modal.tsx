@@ -6,7 +6,7 @@ import styles from "./modal.module.scss";
 
 type ModalProps = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: VoidFunction;
   children: React.ReactNode;
 };
 
