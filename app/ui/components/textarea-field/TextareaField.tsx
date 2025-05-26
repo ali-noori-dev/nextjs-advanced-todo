@@ -6,20 +6,16 @@ import { ComponentPropsWithoutRef, useRef } from "react";
 import styles from "./textarea-field.module.scss";
 
 type TextareaFieldProps = {
-  fullWidth?: boolean;
   error?: boolean;
   helperText?: string;
-  rootClassName?: string;
   resize?: "none" | "vertical" | "horizontal" | "both";
 } & ComponentPropsWithoutRef<"textarea">;
 
 export function TextareaField({
-  fullWidth = false,
   disabled = false,
   error = false,
   helperText = "",
   className = "",
-  rootClassName,
   onChange,
   rows = 1,
   resize = "none",
@@ -27,10 +23,9 @@ export function TextareaField({
 }: TextareaFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const rootClasses = clsx(styles.textarea, rootClassName, {
-    [styles["textarea--full-width"]]: fullWidth,
-    [styles["textarea--error"]]: error,
-    [styles["textarea--disabled"]]: disabled,
+  const fieldClasses = clsx(styles.textarea__field, className, {
+    [styles["textarea__field--error"]]: error,
+    [styles["textarea__field--disabled"]]: disabled,
   });
 
   const handleResize = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -43,11 +38,11 @@ export function TextareaField({
   };
 
   return (
-    <VFlex className={rootClasses}>
+    <VFlex className={styles.textarea}>
       <textarea
         ref={textareaRef}
         disabled={disabled}
-        className={`${styles.textarea__field} ${className}`}
+        className={fieldClasses}
         onChange={handleResize}
         rows={rows}
         style={{ resize, overflow: "hidden" }}

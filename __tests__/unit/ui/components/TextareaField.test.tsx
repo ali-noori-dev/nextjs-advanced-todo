@@ -25,11 +25,10 @@ describe("TextareaField", () => {
     expect(textarea.style.height).not.toBe(""); // height should be set
   });
 
-  it("applies full width and error styles", () => {
-    render(<TextareaField fullWidth error />);
-    const wrapper = screen.getByRole("textbox").parentElement;
-    expect(wrapper?.className).toMatch(/textarea--full-width/);
-    expect(wrapper?.className).toMatch(/textarea--error/);
+  it("applies error styles", () => {
+    render(<TextareaField error />);
+    const wrapper = screen.getByRole("textbox");
+    expect(wrapper?.className).toMatch(/textarea__field--error/);
   });
 
   it("is disabled when prop is set", () => {
