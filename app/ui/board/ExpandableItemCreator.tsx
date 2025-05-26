@@ -98,7 +98,7 @@ function CreationForm({
   return (
     <form
       onSubmit={handleValidateAndSubmit}
-      className={styles["expandable-item-creator__form"]}
+      className={`${styles["expandable-item-creator__form"]} expandable-item-creator-form`}
     >
       <TextareaField
         placeholder={`Enter ${entityName} name...`}

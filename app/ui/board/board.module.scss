@@ -12,5 +12,9 @@
     :global(.expandable-item-creator-add-button) {
       padding-block: functions.spacing(6);
     }
+
+    :global(.expandable-item-creator-form) {
+      padding: functions.spacing(2);
+    }
   }
 }
