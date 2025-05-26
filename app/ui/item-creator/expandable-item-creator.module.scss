@@ -5,7 +5,7 @@
   &__add-button {
     width: 100%;
     height: 2rem;
-    padding: 0 functions.spacing(2);
+    padding: functions.spacing(5) functions.spacing(2);
     justify-content: left;
   }
 
@@ -15,14 +15,13 @@
   }
 
   &__form {
+    display: flex;
+    flex-direction: column;
+    gap: functions.spacing(2);
     background-color: variables.$color-gray-100;
-    border-radius: 0.5rem;
+    border-radius: variables.$radius-md;
     padding: functions.spacing(2);
     width: 100%;
-  }
-
-  &__input {
-    margin-bottom: functions.spacing(2);
   }
 
   &__cancel-button {
