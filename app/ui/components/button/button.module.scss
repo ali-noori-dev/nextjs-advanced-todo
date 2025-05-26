@@ -163,6 +163,7 @@
     font-size: variables.$font-size-sm;
     padding: functions.spacing(2) functions.spacing(3);
     height: functions.spacing(8);
+    border-radius: variables.$radius-sm;
   }
 
   &--medium {
