@@ -1,31 +1,38 @@
 "use client";
 
-import { useListStore } from "@/app/lib/store";
+import { createListSchema } from "@/app/lib/schemas";
+import { useBoardStore } from "@/app/lib/store";
 import type { ListWithCards } from "@/app/lib/types";
-import { AddCardForm, CardList } from "@/app/ui/cards";
-import { ListCreator } from "@/app/ui/lists";
 import { useEffect } from "react";
 import styles from "./board.module.scss";
+import { BoardListItem } from "./BoardListItem";
+import { ExpandableItemCreator } from "./ExpandableItemCreator";
 
 export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
-  const lists = useListStore((state) => state.lists);
-  const setLists = useListStore((state) => state.setLists);
+  const lists = useBoardStore((state) => state.lists);
+  const setLists = useBoardStore((state) => state.setLists);
+  const addList = useBoardStore((state) => state.addList);
+  const isAddingList = useBoardStore((state) => state.isAddingList);
 
   useEffect(() => {
     setLists(initialLists);
-  }, [initialLists, setLists]);
+  }, [initialLists]);
 
   return (
     <main className={styles.board}>
-      <ListCreator />
-
       {lists.map((list) => (
-        <section key={list.id}>
-          <h2>{list.title}</h2>
-          <AddCardForm listId={list.id} />
-          <CardList cards={list.cards} />
-        </section>
+        <BoardListItem key={list.id} list={list} />
       ))}
+
+      <div className={styles["board__list-creator"]}>
+        <ExpandableItemCreator
+          entityName="list"
+          itemCount={lists.length}
+          isLoading={isAddingList}
+          onSubmit={addList}
+          schema={createListSchema}
+        />
+      </div>
     </main>
   );
 }

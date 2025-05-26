@@ -6,7 +6,11 @@
   padding: functions.spacing(4);
   gap: functions.spacing(3);
 
-  &__list {
+  &__list-creator {
     width: variables.$list-width;
+
+    :global(.expandable-item-creator-add-button) {
+      padding-block: functions.spacing(6);
+    }
   }
 }
