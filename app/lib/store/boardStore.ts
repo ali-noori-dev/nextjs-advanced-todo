@@ -1,9 +1,10 @@
 "use client";
 
 import {
-  createCard,
-  createList,
-  deleteList as deleteListRequest,
+  createCardRequest,
+  createListRequest,
+  deleteListRequest,
+  toggleCardCompletionRequest,
 } from "@/app/lib/api";
 import type { CardInput, ListWithCards } from "@/app/lib/types";
 import toast from "react-hot-toast";
@@ -18,6 +19,7 @@ interface BoardState {
   addList: (title: string) => Promise<void>;
   deleteList: (listId: string) => Promise<void>;
   addCard: (listId: string, card: CardInput) => Promise<void>;
+  toggleCardCompletion: (cardId: string) => void;
 }
 
 type SetState = Parameters<StateCreator<BoardState>>[0];
@@ -25,7 +27,7 @@ type SetState = Parameters<StateCreator<BoardState>>[0];
 const handleAddList = async (title: string, set: SetState) => {
   set({ isAddingList: true });
   try {
-    const newList = await createList(title);
+    const newList = await createListRequest(title);
 
     set((state) => ({
       lists: [...state.lists, { ...newList, cards: [] }],
@@ -63,7 +65,7 @@ const handleAddCard = async (
   set({ isAddingCard: true });
 
   try {
-    const newCard = await createCard(listId, card);
+    const newCard = await createCardRequest(listId, card);
 
     set((state) => ({
       lists: state.lists.map((list) =>
@@ -78,7 +80,45 @@ const handleAddCard = async (
   }
 };
 
-export const useBoardStore = create<BoardState>((set) => ({
+const handleToggleCardCompletion = async (
+  cardId: string,
+  set: SetState,
+  get: () => BoardState
+) => {
+  const { lists } = get();
+
+  const currentCard = lists
+    .flatMap((list) => list.cards)
+    .find((card) => card.id === cardId);
+
+  if (!currentCard) {
+    toast.error("Card not found");
+    return;
+  }
+
+  const newCompletedState = !currentCard.completed;
+
+  try {
+    const updatedCard = await toggleCardCompletionRequest(
+      cardId,
+      newCompletedState
+    );
+
+    set((state) => ({
+      lists: state.lists.map((list) => ({
+        ...list,
+        cards: list.cards.map((card) =>
+          card.id === cardId ? updatedCard : card
+        ),
+      })),
+    }));
+  } catch (error) {
+    console.error("Failed to toggle card completion:", error);
+    toast.error("Failed to update card");
+  }
+};
+
+export const useBoardStore = create<BoardState>((set, get) => ({
   lists: [],
   isAddingList: false,
   isAddingCard: false,
@@ -88,4 +128,6 @@ export const useBoardStore = create<BoardState>((set) => ({
   addList: (title) => handleAddList(title, set),
   addCard: (listId, card) => handleAddCard(listId, card, set),
   deleteList: (listId) => handleDeleteList(listId, set),
+  toggleCardCompletion: (cardId) =>
+    handleToggleCardCompletion(cardId, set, get),
 }));
