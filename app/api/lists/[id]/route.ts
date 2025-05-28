@@ -7,24 +7,31 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   return withCurrentUserAPI(async (email) => {
-    const listId = params.id;
+    try {
+      const listId = params.id;
 
-    // Ensure list belongs to current user
-    const existingList = await prisma.list.findUnique({
-      where: { id: listId },
-      select: { user: { select: { email: true } } },
-    });
+      // Ensure list belongs to current user
+      const existingList = await prisma.list.findUnique({
+        where: { id: listId },
+        select: { user: { select: { email: true } } },
+      });
 
-    if (!existingList || existingList.user.email !== email) {
-      return new Response("List not found or unauthorized", {
-        status: HttpStatus.FORBIDDEN,
+      if (!existingList || existingList.user.email !== email) {
+        return new Response("List not found or unauthorized", {
+          status: HttpStatus.FORBIDDEN,
+        });
+      }
+
+      await prisma.list.delete({
+        where: { id: listId },
+      });
+
+      return new Response(null, { status: HttpStatus.NO_CONTENT });
+    } catch (error) {
+      console.error("Error deleting list:", error);
+      return new Response("Failed to delete list", {
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
       });
     }
-
-    await prisma.list.delete({
-      where: { id: listId },
-    });
-
-    return new Response(null, { status: HttpStatus.NO_CONTENT });
   });
 }
