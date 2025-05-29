@@ -12,7 +12,7 @@
 ::-webkit-scrollbar-thumb {
   background-color: #dadada;
   border-radius: variables.$radius-2xl;
-  border: 6px solid transparent;
+  border: 1px solid transparent;
   background-clip: content-box;
 }
 
@@ -21,6 +21,10 @@
 }
 
 body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
   color: variables.$color-text;
   font-size: variables.$font-size-md;
 }
