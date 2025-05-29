@@ -3,11 +3,14 @@
 
 .board {
   display: flex;
-  padding: functions.spacing(4);
+  flex: 1;
+  overflow: auto;
+  padding: functions.spacing(3);
   gap: functions.spacing(3);
 
   &__list-creator {
     width: variables.$list-width;
+    min-width: variables.$list-width;
 
     :global(.expandable-item-creator-add-button) {
       padding-block: functions.spacing(6);
