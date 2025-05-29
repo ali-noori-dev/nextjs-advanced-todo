@@ -25,11 +25,7 @@ export function BoardListItem({ list }: { list: ListWithCards }) {
 
   return (
     <section className={styles["list-item"]}>
-      <Flex
-        justify="space-between"
-        align="center"
-        className={styles["list-item__header"]}
-      >
+      <Flex className={styles["list-item__header"]}>
         <h2 className={styles["list-item__title"]}>{list.title}</h2>
 
         <Button
