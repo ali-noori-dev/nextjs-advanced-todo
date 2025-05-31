@@ -10,7 +10,6 @@ import styles from "./expandable-item-creator.module.scss";
 export type ExpandableItemCreatorProps = {
   itemCount: number;
   entityName: string;
-  isLoading: boolean;
   onSubmit: (title: string) => Promise<void>;
   schema: ZodSchema;
 };
@@ -67,12 +66,12 @@ function AddButton({
 function CreationForm({
   onSubmit,
   onClose,
-  isLoading,
   entityName,
   schema,
 }: CreationFormProps) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
@@ -89,7 +88,9 @@ function CreationForm({
       return;
     }
 
+    setLoading(true);
     await onSubmit(trimmed);
+    setLoading(false);
     setValue("");
     setError("");
     onClose();
@@ -104,14 +105,14 @@ function CreationForm({
         placeholder={`Enter ${entityName} name...`}
         value={value}
         onChange={handleChange}
-        disabled={isLoading}
+        disabled={loading}
         autoFocus
         error={!!error}
         helperText={error}
       />
 
       <Flex gap="0.5rem">
-        <Button type="submit" loading={isLoading} size="small">
+        <Button type="submit" loading={loading} size="small">
           {`Add ${entityName}`}
         </Button>
 

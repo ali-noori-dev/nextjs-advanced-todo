@@ -12,7 +12,6 @@ export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
   const lists = useBoardStore((state) => state.lists);
   const setLists = useBoardStore((state) => state.setLists);
   const addList = useBoardStore((state) => state.addList);
-  const isAddingList = useBoardStore((state) => state.isAddingList);
 
   useEffect(() => {
     setLists(initialLists);
@@ -28,7 +27,6 @@ export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
         <ExpandableItemCreator
           entityName="list"
           itemCount={lists.length}
-          isLoading={isAddingList}
           onSubmit={addList}
           schema={createListSchema}
         />
