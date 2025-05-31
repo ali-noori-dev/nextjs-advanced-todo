@@ -10,6 +10,7 @@
   background-color: variables.$color-gray-100;
   border-radius: variables.$radius-md;
   padding: functions.spacing(2);
+  cursor: pointer;
 
   &__header {
     margin-bottom: functions.spacing(2);
