@@ -1,7 +1,7 @@
 "use client";
 
 import { useBoardStore } from "@/app/lib/store";
-import { CircularSpinner } from "@/app/ui/components";
+import { CircularSpinner, Tooltip } from "@/app/ui/components";
 import type { Card } from "@prisma/client";
 import { useState } from "react";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
@@ -25,17 +25,21 @@ export function CardList({ cards }: { cards: Card[] }) {
       return <CircularSpinner />;
     } else if (card.completed) {
       return (
-        <FaCheckCircle
-          className={styles["card-list__check-icon"]}
-          onClick={() => handleToggle(card)}
-        />
+        <Tooltip content="Mark incomplete">
+          <FaCheckCircle
+            className={styles["card-list__check-icon"]}
+            onClick={() => handleToggle(card)}
+          />
+        </Tooltip>
       );
     } else {
       return (
-        <FaRegCircle
-          className={styles["card-list__circle-icon"]}
-          onClick={() => handleToggle(card)}
-        />
+        <Tooltip content="Mark complete">
+          <FaRegCircle
+            className={styles["card-list__circle-icon"]}
+            onClick={() => handleToggle(card)}
+          />
+        </Tooltip>
       );
     }
   };
