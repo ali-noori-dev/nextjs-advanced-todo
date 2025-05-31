@@ -1,21 +1,19 @@
 "use client";
 
+import { VALIDATION_MESSAGES } from "@/app/lib/constants";
+import { createListSchema } from "@/app/lib/schemas";
 import {
   ExpandableItemCreator,
   ExpandableItemCreatorProps,
-} from "@/app/ui/item-creator";
+} from "@/app/ui/board/ExpandableItemCreator";
 import { fireEvent, render, screen } from "@testing-library/react";
-
-const NAME_REQUIRED_MESSAGE = "Name is required";
 
 describe("ExpandableItemCreator", () => {
   const defaultProps: ExpandableItemCreatorProps = {
     entityName: "item",
     itemCount: 0,
-    isLoading: false,
     onSubmit: jest.fn(() => Promise.resolve()),
-    validateForm: (value: string) =>
-      value.trim() ? null : NAME_REQUIRED_MESSAGE,
+    schema: createListSchema,
   };
 
   const getTextarea = () => screen.getByPlaceholderText(/enter item name/i);
@@ -50,7 +48,9 @@ describe("ExpandableItemCreator", () => {
     openForm();
     fireEvent.click(getSubmitButton());
 
-    expect(await screen.findByText(NAME_REQUIRED_MESSAGE)).toBeInTheDocument();
+    expect(
+      await screen.findByText(VALIDATION_MESSAGES.TITLE_REQUIRED)
+    ).toBeInTheDocument();
     expect(defaultProps.onSubmit).not.toHaveBeenCalled();
   });
 
@@ -67,15 +67,19 @@ describe("ExpandableItemCreator", () => {
     openForm();
 
     fireEvent.click(getSubmitButton());
-    expect(await screen.findByText(NAME_REQUIRED_MESSAGE)).toBeInTheDocument();
+    expect(
+      await screen.findByText(VALIDATION_MESSAGES.TITLE_REQUIRED)
+    ).toBeInTheDocument();
 
     fireEvent.change(getTextarea(), { target: { value: "Hello" } });
-    expect(screen.queryByText(NAME_REQUIRED_MESSAGE)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(VALIDATION_MESSAGES.TITLE_REQUIRED)
+    ).not.toBeInTheDocument();
   });
 
   it("calls onSubmit with trimmed input, clears state, and closes the form", async () => {
     const onSubmit = jest.fn(() => Promise.resolve());
-    openForm({ ...defaultProps, onSubmit, validateForm: () => null });
+    openForm({ ...defaultProps, onSubmit });
 
     fireEvent.change(getTextarea(), { target: { value: "   New Item   " } });
     fireEvent.click(getSubmitButton());
