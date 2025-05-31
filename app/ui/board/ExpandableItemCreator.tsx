@@ -1,5 +1,6 @@
 "use client";
 
+import { useBoolean } from "@/app/lib/hooks";
 import { Button, Flex, TextareaField } from "@/app/ui/components";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
@@ -19,12 +20,9 @@ type CreationFormProps = Omit<ExpandableItemCreatorProps, "itemCount"> & {
 };
 
 export function ExpandableItemCreator(props: ExpandableItemCreatorProps) {
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isFormVisible, openForm, closeForm] = useBoolean();
 
   const { itemCount, entityName, ...restProps } = props;
-
-  const openForm = () => setIsFormVisible(true);
-  const closeForm = () => setIsFormVisible(false);
 
   return (
     <div className={styles["expandable-item-creator"]}>

@@ -1,8 +1,8 @@
+import { useBoolean } from "@/app/lib/hooks";
 import { createCardSchema } from "@/app/lib/schemas";
 import { useBoardStore } from "@/app/lib/store";
 import { ListWithCards } from "@/app/lib/types";
 import { Button, ConfirmDeleteModal, Flex } from "@/app/ui/components";
-import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import styles from "./board-list-item.module.scss";
 import { CardList } from "./CardList";
@@ -11,10 +11,7 @@ import { ExpandableItemCreator } from "./ExpandableItemCreator";
 export function BoardListItem({ list }: { list: ListWithCards }) {
   const deleteList = useBoardStore((state) => state.deleteList);
   const addCard = useBoardStore((state) => state.addCard);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  const closeDeleteModal = () => setIsDeleteModalOpen(false);
-  const openDeleteModal = () => setIsDeleteModalOpen(true);
+  const [isDeleteModalOpen, openDeleteModal, closeDeleteModal] = useBoolean();
 
   return (
     <section className={styles["list-item"]}>

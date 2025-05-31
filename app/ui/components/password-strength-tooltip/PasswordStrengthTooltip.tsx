@@ -1,9 +1,10 @@
 "use client";
 
 import { PASSWORD_MIN_LENGTH } from "@/app/lib/constants";
+import { useBoolean } from "@/app/lib/hooks";
 import { Flex } from "@/app/ui/components";
 import clsx from "clsx";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import styles from "./password-strength-tooltip.module.scss";
 
 enum PasswordStrength {
@@ -74,12 +75,9 @@ const calculatePasswordStrength = (password: string): StrengthResult => {
 };
 
 export function PasswordStrengthTooltip({ password, children }: Props) {
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, handleFocus, handleBlur] = useBoolean();
   const { label, level } = calculatePasswordStrength(password);
   const shouldShowTooltip = isFocused && password.length > 0;
-
-  const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => setIsFocused(false);
 
   return (
     <Flex
