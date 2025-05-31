@@ -10,11 +10,10 @@ export async function createCardRequest(
 }
 
 export async function toggleCardCompletionRequest(
-  cardId: string,
-  completed: boolean
+  cardData: Card
 ): Promise<Card> {
   return patchRequest<Card>({
-    url: `/api/cards/${cardId}/toggle`,
-    body: { completed },
+    url: `/api/cards/${cardData.id}/toggle`,
+    body: { completed: !cardData.completed },
   });
 }
