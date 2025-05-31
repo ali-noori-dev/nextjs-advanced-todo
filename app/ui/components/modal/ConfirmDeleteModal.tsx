@@ -7,14 +7,14 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@/app/ui/components";
+import { useState } from "react";
 
 type ConfirmDeleteModalProps = {
   isOpen: boolean;
   title: string;
   message: string;
   onClose: VoidFunction;
-  onConfirm: () => void;
-  loading?: boolean;
+  onConfirm: () => Promise<void>;
 };
 
 export function ConfirmDeleteModal({
@@ -23,10 +23,17 @@ export function ConfirmDeleteModal({
   message,
   onClose,
   onConfirm,
-  loading = false,
 }: ConfirmDeleteModalProps) {
+  const [loading, setLoading] = useState(false);
+
   const handleClose = () => {
     if (!loading) onClose();
+  };
+
+  const handleConfirm = async () => {
+    setLoading(true);
+    await onConfirm();
+    setLoading(false);
   };
 
   return (
@@ -39,7 +46,7 @@ export function ConfirmDeleteModal({
           Cancel
         </Button>
 
-        <Button color="error" loading={loading} onClick={onConfirm}>
+        <Button color="error" loading={loading} onClick={handleConfirm}>
           Delete
         </Button>
       </ModalFooter>
