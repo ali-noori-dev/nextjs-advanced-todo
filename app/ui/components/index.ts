@@ -10,5 +10,6 @@ export * from "./input-field/InputField";
 export * from "./modal";
 export * from "./password-strength-tooltip/PasswordStrengthTooltip";
 export * from "./textarea-field/TextareaField";
+export * from "./tooltip/Tooltip";
 export * from "./VCenter";
 export * from "./VFlex";
