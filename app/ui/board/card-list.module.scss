@@ -20,6 +20,33 @@
 
     &:hover {
       outline: 2px solid variables.$color-primary;
+
+      .card-list__circle-icon {
+        opacity: 1;
+      }
+
+      .card-list__not-completed-title {
+        transform: translateX(0);
+      }
     }
+  }
+
+  &__status {
+    font-size: 18px;
+    height: 18px;
+  }
+
+  &__check-icon {
+    color: variables.$color-success;
+  }
+
+  &__circle-icon {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+  }
+
+  &__not-completed-title {
+    transform: translateX(-24px);
+    transition: transform 0.4s ease-in-out;
   }
 }
