@@ -7,6 +7,7 @@ import {
   toggleCardCompletionRequest,
 } from "@/app/lib/api";
 import type { CardInput, ListWithCards } from "@/app/lib/types";
+import { Card } from "@prisma/client";
 import toast from "react-hot-toast";
 import { create, StateCreator } from "zustand";
 
@@ -19,7 +20,7 @@ interface BoardState {
   addList: (title: string) => Promise<void>;
   deleteList: (listId: string) => Promise<void>;
   addCard: (listId: string, card: CardInput) => Promise<void>;
-  toggleCardCompletion: (cardId: string) => void;
+  toggleCardCompletion: (cardData: Card) => Promise<void>;
 }
 
 type SetState = Parameters<StateCreator<BoardState>>[0];
@@ -80,35 +81,15 @@ const handleAddCard = async (
   }
 };
 
-const handleToggleCardCompletion = async (
-  cardId: string,
-  set: SetState,
-  get: () => BoardState
-) => {
-  const { lists } = get();
-
-  const currentCard = lists
-    .flatMap((list) => list.cards)
-    .find((card) => card.id === cardId);
-
-  if (!currentCard) {
-    toast.error("Card not found");
-    return;
-  }
-
-  const newCompletedState = !currentCard.completed;
-
+const handleToggleCardCompletion = async (cardData: Card, set: SetState) => {
   try {
-    const updatedCard = await toggleCardCompletionRequest(
-      cardId,
-      newCompletedState
-    );
+    const updatedCard = await toggleCardCompletionRequest(cardData);
 
     set((state) => ({
       lists: state.lists.map((list) => ({
         ...list,
         cards: list.cards.map((card) =>
-          card.id === cardId ? updatedCard : card
+          card.id === cardData.id ? updatedCard : card
         ),
       })),
     }));
@@ -118,7 +99,7 @@ const handleToggleCardCompletion = async (
   }
 };
 
-export const useBoardStore = create<BoardState>((set, get) => ({
+export const useBoardStore = create<BoardState>((set) => ({
   lists: [],
   isAddingList: false,
   isAddingCard: false,
@@ -128,6 +109,5 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   addList: (title) => handleAddList(title, set),
   addCard: (listId, card) => handleAddCard(listId, card, set),
   deleteList: (listId) => handleDeleteList(listId, set),
-  toggleCardCompletion: (cardId) =>
-    handleToggleCardCompletion(cardId, set, get),
+  toggleCardCompletion: (cardData) => handleToggleCardCompletion(cardData, set),
 }));
