@@ -6,10 +6,8 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const listId = params.id;
-
     await prisma.list.delete({
-      where: { id: listId },
+      where: { id: params.id },
     });
 
     return new Response(null, { status: HttpStatus.NO_CONTENT });
@@ -26,11 +24,10 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const listId = params.id;
     const { title } = await request.json();
 
     const updatedList = await prisma.list.update({
-      where: { id: listId },
+      where: { id: params.id },
       data: { title },
     });
 
