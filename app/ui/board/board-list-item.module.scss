@@ -13,15 +13,23 @@
   cursor: pointer;
 
   &__header {
-    margin-bottom: functions.spacing(2);
+    margin-bottom: functions.spacing();
+    display: flex;
+    align-items: center;
+    gap: functions.spacing(2);
   }
 
   &__title {
-    min-height: 32px;
-    flex: 1;
-    overflow-wrap: anywhere;
-    font-weight: 600;
-    padding: functions.spacing(2) functions.spacing(4);
+    font-size: 1.15rem;
+    color: variables.$color-text;
+    padding: functions.spacing(2) functions.spacing(3);
+    background: transparent;
+    outline: none;
+    border-radius: variables.$radius-sm;
+
+    &:focus {
+      background-color: variables.$color-gray-50;
+    }
   }
 
   &__delete-button {
