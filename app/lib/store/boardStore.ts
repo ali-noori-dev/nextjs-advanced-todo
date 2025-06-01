@@ -5,6 +5,7 @@ import {
   createListRequest,
   deleteListRequest,
   toggleCardCompletionRequest,
+  updateListRequest,
 } from "@/app/lib/api";
 import type { CardInput, ListWithCards } from "@/app/lib/types";
 import { Card } from "@prisma/client";
@@ -18,6 +19,7 @@ interface BoardState {
   deleteList: (listId: string) => Promise<void>;
   addCard: (listId: string, card: CardInput) => Promise<void>;
   toggleCardCompletion: (cardData: Card) => Promise<void>;
+  updateList: (listId: string, data: { title: string }) => Promise<void>;
 }
 
 type SetState = Parameters<StateCreator<BoardState>>[0];
@@ -85,6 +87,25 @@ const handleToggleCardCompletion = async (cardData: Card, set: SetState) => {
   }
 };
 
+const handleUpdateList = async (
+  listId: string,
+  data: { title: string },
+  set: SetState
+) => {
+  try {
+    const updatedList = await updateListRequest(listId, data);
+
+    set((state) => ({
+      lists: state.lists.map((list) =>
+        list.id === listId ? { ...list, ...updatedList } : list
+      ),
+    }));
+  } catch (error) {
+    console.error("Failed to update list:", error);
+    toast.error("Failed to update list");
+  }
+};
+
 export const useBoardStore = create<BoardState>((set) => ({
   lists: [],
   setLists: (lists) => set({ lists }),
@@ -92,4 +113,5 @@ export const useBoardStore = create<BoardState>((set) => ({
   addCard: (listId, card) => handleAddCard(listId, card, set),
   deleteList: (listId) => handleDeleteList(listId, set),
   toggleCardCompletion: (cardData) => handleToggleCardCompletion(cardData, set),
+  updateList: (listId, data) => handleUpdateList(listId, data, set),
 }));
