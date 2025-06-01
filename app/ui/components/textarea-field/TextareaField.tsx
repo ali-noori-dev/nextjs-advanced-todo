@@ -2,7 +2,7 @@
 
 import { VFlex } from "@/app/ui/components";
 import clsx from "clsx";
-import { ComponentPropsWithoutRef, useRef } from "react";
+import { ComponentPropsWithoutRef, useEffect, useRef } from "react";
 import styles from "./textarea-field.module.scss";
 
 type TextareaFieldProps = {
@@ -28,14 +28,22 @@ export function TextareaField({
     [styles["textarea__field--disabled"]]: disabled,
   });
 
-  const handleResize = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const adjustHeight = () => {
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = "auto";
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
-    onChange?.(event); // Forward onChange if provided
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    adjustHeight();
+    onChange?.(event);
+  };
+
+  useEffect(() => {
+    adjustHeight();
+  }, []);
 
   return (
     <VFlex className={styles.textarea}>
@@ -43,7 +51,7 @@ export function TextareaField({
         ref={textareaRef}
         disabled={disabled}
         className={fieldClasses}
-        onChange={handleResize}
+        onChange={handleChange}
         rows={rows}
         style={{ resize }}
         spellCheck="false"
