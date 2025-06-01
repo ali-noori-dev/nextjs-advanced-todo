@@ -1,3 +1,5 @@
+"use client";
+
 import { useBoolean } from "@/app/lib/hooks";
 import { createCardSchema } from "@/app/lib/schemas";
 import { useBoardStore } from "@/app/lib/store";
