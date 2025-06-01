@@ -7,6 +7,7 @@ import {
   ConfirmDeleteModal,
   Flex,
   TextareaField,
+  Tooltip,
 } from "@/app/ui/components";
 import { FaRegTrashAlt } from "react-icons/fa";
 import styles from "./board-list-item.module.scss";
@@ -39,13 +40,15 @@ export function BoardListItem({ list }: { list: ListWithCards }) {
           onBlur={handleTitleUpdate}
         />
 
-        <Button
-          color="gray"
-          className={styles["list-item__delete-button"]}
-          onClick={openDeleteModal}
-        >
-          <FaRegTrashAlt />
-        </Button>
+        <Tooltip content="Delete this list">
+          <Button
+            color="gray"
+            className={styles["list-item__delete-button"]}
+            onClick={openDeleteModal}
+          >
+            <FaRegTrashAlt />
+          </Button>
+        </Tooltip>
       </Flex>
 
       <CardList cards={list.cards} />
