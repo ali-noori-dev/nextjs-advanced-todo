@@ -45,7 +45,7 @@ export function TextareaField({
         className={fieldClasses}
         onChange={handleResize}
         rows={rows}
-        style={{ resize, overflow: "hidden" }}
+        style={{ resize }}
         {...restProps}
       />
 
