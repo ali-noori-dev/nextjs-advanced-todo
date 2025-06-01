@@ -25,9 +25,11 @@
     background: transparent;
     outline: none;
     border-radius: variables.$radius-sm;
+    cursor: pointer;
 
     &:focus {
       background-color: variables.$color-gray-50;
+      cursor: text;
     }
   }
 
