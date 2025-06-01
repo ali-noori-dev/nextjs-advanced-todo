@@ -2,7 +2,7 @@
 
 import { useBoolean } from "@/app/lib/hooks";
 import { Button, Flex, TextareaField } from "@/app/ui/components";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdClear } from "react-icons/md";
 import { ZodSchema } from "zod";
@@ -21,11 +21,29 @@ type CreationFormProps = Omit<ExpandableItemCreatorProps, "itemCount"> & {
 
 export function ExpandableItemCreator(props: ExpandableItemCreatorProps) {
   const [isFormVisible, openForm, closeForm] = useBoolean();
+  const formRef = useRef<HTMLDivElement>(null);
 
   const { itemCount, entityName, ...restProps } = props;
 
+  // Handles closing the form when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        closeForm();
+      }
+    }
+
+    if (isFormVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isFormVisible]);
+
   return (
-    <div className={styles["expandable-item-creator"]}>
+    <div ref={formRef} className={styles["expandable-item-creator"]}>
       {isFormVisible ? (
         <CreationForm
           onClose={closeForm}
