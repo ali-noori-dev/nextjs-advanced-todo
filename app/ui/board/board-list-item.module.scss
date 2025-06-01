@@ -15,7 +15,6 @@
   &__header {
     margin-bottom: functions.spacing();
     display: flex;
-    align-items: center;
     gap: functions.spacing(2);
   }
 
@@ -36,5 +35,6 @@
     width: 32px;
     height: 32px;
     padding: 0;
+    margin-top: functions.spacing();
   }
 }
