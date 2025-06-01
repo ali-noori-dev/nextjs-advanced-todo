@@ -46,6 +46,7 @@ export function TextareaField({
         onChange={handleResize}
         rows={rows}
         style={{ resize }}
+        spellCheck="false"
         {...restProps}
       />
 
