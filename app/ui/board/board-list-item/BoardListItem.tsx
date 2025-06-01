@@ -2,6 +2,7 @@ import { useBoolean } from "@/app/lib/hooks";
 import { createCardSchema } from "@/app/lib/schemas";
 import { useBoardStore } from "@/app/lib/store";
 import { ListWithCards } from "@/app/lib/types";
+import { CardList, ExpandableItemCreator } from "@/app/ui/board";
 import {
   Button,
   ConfirmDeleteModal,
@@ -11,8 +12,6 @@ import {
 } from "@/app/ui/components";
 import { FaRegTrashAlt } from "react-icons/fa";
 import styles from "./board-list-item.module.scss";
-import { CardList } from "./CardList";
-import { ExpandableItemCreator } from "./ExpandableItemCreator";
 
 export function BoardListItem({ list }: { list: ListWithCards }) {
   const updateList = useBoardStore((state) => state.updateList);

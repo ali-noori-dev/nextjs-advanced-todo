@@ -5,7 +5,7 @@ import { createListSchema } from "@/app/lib/schemas";
 import {
   ExpandableItemCreator,
   ExpandableItemCreatorProps,
-} from "@/app/ui/board/ExpandableItemCreator";
+} from "@/app/ui/board";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("ExpandableItemCreator", () => {

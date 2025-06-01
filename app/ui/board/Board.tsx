@@ -3,10 +3,9 @@
 import { createListSchema } from "@/app/lib/schemas";
 import { useBoardStore } from "@/app/lib/store";
 import type { ListWithCards } from "@/app/lib/types";
+import { BoardListItem, ExpandableItemCreator } from "@/app/ui/board";
 import { useEffect } from "react";
 import styles from "./board.module.scss";
-import { BoardListItem } from "./BoardListItem";
-import { ExpandableItemCreator } from "./ExpandableItemCreator";
 
 export function Board({ initialLists }: { initialLists: ListWithCards[] }) {
   const lists = useBoardStore((state) => state.lists);
