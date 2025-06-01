@@ -40,7 +40,7 @@ export function BoardListItem({ list }: { list: ListWithCards }) {
           onBlur={handleTitleUpdate}
         />
 
-        <Tooltip content="Delete this list">
+        <Tooltip content="Delete list">
           <Button
             color="gray"
             className={styles["list-item__delete-button"]}
