@@ -39,4 +39,13 @@
     padding: 0;
     margin-top: functions.spacing();
   }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: functions.spacing(2);
+    list-style: none;
+    padding: 0;
+    margin: functions.spacing() 0 functions.spacing(2);
+  }
 }

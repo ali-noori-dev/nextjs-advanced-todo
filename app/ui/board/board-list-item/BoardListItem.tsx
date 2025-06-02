@@ -4,7 +4,7 @@ import { useBoolean } from "@/app/lib/hooks";
 import { createCardSchema } from "@/app/lib/schemas";
 import { useBoardStore } from "@/app/lib/store";
 import { ListWithCards } from "@/app/lib/types";
-import { CardList, ExpandableItemCreator } from "@/app/ui/board";
+import { CardItem, ExpandableItemCreator } from "@/app/ui/board";
 import {
   Button,
   ConfirmDeleteModal,
@@ -52,7 +52,13 @@ export function BoardListItem({ list }: { list: ListWithCards }) {
         </Tooltip>
       </Flex>
 
-      <CardList cards={list.cards} />
+      {list.cards.length > 0 && (
+        <ul className={styles["list-item__cards"]}>
+          {list.cards.map((card) => (
+            <CardItem key={card.id} card={card} listId={list.id} />
+          ))}
+        </ul>
+      )}
 
       <ExpandableItemCreator
         entityName="card"
