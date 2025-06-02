@@ -55,7 +55,7 @@ export function BoardListItem({ list }: { list: ListWithCards }) {
       {list.cards.length > 0 && (
         <ul className={styles["list-item__cards"]}>
           {list.cards.map((card) => (
-            <CardItem key={card.id} card={card} listId={list.id} />
+            <CardItem key={card.id} card={card} />
           ))}
         </ul>
       )}

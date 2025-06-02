@@ -20,8 +20,8 @@ interface BoardState {
   updateList: (listId: string, data: { title: string }) => Promise<void>;
   deleteList: (listId: string) => Promise<void>;
   addCard: (listId: string, card: CardInput) => Promise<void>;
-  deleteCard: (cardId: string, listId: string) => Promise<void>;
-  toggleCardCompletion: (cardData: Card) => Promise<void>;
+  deleteCard: (card: Card) => Promise<void>;
+  toggleCardCompletion: (card: Card) => Promise<void>;
 }
 
 type SetState = Parameters<StateCreator<BoardState>>[0];
@@ -108,18 +108,14 @@ const handleUpdateList = async (
   }
 };
 
-const handleDeleteCard = async (
-  cardId: string,
-  listId: string,
-  set: SetState
-) => {
+const handleDeleteCard = async (card: Card, set: SetState) => {
   try {
-    await deleteCardRequest(cardId);
+    await deleteCardRequest(card.id);
 
     set((state) => ({
       lists: state.lists.map((list) =>
-        list.id === listId
-          ? { ...list, cards: list.cards.filter((card) => card.id !== cardId) }
+        list.id === card.listId
+          ? { ...list, cards: list.cards.filter((card) => card.id !== card.id) }
           : list
       ),
     }));
@@ -136,6 +132,6 @@ export const useBoardStore = create<BoardState>((set) => ({
   updateList: (listId, data) => handleUpdateList(listId, data, set),
   deleteList: (listId) => handleDeleteList(listId, set),
   addCard: (listId, card) => handleAddCard(listId, card, set),
-  deleteCard: (cardId, listId) => handleDeleteCard(cardId, listId, set),
-  toggleCardCompletion: (cardData) => handleToggleCardCompletion(cardData, set),
+  deleteCard: (card) => handleDeleteCard(card, set),
+  toggleCardCompletion: (card) => handleToggleCardCompletion(card, set),
 }));
