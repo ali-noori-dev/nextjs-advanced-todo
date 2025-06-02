@@ -3,6 +3,7 @@
 import {
   createCardRequest,
   createListRequest,
+  deleteCardRequest,
   deleteListRequest,
   toggleCardCompletionRequest,
   updateListRequest,
@@ -16,10 +17,11 @@ interface BoardState {
   lists: ListWithCards[];
   setLists: (lists: ListWithCards[]) => void;
   addList: (title: string) => Promise<void>;
+  updateList: (listId: string, data: { title: string }) => Promise<void>;
   deleteList: (listId: string) => Promise<void>;
   addCard: (listId: string, card: CardInput) => Promise<void>;
+  deleteCard: (cardId: string, listId: string) => Promise<void>;
   toggleCardCompletion: (cardData: Card) => Promise<void>;
-  updateList: (listId: string, data: { title: string }) => Promise<void>;
 }
 
 type SetState = Parameters<StateCreator<BoardState>>[0];
@@ -106,12 +108,34 @@ const handleUpdateList = async (
   }
 };
 
+const handleDeleteCard = async (
+  cardId: string,
+  listId: string,
+  set: SetState
+) => {
+  try {
+    await deleteCardRequest(cardId);
+
+    set((state) => ({
+      lists: state.lists.map((list) =>
+        list.id === listId
+          ? { ...list, cards: list.cards.filter((card) => card.id !== cardId) }
+          : list
+      ),
+    }));
+  } catch (error) {
+    console.error("Failed to delete card:", error);
+    toast.error("Failed to delete card");
+  }
+};
+
 export const useBoardStore = create<BoardState>((set) => ({
   lists: [],
   setLists: (lists) => set({ lists }),
   addList: (title) => handleAddList(title, set),
-  addCard: (listId, card) => handleAddCard(listId, card, set),
-  deleteList: (listId) => handleDeleteList(listId, set),
-  toggleCardCompletion: (cardData) => handleToggleCardCompletion(cardData, set),
   updateList: (listId, data) => handleUpdateList(listId, data, set),
+  deleteList: (listId) => handleDeleteList(listId, set),
+  addCard: (listId, card) => handleAddCard(listId, card, set),
+  deleteCard: (cardId, listId) => handleDeleteCard(cardId, listId, set),
+  toggleCardCompletion: (cardData) => handleToggleCardCompletion(cardData, set),
 }));
