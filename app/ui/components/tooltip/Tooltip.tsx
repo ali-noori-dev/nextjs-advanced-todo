@@ -1,6 +1,12 @@
 "use client";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import styles from "./tooltip.module.scss";
 
@@ -8,9 +14,15 @@ type TooltipProps = {
   content: ReactNode;
   children: ReactNode;
   position?: "top" | "bottom" | "left" | "right";
-};
+} & ComponentPropsWithoutRef<"div">;
 
-export function Tooltip({ content, children, position = "top" }: TooltipProps) {
+export function Tooltip({
+  content,
+  children,
+  position = "top",
+  className = "",
+  ...restProps
+}: TooltipProps) {
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const targetRef = useRef<HTMLDivElement>(null);
@@ -62,9 +74,10 @@ export function Tooltip({ content, children, position = "top" }: TooltipProps) {
     <>
       <div
         ref={targetRef}
-        className={styles["tooltip"]}
+        className={`${styles.tooltip} ${className}`}
         onMouseEnter={show}
         onMouseLeave={hide}
+        {...restProps}
       >
         {children}
       </div>
