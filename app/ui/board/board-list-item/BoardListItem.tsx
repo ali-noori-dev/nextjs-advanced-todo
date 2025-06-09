@@ -4,14 +4,8 @@ import { useBoolean } from "@/app/lib/hooks";
 import { createCardSchema } from "@/app/lib/schemas";
 import { useBoardStore } from "@/app/lib/store";
 import { ListWithCards } from "@/app/lib/types";
-import { CardItem, ExpandableItemCreator } from "@/app/ui/board";
-import {
-  Button,
-  ConfirmDeleteModal,
-  Flex,
-  TextareaField,
-  Tooltip,
-} from "@/app/ui/components";
+import { CardItem, ExpandableItemCreator, TitleField } from "@/app/ui/board";
+import { Button, ConfirmDeleteModal, Flex, Tooltip } from "@/app/ui/components";
 import { FaRegTrashAlt } from "react-icons/fa";
 import styles from "./board-list-item.module.scss";
 
@@ -21,24 +15,12 @@ export function BoardListItem({ list }: { list: ListWithCards }) {
   const addCard = useBoardStore((state) => state.addCard);
   const [isDeleteModalOpen, openDeleteModal, closeDeleteModal] = useBoolean();
 
-  const handleTitleUpdate = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-    const newTitle = e.target.value.trim();
-    if (newTitle && newTitle !== list.title) {
-      updateList(list.id, { title: newTitle });
-    } else {
-      // Reset to original title if empty
-      e.target.value = list.title;
-    }
-  };
-
   return (
     <section className={styles["list-item"]}>
       <Flex className={styles["list-item__header"]}>
-        <TextareaField
-          defaultValue={list.title}
-          className={styles["list-item__title"]}
-          onFocus={(e) => e.target.select()}
-          onBlur={handleTitleUpdate}
+        <TitleField
+          title={list.title}
+          onUpdate={(title) => updateList(list.id, { title })}
         />
 
         <Tooltip content="Delete list">
