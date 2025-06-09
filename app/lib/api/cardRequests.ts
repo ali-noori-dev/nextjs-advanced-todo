@@ -13,11 +13,12 @@ export function deleteCardRequest(cardId: string): Promise<void> {
   return deleteRequest({ url: `/api/cards/${cardId}` });
 }
 
-export async function toggleCardCompletionRequest(
-  cardData: Card
+export async function updateCardRequest(
+  id: string,
+  data: Partial<Card>
 ): Promise<Card> {
   return patchRequest<Card>({
-    url: `/api/cards/${cardData.id}/toggle`,
-    body: { completed: !cardData.completed },
+    url: `/api/cards/${id}`,
+    body: data,
   });
 }
