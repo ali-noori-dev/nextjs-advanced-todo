@@ -5,7 +5,7 @@ import {
   createListRequest,
   deleteCardRequest,
   deleteListRequest,
-  toggleCardCompletionRequest,
+  updateCardRequest,
   updateListRequest,
 } from "@/app/lib/api";
 import type { CardInput, ListWithCards } from "@/app/lib/types";
@@ -21,7 +21,7 @@ interface BoardState {
   deleteList: (listId: string) => Promise<void>;
   addCard: (listId: string, card: CardInput) => Promise<void>;
   deleteCard: (card: Card) => Promise<void>;
-  toggleCardCompletion: (card: Card) => Promise<void>;
+  updateCard: (Id: string, data: Partial<Card>) => Promise<void>;
 }
 
 type SetState = Parameters<StateCreator<BoardState>>[0];
@@ -71,16 +71,18 @@ const handleAddCard = async (
   }
 };
 
-const handleToggleCardCompletion = async (cardData: Card, set: SetState) => {
+const handleUpdateCard = async (
+  id: string,
+  data: Partial<Card>,
+  set: SetState
+) => {
   try {
-    const updatedCard = await toggleCardCompletionRequest(cardData);
+    const updatedCard = await updateCardRequest(id, data);
 
     set((state) => ({
       lists: state.lists.map((list) => ({
         ...list,
-        cards: list.cards.map((card) =>
-          card.id === cardData.id ? updatedCard : card
-        ),
+        cards: list.cards.map((card) => (card.id === id ? updatedCard : card)),
       })),
     }));
   } catch (error) {
@@ -133,5 +135,5 @@ export const useBoardStore = create<BoardState>((set) => ({
   deleteList: (listId) => handleDeleteList(listId, set),
   addCard: (listId, card) => handleAddCard(listId, card, set),
   deleteCard: (card) => handleDeleteCard(card, set),
-  toggleCardCompletion: (card) => handleToggleCardCompletion(card, set),
+  updateCard: (id, data) => handleUpdateCard(id, data, set),
 }));
