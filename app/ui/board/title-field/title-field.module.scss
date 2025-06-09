@@ -1,0 +1,15 @@
+@use "styles/functions";
+@use "styles/variables";
+
+.title-field {
+  font-size: 1.15rem;
+  color: variables.$color-text;
+  padding: functions.spacing(2) functions.spacing(3);
+  background: transparent;
+  outline: none;
+  border-radius: variables.$radius-sm;
+
+  &:focus {
+    background-color: variables.$color-gray-50;
+  }
+}
