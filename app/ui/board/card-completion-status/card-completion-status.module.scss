@@ -1,0 +1,8 @@
+@use "styles/variables";
+
+.completed-icon {
+  color: variables.$color-success;
+}
+
+.not-completed-tooltip {
+}
