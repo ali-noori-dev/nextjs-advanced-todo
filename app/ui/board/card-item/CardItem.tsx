@@ -2,75 +2,45 @@
 
 import { useBoolean } from "@/app/lib/hooks";
 import { useBoardStore } from "@/app/lib/store";
-import {
-  Button,
-  CircularSpinner,
-  ConfirmDeleteModal,
-  Tooltip,
-} from "@/app/ui/components";
+import { CardCompletionStatus, EditCardModal } from "@/app/ui/board";
+import { Button, ConfirmDeleteModal, Tooltip } from "@/app/ui/components";
 import type { Card } from "@prisma/client";
-import { useState } from "react";
-import { FaCheckCircle, FaRegCircle, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import styles from "./card-item.module.scss";
 
-export function CardItem({ card, listId }: { card: Card; listId: string }) {
-  const [togglingCardId, setTogglingCardId] = useState<string | null>(null);
+export function CardItem({ card }: { card: Card }) {
   const [isDeleteModalOpen, openDeleteModal, closeDeleteModal] = useBoolean();
+  const [isEditModalOpen, openEditModal, closeEditModal] = useBoolean();
   const deleteCard = useBoardStore((state) => state.deleteCard);
-
-  const toggleCardCompletion = useBoardStore(
-    (state) => state.toggleCardCompletion
-  );
-
-  const handleToggle = async () => {
-    setTogglingCardId(card.id);
-    await toggleCardCompletion(card);
-    setTogglingCardId(null);
-  };
-
-  const CompletionStatus = () => {
-    if (togglingCardId === card.id) {
-      return <CircularSpinner />;
-    } else if (card.completed) {
-      return (
-        <Tooltip content="Mark incomplete">
-          <FaCheckCircle
-            className={styles["card__check-icon"]}
-            onClick={handleToggle}
-          />
-        </Tooltip>
-      );
-    } else {
-      return (
-        <Tooltip content="Mark complete">
-          <FaRegCircle
-            className={styles["card__circle-icon"]}
-            onClick={handleToggle}
-          />
-        </Tooltip>
-      );
-    }
-  };
 
   return (
     <>
       <li className={styles["card"]}>
         <div className={styles["card__status"]}>
-          <CompletionStatus />
+          <CardCompletionStatus card={card} />
         </div>
 
-        <Tooltip
-          content="Delete card"
-          className={styles["card__delete-tooltip"]}
-        >
-          <Button
-            color="gray"
-            className={styles["card__delete-button"]}
-            onClick={openDeleteModal}
-          >
-            <FaRegTrashAlt />
-          </Button>
-        </Tooltip>
+        <div className={styles["card__actions"]}>
+          <Tooltip content="Delete card">
+            <Button
+              color="gray"
+              className={styles["card__action-button"]}
+              onClick={openDeleteModal}
+            >
+              <FaRegTrashAlt />
+            </Button>
+          </Tooltip>
+
+          <Tooltip content="Edit card">
+            <Button
+              color="gray"
+              className={styles["card__action-button"]}
+              onClick={openEditModal}
+            >
+              <FaRegEdit size={16} />
+            </Button>
+          </Tooltip>
+        </div>
 
         <h4
           className={card.completed ? "" : styles["card__not-completed-title"]}
@@ -84,7 +54,13 @@ export function CardItem({ card, listId }: { card: Card; listId: string }) {
         title="Delete this card?"
         message="This action will permanently remove the card. You can't undo this."
         onClose={closeDeleteModal}
-        onConfirm={() => deleteCard(card.id, listId)}
+        onConfirm={() => deleteCard(card)}
+      />
+
+      <EditCardModal
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        card={card}
       />
     </>
   );

@@ -14,31 +14,32 @@
   &:hover {
     outline: 2px solid variables.$color-primary;
 
-    .card__circle-icon {
-      opacity: 1;
-    }
+    // .card__circle-icon {
+    //   opacity: 1;
+    // }
 
     .card__not-completed-title {
       transform: translateX(0);
     }
 
-    .card__delete-tooltip {
-      display: block;
+    .card__actions {
+      display: flex;
+      gap: functions.spacing(1);
+    }
+
+    :global(.not-completed-tooltip) {
+      opacity: 1;
     }
   }
 
   &__status {
     font-size: 18px;
     height: 18px;
-  }
 
-  &__check-icon {
-    color: variables.$color-success;
-  }
-
-  &__circle-icon {
-    opacity: 0;
-    transition: opacity 0.4s ease-in-out;
+    :global(.not-completed-tooltip) {
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
   }
 
   &__not-completed-title {
@@ -46,20 +47,25 @@
     transition: transform 0.4s ease-in-out;
   }
 
-  &__delete-tooltip {
+  &__actions {
     display: none;
     position: absolute;
-    top: 6;
+    top: 8;
     right: 4;
     z-index: 10;
+    background: variables.$color-gray-50;
   }
 
-  &__delete-button {
+  &__action-button {
     border-radius: 100%;
     padding: 0;
     width: 25px;
     height: 25px;
     font-size: variables.$font-size-sm;
     background: transparent !important;
+
+    &:hover {
+      background-color: variables.$color-gray-100 !important;
+    }
   }
 }
