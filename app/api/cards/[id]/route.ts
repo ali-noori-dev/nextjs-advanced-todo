@@ -22,3 +22,26 @@ export async function DELETE(
     );
   }
 }
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const cardId = params.id;
+    const data = await req.json();
+
+    const updatedCard = await prisma.card.update({
+      where: { id: cardId },
+      data,
+    });
+
+    return NextResponse.json(updatedCard);
+  } catch (error) {
+    console.error("Failed to update card:", error);
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: HttpStatus.INTERNAL_SERVER_ERROR }
+    );
+  }
+}
